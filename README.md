@@ -10,5 +10,5 @@ To initialize yarn:
 To install the necessary dependencies, navigate to '.../WebLevelUp' and type::
     yarn install-dependencies
 
-To run login O Auth, navigate to '.../WebLevelUp' and type:
+To run login Oauth, navigate to '.../WebLevelUp' and type:
     yarn run dev
