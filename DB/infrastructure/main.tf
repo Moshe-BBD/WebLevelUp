@@ -123,7 +123,7 @@ resource "aws_security_group" "spiderpedia_security_group" {
   }
 }
 
-resource "aws_db_instance" "beantastic_postgres_rds" {
+resource "aws_db_instance" "spiderpedia_postgres_rds" {
   allocated_storage    = 5
   instance_class       = "db.t3.micro"
   publicly_accessible  = true
