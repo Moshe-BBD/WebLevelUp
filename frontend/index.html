@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Spider Flip Book</title>
+		<link rel="stylesheet" href="styles.css" />
+		<script src="app.js"></script>
+	</head>
+	<body>
+		<input type="checkbox" id="checkbox-cover" />
+		<input type="checkbox" id="checkbox-page1" />
+		<input type="checkbox" id="checkbox-page2" />
+		<input type="checkbox" id="checkbox-page3" />
+
+		<main class="book">
+			<section class="cover">
+				<label for="checkbox-cover"></label>
+			</section>
+			<article class="page" id="page1">
+				<section class="front-page">
+					<h2>Page 1</h2>
+					<p>I am page 1</p>
+					<label class="next" for="checkbox-page1"></label>
+				</section>
+				<section class="back-page">
+					<label class="prev" for="checkbox-page1"> </label>
+				</section>
+			</article>
+			<article class="page" id="page2">
+				<section class="front-page">
+					<h2>Page 2</h2>
+					<p>I am a spider fact</p>
+					<label class="next" for="checkbox-page2"></label>
+				</section>
+				<section class="back-page">
+					<label class="prev" for="checkbox-page2"></label>
+				</section>
+			</article>
+			<article class="page" id="page3">
+				<section class="front-page">
+					<h2>Page 3</h2>
+					<p>this is page three</p>
+				</section>
+			</article>
+			<section class="back-cover"></section>
+		</main>
+
+		<button class="next-btn" onclick="nextPage()">Next</button>
+		<button class="prev-btn" onclick="prevPage()">Previous</button>
+		<script>
+			let currentPage = 0;
+			const pages = document.querySelectorAll(".page");
+
+			function showPage(pageIndex) {
+				if (pageIndex >= 0 && pageIndex < pages.length) {
+					pages[currentPage].style.display = "none";
+					pages[pageIndex].style.display = "block";
+					currentPage = pageIndex;
+				}
+			}
+
+			function nextPage() {
+				showPage(currentPage + 1);
+			}
+
+			function prevPage() {
+				showPage(currentPage - 1);
+			}
+
+			showPage(0);
+		</script>
+	</body>
+</html>
