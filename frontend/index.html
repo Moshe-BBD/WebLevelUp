@@ -8,10 +8,19 @@
 		<script src="app.js"></script>
 	</head>
 	<body>
-		<nav>
-            <a id="login-btn" href="/login">Login with GitHub</a>
-			<a id="logout-btn" href="/logout" style="display:none;">Logout</a>
-        </nav>
+		<nav id="top-nav">
+			<div class="nav-left">
+				<img src="images/spiderLogo.png" alt="Logo" id="logo" />
+				<span id="nav-title">SPIDERPEDIA</span>
+			</div>
+			<div class="nav-right">
+				<span id="nav-username" style="display:none;"></span>
+				<a id="login-btn" href="/login">
+					<img src="images/githubLogo.png" alt="GitHub Logo" class="github-icon" /> Login
+				</a>
+				<a id="logout-btn" href="/logout" style="display:none;">Logout</a>
+			</div>
+		</nav>
 
 		<div id="book-content" style="display:none;">
 			<input type="checkbox" id="checkbox-cover" />
