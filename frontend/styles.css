@@ -1,11 +1,22 @@
 body {
+	margin: 0; /* Remove default margin */
 	font-family: "Poppin", sans-serif;
 	background-color: #2e3537;
 	height: 100vh;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	padding-top: 3.75rem; /* Adjust this based on the height of the navbar */
+	overflow-x: hidden; /* Prevent horizontal scrolling */
 }
+
+/* General Reset */
+* {
+    margin: 0; /* Reset all margin */
+    padding: 0; /* Reset all padding */
+    box-sizing: border-box; /* Apply box-sizing */
+}
+
 .book {
 	width: 350px;
 	height: 450px;
@@ -140,18 +151,106 @@ a {
     margin: 0.625rem; /* Margin for spacing */
 }
 
-#login-btn, #logout-btn {
-    color: #ffffff; /* White text color */
-    background-color: #4173a5; /* Button background color */
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+#top-nav {
+    position: fixed; /* Fixed position at the top */
+    top: 0; /* Align to the top edge */
+    left: 0; /* Align to the left edge */
+    width: 100%; /* Occupy the full width */
+    display: flex; /* Horizontal layout for children */
+    justify-content: space-between; /* Space between left and right content */
+    align-items: center; /* Vertically center items */
+    background-color: #222222; /* Dark background */
+    padding: 0.5rem 1rem; /* Padding around the navbar */
+    box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    z-index: 1000; /* Keep navbar above other content */
+    box-sizing: border-box; /* Include padding in width calculation */
 }
 
-#login-btn:hover, #logout-btn:hover {
-    background-color: #365f85; /* Darker background on hover */
-    box-shadow: 0rem 0.5rem 1rem rgba(0, 0, 0, 0.15); /* Increase shadow */
+.nav-left,
+.nav-right {
+    display: flex; /* Flex container for inner alignment */
+    align-items: center; /* Vertically center the items */
+	gap: 0.5rem;
 }
 
-#login-btn:active, #logout-btn:active {
-    background-color: #2b4c65; /* Even darker background on click */
-    box-shadow: 0rem 0.25rem 0.5rem rgba(0, 0, 0, 0.15);
+#logo {
+    height: 1.875rem; /* Adjust logo size */
+    margin-right: 0.75rem; /* Space between logo and title */
+}
+
+#nav-title {
+    font-size: 1.5rem;
+    color: #ffffff;
+    font-weight: bold;
+    margin: 0 auto; /* Automatically adjust margins to center title */
+}
+
+#nav-username {
+    font-size: 1.125rem;
+    color: #ffffff;
+    display: inline; /* Ensure it takes inline space */
+}
+
+#login-btn,
+#logout-btn {
+    color: #ffffff;
+    background-color: #444444;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+    font-size: 1rem;
+}
+
+
+#login-btn:hover,
+#logout-btn:hover {
+	background-color: #333333; /* Darker shade on hover */
+}
+
+#login-btn:active,
+#logout-btn:active {
+    background-color: #1b1e21; /* Even darker shade on active */
+}
+
+.github-icon {
+    width: 1.25rem; /* Adjust width */
+    height: 1.25rem; /* Adjust height */
+    margin-right: 0.5rem; /* Space between the icon and the text */
+    vertical-align: middle; /* Align vertically with text */
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* Adjust header children spacing */
+header img#logo {
+    height: 1.875rem;
+    margin-right: 0.75rem;
+}
+
+header h1#nav-title {
+    font-size: 1.5rem;
+    color: #ffffff;
+    font-weight: bold;
+    margin-left: 0.5rem;
+}
+
+#top-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center all header content horizontally */
+    background-color: #222222;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
 }

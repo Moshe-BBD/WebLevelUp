@@ -29,11 +29,11 @@ passport.use(new GitHubStrategy({
 ));
 
 passport.serializeUser((user, done) => {
-    done(null, user.id);
+    done(null, user);
 });
 
-passport.deserializeUser((id, done) => {
-    done(null, { id });
+passport.deserializeUser((user, done) => {
+    done(null, user);
 });
 
 app.get('/', (req, res) => {
