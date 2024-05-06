@@ -130,3 +130,28 @@ input {
 .prev-btn {
 	left: 20px;
 }
+
+a {
+    text-decoration: none;
+	display: inline-block; /* Ensure buttons have block dimensions */
+    font-size: 1.125rem; /* Larger font size */
+    padding: 0.75rem 1.5rem; /* Increase padding for better clickability */
+    border-radius: 0.5rem; /* Increase border radius */
+    margin: 0.625rem; /* Margin for spacing */
+}
+
+#login-btn, #logout-btn {
+    color: #ffffff; /* White text color */
+    background-color: #4173a5; /* Button background color */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#login-btn:hover, #logout-btn:hover {
+    background-color: #365f85; /* Darker background on hover */
+    box-shadow: 0rem 0.5rem 1rem rgba(0, 0, 0, 0.15); /* Increase shadow */
+}
+
+#login-btn:active, #logout-btn:active {
+    background-color: #2b4c65; /* Even darker background on click */
+    box-shadow: 0rem 0.25rem 0.5rem rgba(0, 0, 0, 0.15);
+}

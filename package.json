@@ -15,7 +15,7 @@
     "nodemon": "^3.1.0"
   },
   "scripts": {
-    "dev": "nodemon Oauth/server.js",
+    "dev": "nodemon Oauth/oauthServer.js",
     "install-dependencies": "yarn add express-session passport-github dotenv --dev && yarn add -D nodemon"
   }
 }
