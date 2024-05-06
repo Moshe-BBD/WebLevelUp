@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - 'DB/infrastructure/**'
+      - "DB/infrastructure/**"
 
 permissions:
   id-token: write
@@ -16,8 +16,6 @@ permissions:
 jobs:
   deploy-infrastructure:
     runs-on: ubuntu-latest
-    outputs:
-      rds_endpoint: ${{ steps.save_rds_endpoint.outputs.rds_endpoint }}
     env:
       TF_VAR_DB_USERNAME: ${{ secrets.DB_USERNAME }}
       TF_VAR_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
@@ -54,18 +52,3 @@ jobs:
       - name: Apply infrastructure plan
         id: apply
         run: terraform apply .tfplan
-
-      - name: Save RDS Endpoint
-        id: save_rds_endpoint
-        run: |
-          echo "::set-output name=rds_endpoint::$(terraform output -json rds_endpoint)"
-
-  save-rds-endpoint-secret:
-    needs: deploy-infrastructure
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set RDS Endpoint as Secret
-        run: echo "${{ needs.deploy-infrastructure.outputs.rds_endpoint }}" | gh secret set AWS_RDS_ENDPOINT
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
