@@ -170,6 +170,7 @@ a {
 .nav-right {
     display: flex; /* Flex container for inner alignment */
     align-items: center; /* Vertically center the items */
+	gap: 0.5rem;
 }
 
 #logo {
@@ -178,30 +179,28 @@ a {
 }
 
 #nav-title {
-    font-size: 1.5rem; /* Adjust title size */
-    color: #ffffff; /* White text color */
-    font-weight: bold; /* Bold title */
-    margin-left: 0.5rem; /* Space between logo and title */
+    font-size: 1.5rem;
+    color: #ffffff;
+    font-weight: bold;
+    margin: 0 auto; /* Automatically adjust margins to center title */
 }
 
 #nav-username {
     font-size: 1.125rem;
     color: #ffffff;
-    margin-right: 1rem; /* Space between username and logout button */
+    display: inline; /* Ensure it takes inline space */
 }
 
 #login-btn,
 #logout-btn {
-    display: inline-flex; /* Align icon and text horizontally */
-    align-items: center; /* Vertically center icon and text */
-    color: #ffffff; /* White text color */
-    background-color: #444444; /* Dark background */
-    border: none; /* No border */
-    padding: 0.5rem 1rem; /* Padding for size */
-    border-radius: 5px; /* Rounded corners */
-    text-decoration: none; /* Remove underline */
-    transition: background-color 0.3s, color 0.3s; /* Smooth hover transition */
-    font-size: 1rem; /* Standard font size */
+    color: #ffffff;
+    background-color: #444444;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+    font-size: 1rem;
 }
 
 
@@ -220,4 +219,38 @@ a {
     height: 1.25rem; /* Adjust height */
     margin-right: 0.5rem; /* Space between the icon and the text */
     vertical-align: middle; /* Align vertically with text */
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* Adjust header children spacing */
+header img#logo {
+    height: 1.875rem;
+    margin-right: 0.75rem;
+}
+
+header h1#nav-title {
+    font-size: 1.5rem;
+    color: #ffffff;
+    font-weight: bold;
+    margin-left: 0.5rem;
+}
+
+#top-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center all header content horizontally */
+    background-color: #222222;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
 }
