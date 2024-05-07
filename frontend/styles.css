@@ -8,6 +8,10 @@ body {
 	justify-content: center;
 	padding-top: 3.75rem; /* Adjust this based on the height of the navbar */
 	overflow-x: hidden; /* Prevent horizontal scrolling */
+	background-image: url('images/spider-web-background-free-vector.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Optional: Fixes the background position */
 }
 
 /* General Reset */
@@ -18,8 +22,8 @@ body {
 }
 
 .book {
-	width: 350px;
-	height: 450px;
+	width: 500px;
+	height: 600px;
 	position: relative;
 	transition-duration: 1s;
 	perspective: 1500;
@@ -29,7 +33,7 @@ input {
 }
 .cover,
 .back-cover {
-	background-color: #4173a5;
+	background-color: #552e13;
 	width: 100%;
 	height: 100%;
 	border-radius: 0 15px 15px 0;
@@ -56,8 +60,8 @@ input {
 .page {
 	position: absolute;
 	background-color: white;
-	width: 330px;
-	height: 430px;
+	width: 470px;
+	height: 570px;
 	border-radius: 0 15px 15px 0;
 	margin-top: 10px;
 	transform-origin: left;
@@ -86,17 +90,17 @@ input {
 	backface-visibility: hidden;
 	z-index: 99;
 }
-.next,
-.prev {
-	position: absolute;
-	bottom: 1em;
-	cursor: pointer;
+.next-btn,
+.prev-btn {
+    position: absolute;
+    /* bottom: 1em; Adjust position as needed */
 }
-.next {
-	right: 1em;
+
+.next-btn {
+    right: 27em !important; 
 }
-.prev {
-	left: 1em;
+.prev-btn {
+    left: 9em; 
 }
 #page1 {
 	z-index: 3;
@@ -159,7 +163,7 @@ a {
     display: flex; /* Horizontal layout for children */
     justify-content: space-between; /* Space between left and right content */
     align-items: center; /* Vertically center items */
-    background-color: #222222; /* Dark background */
+    background-color: #0b0b0b; /* Dark background */
     padding: 0.5rem 1rem; /* Padding around the navbar */
     box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.2); /* Subtle shadow */
     z-index: 1000; /* Keep navbar above other content */
@@ -194,7 +198,7 @@ a {
 #login-btn,
 #logout-btn {
     color: #ffffff;
-    background-color: #444444;
+    background-color: #050505;
     border: none;
     padding: 0.5rem 1rem;
     border-radius: 5px;
@@ -206,7 +210,7 @@ a {
 
 #login-btn:hover,
 #logout-btn:hover {
-	background-color: #333333; /* Darker shade on hover */
+	background-color: #0b0b0b; /* Darker shade on hover */
 }
 
 #login-btn:active,
@@ -245,12 +249,14 @@ header h1#nav-title {
     display: flex;
     align-items: center;
     justify-content: center; /* Center all header content horizontally */
-    background-color: #222222;
+    background-color: #0a0a0a;
     padding: 0.5rem 1rem;
-    box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.974);
     z-index: 1000;
     position: fixed;
     width: 100%;
     top: 0;
     left: 0;
 }
+
+
