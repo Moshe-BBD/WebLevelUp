@@ -5,7 +5,10 @@
     "pg": "^8.11.5"
   },
   "scripts": {
-    "start": "set NODE_ENV=production&& node index.js",
-    "dev": "set NODE_ENV=development&& node index.js"
+    "start": "cross-env NODE_ENV=production node index.js",
+    "dev": "cross-env NODE_ENV=development node index.js"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   }
 }
