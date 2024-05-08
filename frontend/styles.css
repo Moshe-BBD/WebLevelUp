@@ -1,13 +1,13 @@
 body {
-	margin: 0; /* Remove default margin */
-	font-family: "Poppin", sans-serif;
-	background-color: #2e3537;
-	height: 100vh;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	padding-top: 3.75rem; /* Adjust this based on the height of the navbar */
-	overflow-x: hidden; /* Prevent horizontal scrolling */
+    margin: 0;
+    font-family: "Poppin", sans-serif;
+    background-color: #2e3537;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 3.75rem;
+    overflow-x: hidden;
 	background-image: url('images/spider-web-background-free-vector.jpg');
     background-size: cover;
     background-position: center;
@@ -16,9 +16,9 @@ body {
 
 /* General Reset */
 * {
-    margin: 0; /* Reset all margin */
-    padding: 0; /* Reset all padding */
-    box-sizing: border-box; /* Apply box-sizing */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 .book {
@@ -42,21 +42,55 @@ input {
 	align-items: center;
 	justify-content: center;
 	transform-origin: center left;
+    width: 21.875rem; /* 350px converted to rem */
+    height: 28.125rem; /* 450px converted to rem */
+    position: relative;
+    transition-duration: 1s;
+    perspective: 93.75rem; /* 1500px converted to rem */
 }
+
 .cover {
-	position: absolute;
-	z-index: 4;
-	transition: transform 1s;
+    position: absolute;
+    z-index: 4;
+    transition: transform 1s;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    border-radius: 0 0.9375rem 0.9375rem 0; /* 15px converted to rem */
+    box-shadow: 0 0 0.3125rem rgb(41, 41, 41); /* 5px converted to rem */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-origin: center left;
 }
-.cover label {
-	width: 100%;
-	height: 100%;
-	cursor: pointer;
+
+.cover img {
+    width: 100%;
+    height: 100%;
+    border-radius: 0 0.9375rem 0.9375rem 0; /* 15px converted to rem */
+    box-shadow: 0 0 0.3125rem rgb(41, 41, 41); /* 5px converted to rem */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-origin: center left;
+    backface-visibility: hidden;
 }
+
 .back-cover {
-	position: relative;
-	z-index: -1;
+    background-color: #A6A6A6;
+    width: 100%;
+    height: 100%;
+    border-radius: 0 0.9375rem 0.9375rem 0; /* 15px converted to rem */
+    box-shadow: 0 0 0.3125rem rgb(41, 41, 41); /* 5px converted to rem */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-origin: center left;
+    position: relative;
+    z-index: -1;
+    backface-visibility: hidden;
 }
+
 .page {
 	position: absolute;
 	background-color: white;
@@ -68,91 +102,110 @@ input {
 	transform-style: preserve-3d;
 	transform: rotateY(0deg);
 	transition-duration: 1.5s;
+    position: absolute;
+    background-color: white;
+    width: 20.625rem; /* 330px converted to rem */
+    height: 26.875rem; /* 430px converted to rem */
+    border-radius: 0 0.9375rem 0.9375rem 0; /* 15px converted to rem */
+    margin-top: 0.625rem; /* 10px converted to rem */
+    transform-origin: left;
+    transform-style: preserve-3d;
+    transform: rotateY(0deg);
+    transition-duration: 1.5s;
 }
+
 .page img {
-	width: 100%;
-	height: 100%;
-	border-radius: 15px 0 0 15px;
+    width: 100%;
+    height: 100%;
+    border-radius: 0.9375rem 0 0 0.9375rem; /* 15px converted to rem */
 }
+
 .front-page {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	backface-visibility: hidden;
-	box-sizing: border-box;
-	padding: 1rem;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    box-sizing: border-box;
+    padding: 1rem;
 }
+
 .back-page {
-	transform: rotateY(180deg);
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	backface-visibility: hidden;
-	z-index: 99;
+    transform: rotateY(180deg);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    z-index: 99;
 }
 .next-btn,
 .prev-btn {
     position: absolute;
     /* bottom: 1em; Adjust position as needed */
+
+.next,
+.prev {
+    position: absolute;
+    bottom: 1rem;
+    cursor: pointer;
 }
 
 .next-btn {
     right: 27em !important; 
+
+.next {
+    right: 1rem;
 }
 .prev-btn {
     left: 9em; 
 }
-#page1 {
-	z-index: 3;
-}
-#page2 {
-	z-index: 2;
-}
-#page3 {
-	z-index: 1;
-}
+
+
 #checkbox-cover:checked ~ .book {
-	transform: translateX(200px);
+    transform: translateX(12.5rem); /* 200px converted to rem */
 }
+
 #checkbox-cover:checked ~ .book .cover {
-	transition: transform 1.5s, z-index 0.5s 0.5s;
-	transform: rotateY(-180deg);
-	z-index: 1;
+    transition: transform 1.5s, z-index 0.5s 0.5s;
+    transform: rotateY(-180deg);
+    z-index: 1;
 }
+
 #checkbox-cover:checked ~ .book .page {
-	box-shadow: 0 0 3px rgb(99, 98, 98);
+    box-shadow: 0 0 0.1875rem rgb(99, 98, 98); /* 3px converted to rem */
 }
+
 #checkbox-page1:checked ~ .book #page1 {
-	transform: rotateY(-180deg);
-	z-index: 2;
+    transform: rotateY(-180deg);
+    z-index: 2;
 }
+
 #checkbox-page2:checked ~ .book #page2 {
-	transform: rotateY(-180deg);
-	z-index: 3;
+    transform: rotateY(-180deg);
+    z-index: 3;
 }
+
 .next-btn,
 .prev-btn {
-	position: absolute;
-
-	top: 50%;
-	transform: translateY(-50%);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .next-btn {
-	right: 20px;
+    right: 1.25rem;
 }
 
 .prev-btn {
-	left: 20px;
+    left: 1.25rem;
 }
 
 a {
     text-decoration: none;
-	display: inline-block; /* Ensure buttons have block dimensions */
-    font-size: 1.125rem; /* Larger font size */
-    padding: 0.75rem 1.5rem; /* Increase padding for better clickability */
-    border-radius: 0.5rem; /* Increase border radius */
-    margin: 0.625rem; /* Margin for spacing */
+    display: inline-block;
+    font-size: 1.125rem;
+    padding: 0.9375rem 1.875rem;
+    border-radius: 0.625rem;
+    margin: 0.625rem;
 }
 
 #top-nav {
@@ -168,31 +221,43 @@ a {
     box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.2); /* Subtle shadow */
     z-index: 1000; /* Keep navbar above other content */
     box-sizing: border-box; /* Include padding in width calculation */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #222222;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    box-sizing: border-box;
 }
 
 .nav-left,
 .nav-right {
-    display: flex; /* Flex container for inner alignment */
-    align-items: center; /* Vertically center the items */
-	gap: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3125rem;
 }
 
 #logo {
-    height: 1.875rem; /* Adjust logo size */
-    margin-right: 0.75rem; /* Space between logo and title */
+    height: 1.875rem;
+    margin-right: 0.4375rem;
 }
 
 #nav-title {
     font-size: 1.5rem;
     color: #ffffff;
     font-weight: bold;
-    margin: 0 auto; /* Automatically adjust margins to center title */
+    margin: 0 auto;
 }
 
 #nav-username {
     font-size: 1.125rem;
     color: #ffffff;
-    display: inline; /* Ensure it takes inline space */
+    display: inline;
 }
 
 #login-btn,
@@ -200,30 +265,32 @@ a {
     color: #ffffff;
     background-color: #050505;
     border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
+    padding: 0.5rem 1.25rem;
+    border-radius: 0.3125rem;
     text-decoration: none;
     transition: background-color 0.3s, color 0.3s;
     font-size: 1rem;
 }
 
-
 #login-btn:hover,
 #logout-btn:hover {
 	background-color: #0b0b0b; /* Darker shade on hover */
+    background-color: #333333;
 }
 
 #login-btn:active,
 #logout-btn:active {
-    background-color: #1b1e21; /* Even darker shade on active */
+    background-color: #1b1e21;
 }
 
+
 .github-icon {
-    width: 1.25rem; /* Adjust width */
-    height: 1.25rem; /* Adjust height */
-    margin-right: 0.5rem; /* Space between the icon and the text */
-    vertical-align: middle; /* Align vertically with text */
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-right: 0.3125rem;
+    vertical-align: middle;
 }
+
 
 header {
     display: flex;
@@ -232,17 +299,17 @@ header {
     width: 100%;
 }
 
-/* Adjust header children spacing */
+
 header img#logo {
     height: 1.875rem;
-    margin-right: 0.75rem;
+    margin-right: 0.4375rem;
 }
 
 header h1#nav-title {
     font-size: 1.5rem;
     color: #ffffff;
     font-weight: bold;
-    margin-left: 0.5rem;
+    margin-left: 0.3125rem;
 }
 
 #top-nav {
