@@ -141,6 +141,7 @@ input {
 .prev-btn {
     position: absolute;
     /* bottom: 1em; Adjust position as needed */
+}
 
 .next,
 .prev {
@@ -150,7 +151,8 @@ input {
 }
 
 .next-btn {
-    right: 27em !important; 
+    right: 27em !important;
+}
 
 .next {
     right: 1rem;
