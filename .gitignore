@@ -2,3 +2,4 @@
 /node_modules
 /yarn.lock
 *node_modules
+env
