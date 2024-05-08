@@ -33,7 +33,9 @@ passport.use(new GitHubStrategy({
 
     clientSecret: isProduction ? process.env.PROD_GITHUB_SECRET : process.env.LOCAL_GITHUB_SECRET,
 
-    callbackURL: isProduction ? `http://localhost:${process.env.PORT}/callback` : `http://localhost:5000/callback`
+    callbackURL: isProduction
+        ? `http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:${process.env.PORT || 5000}/callback`
+        : `http://localhost:${process.env.PORT || 5000}/callback`
 
 }, (accessToken, refreshToken, profile, done) => {
 
