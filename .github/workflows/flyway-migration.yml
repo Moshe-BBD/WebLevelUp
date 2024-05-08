@@ -17,7 +17,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: .
+        working-directory: ./DB
     steps:
       - name: repo setup
         uses: actions/checkout@v3
