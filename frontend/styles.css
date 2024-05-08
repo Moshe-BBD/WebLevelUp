@@ -22,18 +22,20 @@ body {
 }
 
 .book {
-	width: 500px;
-	height: 600px;
+	width: 31.25em;
+	height: 37.5em;
 	position: relative;
 	transition-duration: 1s;
-	perspective: 1500;
+	transform-style: preserve-3d;
+	perspective: 93.75em;
 }
+
 input {
 	display: none;
 }
 .cover,
 .back-cover {
-	background-color: #552e13;
+	background-color: #321907;
 	width: 100%;
 	height: 100%;
 	border-radius: 0 15px 15px 0;
@@ -90,7 +92,15 @@ input {
     z-index: -1;
     backface-visibility: hidden;
 }
-
+.book-content{
+	width: 65%;
+	min-width: 2515.6250em;
+	max-width: 25em;
+	height: 330px;
+	position: relative;
+	perspective: 62.5em;
+	transition: 1s;
+}
 .page {
 	position: absolute;
 	background-color: white;
@@ -137,6 +147,8 @@ input {
     backface-visibility: hidden;
     z-index: 99;
 }
+
+
 .next-btn,
 .prev-btn {
     position: absolute;
@@ -158,7 +170,7 @@ input {
     right: 1rem;
 }
 .prev-btn {
-    left: 9em; 
+    left: 9em;
 }
 
 
@@ -327,5 +339,43 @@ header h1#nav-title {
     top: 0;
     left: 0;
 }
+
+
+.arrow {
+    width: 3rem; /* Converted from 40px */
+    height: 3rem; /* Converted from 40px */
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+	z-index: 1000;
+}
+
+.left-arrow {
+    left: 0%;
+    background-image: url('https://img.icons8.com/material-outlined/24/000000/chevron-left.png');
+    background-size: cover;
+}
+
+.right-arrow {
+    right: 6%;
+    background-image: url('https://img.icons8.com/material-outlined/24/000000/chevron-right.png');
+    background-size: cover;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
