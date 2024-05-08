@@ -5,43 +5,72 @@ const GitHubStrategy = require('passport-github').Strategy;
 const userRouter = require('./user');
 const path = require('path');
 const isProduction = process.env.NODE_ENV === 'production';
+const { Pool } = require('pg');
 require('dotenv').config();
-
 const app = express();
 
-// Session Configuration
 app.use(expressSession({
-
     secret: process.env.GITHUB_SECRET || 'default-secret-key',
-
     resave: false,
-
     saveUninitialized: false
-
 }));
 
-
-// Passport Initialization
 app.use(passport.initialize());
-
 app.use(passport.session());
 
-// Passport GitHub OAuth Strategy
+let pool = new Pool({
+    // user: secret.username,
+    user: process.env.username,
+    host: "spiderpedia-postgres-db.c4n7thcq1lqm.eu-west-1.rds.amazonaws.com",
+    database: "SpiderpediaDB",
+    // password: secret.password,
+    password: process.env.password,
+    port: 5432,
+    ssl: {
+        rejectUnauthorized: false
+    }
+});
+
 passport.use(new GitHubStrategy({
-
     clientID: isProduction ? process.env.PROD_GITHUB_ID : process.env.LOCAL_GITHUB_ID,
-
     clientSecret: isProduction ? process.env.PROD_GITHUB_SECRET : process.env.LOCAL_GITHUB_SECRET,
-
     callbackURL: isProduction
         ? `http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:${process.env.PORT || 5000}/callback`
-        : `http://localhost:${process.env.PORT || 5000}/callback`
-
-}, (accessToken, refreshToken, profile, done) => {
-
-    done(null, profile);
-
+        : 'http://localhost:5000/callback'
+}, async (accessToken, refreshToken, profile, done) => {
+    // Check if user exists and insert if not
+    try {
+        const user = await findOrCreateUser(profile);
+        done(null, user);
+    } catch (error) {
+        done(error);
+    }
 }));
+
+async function findOrCreateUser(profile) {
+    const client = await pool.connect();
+    try {
+        // Check if the user already exists
+        const result = await client.query('SELECT * FROM "User" WHERE "githubId" = $1', [profile.id]);
+        if (result.rows.length > 0) {
+            // User exists
+            return result.rows[0]
+        } else {
+            // Insert new user
+            const newUser = await client.query(
+                'INSERT INTO "User" ("emailAddress", "username", "githubId") VALUES ($1, $2, $3) RETURNING *',
+                [profile.emails[0].value, profile.username, profile.id]
+            );
+            return newUser.rows[0];
+        }
+    } 
+    catch(error) {
+        console.log(error);
+    }
+    finally {
+        client.release();
+    }
+}
 
 passport.serializeUser((user, done) => {
     done(null, user);
@@ -56,9 +85,7 @@ app.use(express.static(path.join(__dirname, '../frontend')));
 
 // Routes
 app.get('/', (req, res) => {
-
     res.sendFile('index.html', { root: path.join(__dirname, '../frontend') });
-
 });
 
 app.get('/login', passport.authenticate('github'));
@@ -76,9 +103,7 @@ app.get('/logout', (req, res, next) => {
 
 app.get('/user', (req, res) => {
     if (req.isAuthenticated()) {
-
         res.json({ username: req.user.username });
-
     } else {
         res.json('Not logged in');
     }
