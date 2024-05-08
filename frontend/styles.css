@@ -22,31 +22,15 @@ body {
 }
 
 .book {
-	width: 500px;
-	height: 600px;
-	position: relative;
-	transition-duration: 1s;
-	perspective: 1500;
-}
-input {
-	display: none;
-}
-.cover,
-.back-cover {
-	background-color: #552e13;
-	width: 100%;
-	height: 100%;
-	border-radius: 0 15px 15px 0;
-	box-shadow: 0 0 5px rgb(41, 41, 41);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	transform-origin: center left;
-    width: 21.875rem; /* 350px converted to rem */
+	width: 21.875rem; /* 350px converted to rem */
     height: 28.125rem; /* 450px converted to rem */
     position: relative;
     transition-duration: 1s;
     perspective: 93.75rem; /* 1500px converted to rem */
+}
+
+input {
+	display: none;
 }
 
 .cover {
@@ -74,6 +58,7 @@ input {
     justify-content: center;
     transform-origin: center left;
     backface-visibility: hidden;
+    background-size: cover;
 }
 
 .back-cover {
@@ -89,14 +74,17 @@ input {
     position: relative;
     z-index: -1;
     backface-visibility: hidden;
+	background-size: cover;
 }
 
 .page {
-	position: absolute;
+	width: 95%;
+    height: 95%;
+    border-radius: 0 0.9375rem 0.9375rem 0; /* 15px converted to rem */
+    box-shadow: 0 0 0.3125rem rgb(41, 41, 41); /* 5px converted to rem */
+    display: flex;
+    backface-visibility: hidden;
 	background-color: white;
-	width: 470px;
-	height: 570px;
-	border-radius: 0 15px 15px 0;
 	margin-top: 10px;
 	transform-origin: left;
 	transform-style: preserve-3d;
@@ -104,10 +92,6 @@ input {
 	transition-duration: 1.5s;
     position: absolute;
     background-color: white;
-    width: 20.625rem; /* 330px converted to rem */
-    height: 26.875rem; /* 430px converted to rem */
-    border-radius: 0 0.9375rem 0.9375rem 0; /* 15px converted to rem */
-    margin-top: 0.625rem; /* 10px converted to rem */
     transform-origin: left;
     transform-style: preserve-3d;
     transform: rotateY(0deg);
@@ -141,7 +125,7 @@ input {
 .prev-btn {
     position: absolute;
     /* bottom: 1em; Adjust position as needed */
-
+}
 .next,
 .prev {
     position: absolute;
@@ -150,13 +134,14 @@ input {
 }
 
 .next-btn {
-    right: 27em !important; 
+    right: 27em !important;
+}
 
 .next {
     right: 1rem;
 }
 .prev-btn {
-    left: 9em; 
+    left: 9em;
 }
 
 

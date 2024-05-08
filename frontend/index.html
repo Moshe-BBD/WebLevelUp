@@ -30,7 +30,7 @@
 			<main class="book">
 				<section class="cover">
 					<label for="checkbox-cover">
-						<img src="images/spiderPediaBG.png" alt="Cover Image">
+						<img src="images/spiderPediaBookCover.png" alt="Cover Image">
 					</label>
 				</section>
 				<article class="page" id="page1">
@@ -98,7 +98,8 @@
 			fetch('/user')
 				.then(response => response.json())
 				.then(data => {
-					if (data !== 'Not logged in') {
+					if (true) {
+                        // if (data !== 'Not logged in') {
 						document.getElementById('book-content').style.display = 'block';
 						document.getElementById('login-btn').style.display = 'none';
 						document.getElementById('logout-btn').style.display = 'inline';
