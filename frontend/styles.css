@@ -8,6 +8,10 @@ body {
     justify-content: center;
     padding-top: 3.75rem;
     overflow-x: hidden;
+	background-image: url('images/spider-web-background-free-vector.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Optional: Fixes the background position */
 }
 
 /* General Reset */
@@ -18,6 +22,26 @@ body {
 }
 
 .book {
+	width: 500px;
+	height: 600px;
+	position: relative;
+	transition-duration: 1s;
+	perspective: 1500;
+}
+input {
+	display: none;
+}
+.cover,
+.back-cover {
+	background-color: #552e13;
+	width: 100%;
+	height: 100%;
+	border-radius: 0 15px 15px 0;
+	box-shadow: 0 0 5px rgb(41, 41, 41);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transform-origin: center left;
     width: 21.875rem; /* 350px converted to rem */
     height: 28.125rem; /* 450px converted to rem */
     position: relative;
@@ -68,6 +92,16 @@ body {
 }
 
 .page {
+	position: absolute;
+	background-color: white;
+	width: 470px;
+	height: 570px;
+	border-radius: 0 15px 15px 0;
+	margin-top: 10px;
+	transform-origin: left;
+	transform-style: preserve-3d;
+	transform: rotateY(0deg);
+	transition-duration: 1.5s;
     position: absolute;
     background-color: white;
     width: 20.625rem; /* 330px converted to rem */
@@ -103,6 +137,10 @@ body {
     backface-visibility: hidden;
     z-index: 99;
 }
+.next-btn,
+.prev-btn {
+    position: absolute;
+    /* bottom: 1em; Adjust position as needed */
 
 .next,
 .prev {
@@ -111,12 +149,14 @@ body {
     cursor: pointer;
 }
 
+.next-btn {
+    right: 27em !important; 
+
 .next {
     right: 1rem;
 }
-
-.prev {
-    left: 1rem;
+.prev-btn {
+    left: 9em; 
 }
 
 
@@ -169,6 +209,18 @@ a {
 }
 
 #top-nav {
+    position: fixed; /* Fixed position at the top */
+    top: 0; /* Align to the top edge */
+    left: 0; /* Align to the left edge */
+    width: 100%; /* Occupy the full width */
+    display: flex; /* Horizontal layout for children */
+    justify-content: space-between; /* Space between left and right content */
+    align-items: center; /* Vertically center items */
+    background-color: #0b0b0b; /* Dark background */
+    padding: 0.5rem 1rem; /* Padding around the navbar */
+    box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    z-index: 1000; /* Keep navbar above other content */
+    box-sizing: border-box; /* Include padding in width calculation */
     position: fixed;
     top: 0;
     left: 0;
@@ -211,7 +263,7 @@ a {
 #login-btn,
 #logout-btn {
     color: #ffffff;
-    background-color: #444444;
+    background-color: #050505;
     border: none;
     padding: 0.5rem 1.25rem;
     border-radius: 0.3125rem;
@@ -222,6 +274,7 @@ a {
 
 #login-btn:hover,
 #logout-btn:hover {
+	background-color: #0b0b0b; /* Darker shade on hover */
     background-color: #333333;
 }
 
@@ -262,13 +315,15 @@ header h1#nav-title {
 #top-nav {
     display: flex;
     align-items: center;
-    justify-content: center;
-    background-color: #222222;
+    justify-content: center; /* Center all header content horizontally */
+    background-color: #0a0a0a;
     padding: 0.5rem 1rem;
-    box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.974);
     z-index: 1000;
     position: fixed;
     width: 100%;
     top: 0;
     left: 0;
 }
+
+
