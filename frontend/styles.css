@@ -277,23 +277,24 @@ header h1#nav-title {
 
 
 .arrow {
-    width: 2.5em; /* Converted from 40px */
-    height: 2.5em; /* Converted from 40px */
-    position: absolute;
+    width: 3rem; /* Converted from 40px */
+    height: 3rem; /* Converted from 40px */
+    position: fixed;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
+	z-index: 1000;
 }
 
 .left-arrow {
-    left: 1.25em; /* Converted from 20px to em */
-    background-image: url('https://img.icons8.com/material-outlined/24/ffffff/chevron-left.png');
+    left: 0%;
+    background-image: url('https://img.icons8.com/material-outlined/24/000000/chevron-left.png');
     background-size: cover;
 }
 
 .right-arrow {
-    right: 1.25em; /* Converted from 20px to em */
-    background-image: url('https://img.icons8.com/material-outlined/24/ffffff/chevron-right.png');
+    right: 6%;
+    background-image: url('https://img.icons8.com/material-outlined/24/000000/chevron-right.png');
     background-size: cover;
 }
 

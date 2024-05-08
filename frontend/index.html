@@ -1,121 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<title>Spider Flip Book</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="styles.css" />
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<script src="app.js"></script>
-	</head>
-	<body>
-		<header id="top-nav">
-			<img src="images/spiderLogo.png" alt="Logo" id="logo">
-			<h1 id="nav-title">SPIDERPEDIA</h1>
-			<nav class="nav-right">
-				<p id="nav-username"></p>
-				<a id="login-btn" href="/login">
-					<img src="images/githubLogo.png" alt="GitHub Logo" class="github-icon"> Login
-				</a>
-				<a id="logout-btn" href="/logout" style="display:none;">Logout</a>
-			</nav>
-		</header>
-	
-		<div id="book-content" style="display:none;">
-			<input type="checkbox" id="checkbox-cover" />
-			<input type="checkbox" id="checkbox-page1" />
-			<input type="checkbox" id="checkbox-page2" />
-			<input type="checkbox" id="checkbox-page3" />
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Spider Flip Book</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="app.js"></script>
+</head>
+<body>
+    <header id="top-nav">
+        <img src="images/spiderLogo.png" alt="Logo" id="logo">
+        <h1 id="nav-title">SPIDERPEDIA</h1>
+        <nav class="nav-right">
+            <p id="nav-username"></p>
+            <a id="login-btn" href="/login">
+                <img src="images/githubLogo.png" alt="GitHub Logo" class="github-icon"> Login
+            </a>
+            <a id="logout-btn" href="/logout" style="display:none;">Logout</a>
+        </nav>
+    </header>
 
-			<main class="book">
-				<section class="cover">
-					<label for="checkbox-cover"></label>
-				</section>
-				<article class="page" id="page1">
-					<section class="front-page">
-						<h2>Page 1</h2>
-						<p>I am page 1</p>
-						<label class="next" for="checkbox-page1"></label>
-					</section>
-					<section class="back-page">
-						<label class="prev" for="checkbox-page1"> </label>
-					</section>
-				</article>
-				<article class="page" id="page2">
-					<section class="front-page">
-						<h2>Page 2</h2>
-						<p>I am a spider fact</p>
-						<label class="next" for="checkbox-page2"></label>
-					</section>
-					<section class="back-page">
-						<label class="prev" for="checkbox-page2"></label>
-					</section>
-				</article>
-				<article class="page" id="page3">
-					<section class="front-page">
-						<h2>Page 3</h2>
-						<p>this is page three</p>
-					</section>
-				</article>
-				<article class="page" id="page3">
-					<section class="front-page">
-						<h2>Page 4</h2>
-						<p>this is page four</p>
-					</section>
-				</article>
-				<section class="back-cover"></section>
-			</main>
-<!--
-			<button class="next-btn" onclick="nextPage()">Next</button>
-			<button class="prev-btn" onclick="prevPage()">Previous</button> -->
-			
-			<span class="arrow left-arrow" onclick="prevPage()"></span>
-            <span class="arrow right-arrow" onclick="nextPage()"></span>
+    <div id="book-content" style="display:none;">
+        <input type="checkbox" id="checkbox-cover" />
+        <input type="checkbox" id="checkbox-page1" />
+        <input type="checkbox" id="checkbox-page2" />
+        <input type="checkbox" id="checkbox-page3" />
 
-			<script>
-				let currentPage = 0;
-				const pages = document.querySelectorAll(".page");
+        <main class="book">
+            <section class="cover">
+                <label for="checkbox-cover"></label>
+            </section>
+            <article class="page" id="page1">
+                <section class="front-page">
+                    <h2>Page 1</h2>
+                    <p>I am page 1</p>
+                    <label class="next" for="checkbox-page1"></label>
+                </section>
+                <section class="back-page">
+                    <label class="prev" for="checkbox-page1"> </label>
+                </section>
+            </article>
+            <article class="page" id="page2">
+                <section class="front-page">
+                    <h2>Page 2</h2>
+                    <p>I am a spider fact</p>
+                    <label class="next" for="checkbox-page2"></label>
+                </section>
+                <section class="back-page">
+                    <label class="prev" for="checkbox-page2"></label>
+                </section>
+            </article>
+            <article class="page" id="page3">
+                <section class="front-page">
+                    <h2>Page 3</h2>
+                    <p>this is page three</p>
+                </section>
+            </article>
+            <article class="page" id="page4">
+                <section class="front-page">
+                    <h2>Page 4</h2>
+                    <p>this is page four</p>
+                </section>
+            </article>
+            <section class="back-cover"></section>
+            <span class="arrow left-arrow" onclick="prevPage()" style="display:none;"></span>
+            <span class="arrow right-arrow" onclick="nextPage()" style="display:none;"></span>
+        </main>
 
-				function showPage(pageIndex) {
-					if (pageIndex >= 0 && pageIndex < pages.length) {
-						pages[currentPage].style.display = "none";
-						pages[pageIndex].style.display = "block";
-						currentPage = pageIndex;
-					}
-				}
+        <script>
+            let currentPage = 0;
+            const pages = document.querySelectorAll(".page");
+            const arrows = document.querySelectorAll(".arrow");
 
-				function nextPage() {
-					showPage(currentPage + 1);
-				}
+            function showPage(pageIndex) {
+                if (pageIndex >= 0 && pageIndex < pages.length) {
+                    pages[currentPage].style.display = "none";
+                    pages[pageIndex].style.display = "block";
+                    currentPage = pageIndex;
+                }
+            }
 
-				function prevPage() {
-					showPage(currentPage - 1);
-				}
+            function showArrows() {
+                arrows.forEach(arrow => {
+                    arrow.style.display = "inline-block";
+                });
+            }
 
-				showPage(0);
-			</script>
-		</div>
+            function nextPage() {
+                showPage(currentPage + 1);
+            }
 
-		<script>
-			fetch('/user')
-				.then(response => response.json())
-				.then(data => {
-					if (data !== 'Not logged in') {
-						document.getElementById('book-content').style.display = 'block';
-						document.getElementById('login-btn').style.display = 'none';
-						document.getElementById('logout-btn').style.display = 'inline';
-						document.getElementById('nav-username').style.display = 'inline';
-						document.getElementById('nav-username').innerText = data.username; // Update with the username fetched
-					} else {
-						document.getElementById('book-content').style.display = 'none';
-						document.getElementById('login-btn').style.display = 'inline';
-						document.getElementById('logout-btn').style.display = 'none';
-						document.getElementById('nav-username').style.display = 'none';
-					}
-				});
-		</script>
-	</body>
+            function prevPage() {
+                showPage(currentPage - 1);
+            }
+
+            showPage(0);
+        </script>
+    </div>
+
+    <script>
+        fetch('/user')
+            .then(response => response.json())
+            .then(data => {
+                if (data !== 'Not logged in') {
+                    document.getElementById('book-content').style.display = 'block';
+                    document.getElementById('login-btn').style.display = 'none';
+                    document.getElementById('logout-btn').style.display = 'inline';
+                    document.getElementById('nav-username').style.display = 'inline';
+                    document.getElementById('nav-username').innerText = data.username; // Update with the username fetched
+                    showArrows(); // Show arrows once the book is opened
+                } else {
+                    document.getElementById('book-content').style.display = 'none';
+                    document.getElementById('login-btn').style.display = 'inline';
+                    document.getElementById('logout-btn').style.display = 'none';
+                    document.getElementById('nav-username').style.display = 'none';
+                }
+            });
+    </script>
+</body>
 </html>
-
