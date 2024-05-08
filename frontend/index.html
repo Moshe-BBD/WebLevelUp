@@ -23,52 +23,53 @@
         </nav>
     </header>
 
-    <div id="book-content" style="display:none;">
-        <input type="checkbox" id="checkbox-cover" />
-        <input type="checkbox" id="checkbox-page1" />
-        <input type="checkbox" id="checkbox-page2" />
-        <input type="checkbox" id="checkbox-page3" />
+		<section id="book-content" style="display:none;">
+			<input type="checkbox" id="checkbox-cover" />
+			<input type="checkbox" id="checkbox-page1" />
+			<input type="checkbox" id="checkbox-page2" />
+			<input type="checkbox" id="checkbox-page3" />
 
-        <main class="book">
-            <section class="cover">
-                <label for="checkbox-cover"></label>
-            </section>
-            <article class="page" id="page1">
-                <section class="front-page">
-                    <h2>Page 1</h2>
-                    <p>I am page 1</p>
-                    <label class="next" for="checkbox-page1"></label>
-                </section>
-                <section class="back-page">
-                    <label class="prev" for="checkbox-page1"> </label>
-                </section>
-            </article>
-            <article class="page" id="page2">
-                <section class="front-page">
-                    <h2>Page 2</h2>
-                    <p>I am a spider fact</p>
-                    <label class="next" for="checkbox-page2"></label>
-                </section>
-                <section class="back-page">
-                    <label class="prev" for="checkbox-page2"></label>
-                </section>
-            </article>
-            <article class="page" id="page3">
-                <section class="front-page">
-                    <h2>Page 3</h2>
-                    <p>this is page three</p>
-                </section>
-            </article>
-            <article class="page" id="page4">
-                <section class="front-page">
-                    <h2>Page 4</h2>
-                    <p>this is page four</p>
-                </section>
-            </article>
-            <section class="back-cover"></section>
-            <span class="arrow left-arrow" onclick="prevPage()" style="display:none;"></span>
-            <span class="arrow right-arrow" onclick="nextPage()" style="display:none;"></span>
-        </main>
+			<main class="book">
+				<section class="cover">
+					<label for="checkbox-cover">
+						<img src="images/spiderPediaBG.png" alt="Cover Image">
+					</label>
+				</section>
+				<article class="page" id="page1">
+					<section class="front-page">
+						<h2>Page 1</h2>
+						<p>I am page 1</p>
+						<label class="next" for="checkbox-page1"></label>
+					</section>
+					<section class="back-page">
+						<label class="prev" for="checkbox-page1"> </label>
+					</section>
+				</article>
+				<article class="page" id="page2">
+					<section class="front-page">
+						<h2>Page 2</h2>
+						<p>I am a spider fact</p>
+						<label class="next" for="checkbox-page2"></label>
+					</section>
+					<section class="back-page">
+						<label class="prev" for="checkbox-page2"></label>
+					</section>
+				</article>
+				<article class="page" id="page3">
+					<section class="front-page">
+						<h2>Page 3</h2>
+						<p>this is page three</p>
+					</section>
+				</article>
+				<article class="page" id="page3">
+					<section class="front-page">
+						<h2>Page 4</h2>
+						<p>this is page four</p>
+					</section>
+				</article>
+				<section class="back-cover"></section>
+			</section>
+			</main>
 
         <script>
             let currentPage = 0;
