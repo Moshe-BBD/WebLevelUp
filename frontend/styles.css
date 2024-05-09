@@ -51,6 +51,10 @@ input {
     perspective: 93.75rem; /* 1500px converted to rem */
 }
 
+input {
+	display: none;
+}
+
 .cover {
     position: absolute;
     z-index: 4;
@@ -76,6 +80,7 @@ input {
     justify-content: center;
     transform-origin: center left;
     backface-visibility: hidden;
+    background-size: cover;
 }
 
 .back-cover {
@@ -102,11 +107,13 @@ input {
 	transition: 1s;
 }
 .page {
-	position: absolute;
+	width: 95%;
+    height: 95%;
+    border-radius: 0 0.9375rem 0.9375rem 0; /* 15px converted to rem */
+    box-shadow: 0 0 0.3125rem rgb(41, 41, 41); /* 5px converted to rem */
+    display: flex;
+    backface-visibility: hidden;
 	background-color: white;
-	width: 470px;
-	height: 570px;
-	border-radius: 0 15px 15px 0;
 	margin-top: 10px;
 	transform-origin: left;
 	transform-style: preserve-3d;
@@ -114,10 +121,6 @@ input {
 	transition-duration: 1.5s;
     position: absolute;
     background-color: white;
-    width: 20.625rem; /* 330px converted to rem */
-    height: 26.875rem; /* 430px converted to rem */
-    border-radius: 0 0.9375rem 0.9375rem 0; /* 15px converted to rem */
-    margin-top: 0.625rem; /* 10px converted to rem */
     transform-origin: left;
     transform-style: preserve-3d;
     transform: rotateY(0deg);
@@ -148,32 +151,6 @@ input {
     z-index: 99;
 }
 
-
-.next-btn,
-.prev-btn {
-    position: absolute;
-    /* bottom: 1em; Adjust position as needed */
-}
-
-.next,
-.prev {
-    position: absolute;
-    bottom: 1rem;
-    cursor: pointer;
-}
-
-.next-btn {
-    right: 27em !important;
-}
-
-.next {
-    right: 1rem;
-}
-.prev-btn {
-    left: 9em;
-}
-
-
 #checkbox-cover:checked ~ .book {
     transform: translateX(12.5rem); /* 200px converted to rem */
 }
@@ -198,20 +175,6 @@ input {
     z-index: 3;
 }
 
-.next-btn,
-.prev-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.next-btn {
-    right: 1.25rem;
-}
-
-.prev-btn {
-    left: 1.25rem;
-}
 
 a {
     text-decoration: none;
@@ -340,42 +303,28 @@ header h1#nav-title {
     left: 0;
 }
 
-
 .arrow {
     width: 3rem; /* Converted from 40px */
     height: 3rem; /* Converted from 40px */
-    position: fixed;
-    top: 50%;
+    top: calc(50% -1.5rem);
     transform: translateY(-50%);
     cursor: pointer;
 	z-index: 1000;
+    position: fixed;
 }
 
 .left-arrow {
-    left: 0%;
+    left: 47%;
     background-image: url('https://img.icons8.com/material-outlined/24/000000/chevron-left.png');
     background-size: cover;
+    position:fixed;
 }
 
 .right-arrow {
-    right: 6%;
+    right: 22.5%;
     background-image: url('https://img.icons8.com/material-outlined/24/000000/chevron-right.png');
     background-size: cover;
+    position:fixed;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
