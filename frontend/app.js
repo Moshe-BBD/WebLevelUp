@@ -106,11 +106,11 @@ document.addEventListener("DOMContentLoaded", function () {
             const page = document.createElement("article");
             page.classList.add("page");
             page.innerHTML = `
-    <section class="front-page">
+    <section class="spider-page">
         <h2>${spider.spiderName}</h2>
         <img src="${IMAGE_BASE_URL}${spider.spiderImage}" alt="${
                 spider.spiderName
-            }" class="spider-image"> 
+            }" class="spider-image">
         <p>${spider.facts || "No fact available"}</p>
     </section>
 `;
