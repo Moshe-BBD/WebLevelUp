@@ -56,6 +56,7 @@
 		</section>
 
 		<script>
+			// console.log(fetchSpidersInfo());
 			function searchSpider() {
 				const searchText = document
 					.getElementById("search-input")
@@ -83,25 +84,26 @@
 				let totalPages = 0;
 
 				function checkLoginAndUpdateContent() {
-					fetch(
-						"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/user"
-					)
-						.then((response) => response.json())
-						.then((data) => {
-							if (data !== "Not logged in") {
+					// fetch(
+					// 	"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/user"
+					// )
+					// 	.then((response) => response.json())
+					// 	.then((data) => {
+							// if (data !== "Not logged in") {
+							// if (true){
 								loginBtn.style.display = "none";
 								logoutBtn.style.display = "inline";
-								navUsername.textContent = data.username;
+								navUsername.textContent = "Some-User";
 								navUsername.style.display = "inline";
 								bookContent.style.display = "block";
 								fetchSpidersInfo().then(displaySpiders);
-							} else {
-								loginBtn.style.display = "inline";
-								logoutBtn.style.display = "none";
-								navUsername.style.display = "none";
-								bookContent.style.display = "none";
-							}
-						});
+							// } else {
+							// 	loginBtn.style.display = "inline";
+							// 	logoutBtn.style.display = "none";
+							// 	navUsername.style.display = "none";
+							// 	bookContent.style.display = "none";
+							// }
+						// });
 				}
 
 				checkLoginAndUpdateContent(); // Perform login check and update content accordingly
@@ -116,9 +118,35 @@
 				});
 
 				function fetchSpidersInfo() {
-					const apiUrl =
-						"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/api/spiders-info";
-					return fetch(apiUrl).then((response) => response.json());
+					// const apiUrl =
+					// 	"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/api/spiders-info";
+					// return fetch(apiUrl).then((response) => response.json());
+					return [
+                        {
+                            "spiderId": 4,
+                            "spiderName": "Steatoda grossa",
+                            "facts": "Steatoda grossa, commonly known as the false black widow, is a species of spider in the family Theridiidae. These spiders are often mistaken for the more dangerous black widow spider due to their similar appearance.",
+                            "spiderImage": "steatoda_grossa.jpg"
+                        },
+                        {
+                            "spiderId": 10,
+                            "spiderName": "Holocnemus pluchei",
+                            "facts": null,
+                            "spiderImage": "holocnemus_pluchei.jpg"
+                        },
+                        {
+                            "spiderId": 6,
+                            "spiderName": "Argiope aurantia",
+                            "facts": "Argiope aurantia, commonly known as the yellow garden spider, is a species of orb-weaving spider found throughout North America. These spiders are often recognized by their bright yellow and black coloration and distinctive zigzag pattern, known as a stabilimentum, in the center of their webs.",
+                            "spiderImage": "argiope_aurantia.jpg"
+                        },
+                        {
+                            "spiderId": 2,
+                            "spiderName": "Habronattus coecatus",
+                            "facts": "Habronattus coecatus is a species of jumping spider commonly found in North America. These spiders have excellent vision and use their keen eyesight to locate and capture prey.",
+                            "spiderImage": "habronattus_coecatus.jpg"
+                        }
+					];
 				}
 
 				function sortData(data, sortOrder) {
@@ -135,6 +163,7 @@
 				}
 
 				function displaySpiders(data) {
+					console.log("Displaying spiders:", data);
 					const book = document.querySelector(".book");
 					const existingPages = document.querySelectorAll(".page");
 					existingPages.forEach((page) => page.remove()); // Remove existing pages
