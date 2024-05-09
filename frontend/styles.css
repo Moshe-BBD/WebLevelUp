@@ -168,7 +168,7 @@ input {
 }
  
 #checkbox-cover:checked ~ .book {
-    transform: translateX(10.5rem); /* 200px converted to rem */
+    transform: translateX(12.5rem); /* 200px converted to rem */
 }
  
 #checkbox-cover:checked ~ .book .cover {
