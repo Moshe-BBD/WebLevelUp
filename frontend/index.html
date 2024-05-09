@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Spider Flip Book</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="app.js"></script>
 </head>
 <body>
@@ -23,11 +21,9 @@
         </nav>
     </header>
 
-		<section id="book-content" style="display:none;">
+		<section id="book-content" style="display:flex;">
 			<input type="checkbox" id="checkbox-cover" />
 			<input type="checkbox" id="checkbox-page1" />
-			<input type="checkbox" id="checkbox-page2" />
-			<input type="checkbox" id="checkbox-page3" />
 
 			<main class="book">
 				<section class="cover">
@@ -45,34 +41,12 @@
 						<label class="prev" for="checkbox-page1"> </label>
 					</section>
 				</article>
-				<article class="page" id="page2">
-					<section class="front-page">
-						<h2>Page 2</h2>
-						<p>I am a spider fact</p>
-						<label class="next" for="checkbox-page2"></label>
-					</section>
-					<section class="back-page">
-						<label class="prev" for="checkbox-page2"></label>
-					</section>
-				</article>
-				<article class="page" id="page3">
-					<section class="front-page">
-						<h2>Page 3</h2>
-						<p>this is page three</p>
-					</section>
-				</article>
-				<article class="page" id="page3">
-					<section class="front-page">
-						<h2>Page 4</h2>
-						<p>this is page four</p>
-					</section>
-				</article>
 				<section class="back-cover"></section>
 			</section>
 			</main>
 
 			<span class="arrow left-arrow" onclick="prevPage()"></span>
-            <span class="arrow right-arrow" onclick="nextPage()"></span>
+            <span class="arrow right-arrow" onclick="nextPage()"></span> 
 
         <script>
           let currentPage = 0;
@@ -108,7 +82,7 @@
             .then(response => response.json())
             .then(data => {
                 if (data !== 'Not logged in') {
-                    document.getElementById('book-content').style.display = 'block';
+                    document.getElementById('book-content').style.display = 'flex';
                     document.getElementById('login-btn').style.display = 'none';
                     document.getElementById('logout-btn').style.display = 'inline';
                     document.getElementById('nav-username').style.display = 'inline';
