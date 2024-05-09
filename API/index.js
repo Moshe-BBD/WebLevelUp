@@ -8,6 +8,11 @@ const isProduction = process.env.NODE_ENV === "production";
 const { Pool } = require("pg");
 require("dotenv").config();
 const app = express();
+const AWS = require("aws-sdk");
+
+AWS.config.update({ region: "eu-west-1" });
+
+const secretsManager = new AWS.SecretsManager();
 
 app.use(
 	expressSession({
@@ -20,16 +25,35 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-const pool = new Pool({
-	host: "spiderpedia-postgres-db.c4n7thcq1lqm.eu-west-1.rds.amazonaws.com",
-	port: 5432,
-	user: "",
-	password: "",
-	database: "SpiderpediaDB",
-	ssl: {
-		rejectUnauthorized: false,
-	},
-});
+let pool;
+
+async function initializePool() {
+    try {
+        const secretData = await secretsManager
+            .getSecretValue({
+                SecretId:
+                    "arn:aws:secretsmanager:eu-west-1:179530787873:secret:spiderpedia_secrets-CiA3Se",
+            })
+            .promise();
+        const secret = JSON.parse(secretData.SecretString);
+ 
+        pool = new Pool({
+            user: secret.username,
+            password: secret.password,
+            host: "spiderpedia-postgres-db.c4n7thcq1lqm.eu-west-1.rds.amazonaws.com",
+            database: "SpiderpediaDB",
+            port: 5432,
+            ssl: {
+                rejectUnauthorized: false,
+            },
+        });
+	} catch (err) {
+		console.error("Error initializing database pool:", err);
+		process.exit(1);
+	}
+}
+
+initializePool();
 
 passport.use(
 	new GitHubStrategy(
