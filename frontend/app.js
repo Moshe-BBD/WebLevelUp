@@ -106,7 +106,6 @@ document.addEventListener("DOMContentLoaded", function () {
             const page = document.createElement("article");
             page.classList.add("page");
             page.innerHTML = `
-    <input type="checkbox" id="checkbox-page${index + 1}" />
     <section class="front-page">
         <h2>${spider.spiderName}</h2>
         <img src="${IMAGE_BASE_URL}${spider.spiderImage}" alt="${
