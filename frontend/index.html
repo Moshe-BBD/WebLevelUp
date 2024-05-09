@@ -91,12 +91,16 @@
 				const IMAGE_BASE_URL =
 					"https://spiderpedia-bucket.s3.eu-west-1.amazonaws.com/";
 
+				let userId;
+
 				fetch(
 					"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/user"
 				)
 					.then((response) => response.json())
 					.then((data) => {
 						if (data !== "Not logged in") {
+							userId = fetchUserId(data.username);
+
 							document.getElementById("book-content").style.display = "block";
 							document.getElementById("login-btn").style.display = "none";
 							document.getElementById("logout-btn").style.display = "inline";
@@ -110,6 +114,26 @@
 							document.getElementById("nav-username").style.display = "none";
 						}
 					});
+
+				function fetchUserId(username) {
+					// Replace the base URL according to your environment settings
+					const apiUrl = `http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/api/user-id/${encodeURIComponent(username)}`;
+					return fetch(apiUrl)
+						.then((response) => {
+							if (!response.ok) {
+								throw new Error("Network response was not ok");
+							}
+							return response.json();
+						})
+						.then((data) => {
+							return data;
+						})
+						.catch((error) => {
+							console.error("Error fetching user ID:", error);
+							return null;
+						});
+				}
+
 
 				function fetchSpidersInfo() {
 					const apiUrl =

@@ -25,6 +25,27 @@ router.get("/users", async (req, res) => {
 	}
 });
 
+router.get("/user-id/:username", async (req, res) => {
+    try {
+        const { username } = req.params;
+        const userIdQuery = await pool.query(`
+            SELECT "userId"
+            FROM "User"
+            WHERE "username" = $1
+        `, [username]);
+
+        if (userIdQuery.rows.length === 0) {
+            res.status(404).json({ message: "User not found" });
+        } else {
+            res.json(userIdQuery.rows[0]); // Assuming username is unique and returns only one row
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Server Error" });
+    }
+});
+
+
 router.get("/spiders", async (req, res) => {
 	try {
 		const spiders = await pool.query('SELECT "spiderName" FROM "Spider"');
