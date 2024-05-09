@@ -273,7 +273,6 @@ a {
 	text-decoration: none;
 	transition: background-color 0.3s, color 0.3s;
 	font-size: 1rem;
-	margin-bottom: 2rem;
 }
 
 #login-btn:hover,
