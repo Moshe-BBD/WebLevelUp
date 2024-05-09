@@ -33,7 +33,14 @@
 				</select>
 			</div>
 		</header>
-
+		<div class="search-bar">
+			<input
+				type="text"
+				id="search-input"
+				placeholder="Search for a spider..."
+			/>
+			<button onclick="searchSpider()">Search</button>
+		</div>
 		<section id="book-content" style="display: none">
 			<input type="checkbox" id="checkbox-cover" />
 			<main class="book">
@@ -49,6 +56,22 @@
 		</section>
 
 		<script>
+			function searchSpider() {
+				const searchText = document
+					.getElementById("search-input")
+					.value.toLowerCase();
+				const pages = document.querySelectorAll(".page");
+				for (let i = 0; i < pages.length; i++) {
+					const spiderName = pages[i]
+						.querySelector("h2")
+						.textContent.toLowerCase();
+					if (spiderName.includes(searchText)) {
+						currentPage = i; // Update current page
+						showPage(currentPage); // Display the searched page
+						break;
+					}
+				}
+			}
 			document.addEventListener("DOMContentLoaded", function () {
 				const loginBtn = document.getElementById("login-btn");
 				const logoutBtn = document.getElementById("logout-btn");
