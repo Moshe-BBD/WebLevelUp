@@ -1,5 +1,5 @@
 CREATE TABLE "User" (
-  "userId" int PRIMARY KEY,
+  "userId" SERIAL PRIMARY KEY,
   "emailAddress" varchar(255) NOT NULL,
   "username" varchar(255) NOT NULL,
   "githubId" varchar(255)

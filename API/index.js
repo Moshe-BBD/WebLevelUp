@@ -5,70 +5,43 @@ const GitHubStrategy = require("passport-github").Strategy;
 const userRouter = require("./user");
 const path = require("path");
 const isProduction = process.env.NODE_ENV === "production";
-const { Pool } = require("pg");
 require("dotenv").config();
+
 const app = express();
-const AWS = require("aws-sdk");
+app.use(express.json());
 
-AWS.config.update({ region: "eu-west-1" });
-
-const secretsManager = new AWS.SecretsManager();
-
+// Session Configuration
 app.use(
 	expressSession({
 		secret: process.env.GITHUB_SECRET || "default-secret-key",
+
 		resave: false,
+
 		saveUninitialized: false,
 	})
 );
 
+// Passport Initialization
 app.use(passport.initialize());
 app.use(passport.session());
 
-let pool;
-
-async function initializePool() {
-    try {
-        const secretData = await secretsManager
-            .getSecretValue({
-                SecretId:
-                    "arn:aws:secretsmanager:eu-west-1:179530787873:secret:spiderpedia_secrets-CiA3Se",
-            })
-            .promise();
-        const secret = JSON.parse(secretData.SecretString);
- 
-        pool = new Pool({
-            user: secret.username,
-            password: secret.password,
-            host: "spiderpedia-postgres-db.c4n7thcq1lqm.eu-west-1.rds.amazonaws.com",
-            database: "SpiderpediaDB",
-            port: 5432,
-            ssl: {
-                rejectUnauthorized: false,
-            },
-        });
-	} catch (err) {
-		console.error("Error initializing database pool:", err);
-		process.exit(1);
-	}
-}
-
-initializePool();
-
+// Passport GitHub OAuth Strategy
 passport.use(
 	new GitHubStrategy(
 		{
 			clientID: isProduction
 				? process.env.PROD_GITHUB_ID
 				: process.env.LOCAL_GITHUB_ID,
+
 			clientSecret: isProduction
 				? process.env.PROD_GITHUB_SECRET
 				: process.env.LOCAL_GITHUB_SECRET,
+
 			callbackURL: isProduction
 				? `http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:${
 						process.env.PORT || 5000
 				  }/callback`
-				: "http://localhost:5000/callback",
+				: `http://localhost:${process.env.PORT || 5000}/callback`,
 		},
 		async (accessToken, refreshToken, profile, done) => {
 			try {
