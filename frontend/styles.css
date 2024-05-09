@@ -28,6 +28,8 @@ body {
     transition-duration: 1s;
     transform-style: preserve-3d;
     perspective: 93.75em;
+    justify-content: center;
+    align-items: center;
 
 }
  
