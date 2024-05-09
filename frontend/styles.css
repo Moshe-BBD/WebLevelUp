@@ -382,7 +382,6 @@ button {
 	color: white;
 	border: none;
 	border-radius: 4px; /* Optional: rounded corners */
-    width: 100%;
 }
 
 .sort-options {
