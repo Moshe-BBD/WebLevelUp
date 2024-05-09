@@ -75,7 +75,7 @@ body {
 	transform-origin: center left;
 	position: relative;
 	transition-duration: 1s;
-	perspective: 93.75rem; /* 1500px converted to rem */
+	perspective: 93.75rem;
 }
 
 .cover {
@@ -85,8 +85,8 @@ body {
 	overflow: hidden;
 	width: 100%;
 	height: 100%;
-	border-radius: 0 0.9375rem 0.9375rem 0; /* 15px converted to rem */
-	box-shadow: 0 0 0.3125rem rgb(41, 41, 41); /* 5px converted to rem */
+	border-radius: 0 0.9375rem 0.9375rem 0;
+	box-shadow: 0 0 0.3125rem rgb(41, 41, 41);
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -96,8 +96,8 @@ body {
 .cover img {
 	width: 100%;
 	height: 100%;
-	border-radius: 0 0.9375rem 0.9375rem 0; /* 15px converted to rem */
-	box-shadow: 0 0 0.3125rem rgb(41, 41, 41); /* 5px converted to rem */
+	border-radius: 0 0.9375rem 0.9375rem 0;
+	box-shadow: 0 0 0.3125rem rgb(41, 41, 41);
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -156,17 +156,22 @@ body {
 	border-radius: 0.9375rem 0 0 0.9375rem; /* 15px converted to rem */
 }
 
-.front-page {
+.spider-page {
 	position: absolute;
-	width: 100%;
-	height: 100%;
-	backface-visibility: hidden;
-	box-sizing: border-box;
-	padding: 1rem;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-content: center;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    box-sizing: border-box;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    image-rendering: crisp-edges;
+    font-family: 'Cormorant Garamond';
+    align-items: center;
+    border-radius: 0.5rem;
+    overflow-wrap: break-word;
 }
 
 .back-page {
@@ -177,9 +182,23 @@ body {
 	backface-visibility: hidden;
 	z-index: 99;
 }
-
+#checkbox-cover {
+	display: none;
+}
+#checkbox-cover {
+	position: absolute;
+	opacity: 0;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+	padding: 0;
+}
 #checkbox-cover:checked ~ .book {
-	transform: translateX(12.5rem); /* 200px converted to rem */
+	transform: translateX(12.5rem);
 }
 
 #checkbox-cover:checked ~ .book .cover {
@@ -189,7 +208,7 @@ body {
 }
 
 #checkbox-cover:checked ~ .book .page {
-	box-shadow: 0 0 0.1875rem rgb(99, 98, 98); /* 3px converted to rem */
+	box-shadow: 0 0 0.1875rem rgb(99, 98, 98);
 }
 
 #checkbox-page1:checked ~ .book #page1 {
@@ -315,7 +334,7 @@ header h1#nav-title {
 #top-nav {
 	display: flex;
 	align-items: center;
-	justify-content: center; /* Center all header content horizontally */
+	justify-content: center;
 	background-color: #0a0a0a;
 	padding: 0.5rem 1rem;
 	box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.974);
@@ -327,8 +346,8 @@ header h1#nav-title {
 }
 
 .arrow {
-	width: 3rem; /* Converted from 40px */
-	height: 3rem; /* Converted from 40px */
+	width: 3rem;
+	height: 3rem;
 	top: calc(50% -1.5rem);
 	transform: translateY(-50%);
 	cursor: pointer;
@@ -356,22 +375,22 @@ header h1#nav-title {
 	padding: 3rem 0;
 }
 .search-bar {
-	position: fixed; /* or absolute */
-	top: 50px; /* Adjust based on header height */
+	position: fixed;
+	top: 50px;
 	left: 50%;
 	transform: translateX(-50%);
-	z-index: 1000; /* Ensure it's above other elements */
+	z-index: 1000;
 	display: flex;
 	justify-content: center;
-	width: 100%; /* or max-width for larger screens */
-	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Optional: adds shadow for better visibility */
-	background-color: #fff; /* Match your site's theme */
+	width: 100%;
+	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+	background-color: #fff;
 	padding: 10px;
 }
 
 #search-input {
 	padding: 8px;
-	width: 200px; /* Adjust as needed */
+	width: 200px;
 	margin-right: 8px;
 }
 
@@ -389,6 +408,7 @@ button {
 	align-items: center;
 	margin-right: 1.25rem;
 	margin-bottom: 0.5rem;
+	width: 100%;
 }
 
 .sort-options label {
@@ -399,7 +419,7 @@ button {
 	padding: 0.3125rem 0.625rem;
 	border-radius: 0.3125rem;
 	border: 0.0625rem solid black;
-	background-color:white;
+	background-color: white;
 	font-size: 0.875rem;
 }
 
@@ -407,4 +427,9 @@ button {
 	font-size: 0.875rem;
 	color: black; /* Adjust as needed */
 	margin-right: 0.625rem; /* Adjust as needed */
+}
+
+#checkbox-cover:not(:checked) ~ .book .left-arrow,
+#checkbox-cover:not(:checked) ~ .book .right-arrow {
+	display: none;
 }
