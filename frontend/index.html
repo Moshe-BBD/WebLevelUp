@@ -91,61 +91,182 @@
 				const IMAGE_BASE_URL =
 					"https://spiderpedia-bucket.s3.eu-west-1.amazonaws.com/";
 
-				fetch(
-					"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/user"
-				)
-					.then((response) => response.json())
-					.then((data) => {
-						if (data !== "Not logged in") {
-							document.getElementById("book-content").style.display = "block";
+
+				const usersData = [
+					{
+						"userId": 1,
+						"emailAddress": "john.doe@example.com",
+						"username": "johndoe",
+						"githubId": "johndoe_github_id"
+					},
+					{
+						"userId": 2,
+						"emailAddress": "jane.smith@example.com",
+						"username": "janesmith",
+						"githubId": "jane_smith_github_id"
+					},
+					{
+						"userId": 3,
+						"emailAddress": "alex.johnson@example.com",
+						"username": "alexjohnson",
+						"githubId": "alexjohnson_github_id"
+					},
+					{
+						"userId": 4,
+						"emailAddress": "emma.wilson@example.com",
+						"username": "emmawilson",
+						"githubId": "emmawilson_github_id"
+					},
+					{
+						"userId": 5,
+						"emailAddress": "michael.jones@example.com",
+						"username": "michaeljones",
+						"githubId": "michaeljones_github_id"
+					},
+					{
+						"userId": 6,
+						"emailAddress": "sophia.brown@example.com",
+						"username": "sophiabrown",
+						"githubId": "sophiabrown_github_id"
+					},
+					{
+						"userId": 7,
+						"emailAddress": "test@gmail.com",
+						"username": "srf0407",
+						"githubId": "112473134"
+					},
+					{
+						"userId": 8,
+						"emailAddress": "test@gmail.com",
+						"username": "SamF07",
+						"githubId": "159272408"
+					}
+				]
+				document.getElementById("book-content").style.display = "block";
 							document.getElementById("login-btn").style.display = "none";
 							document.getElementById("logout-btn").style.display = "inline";
 							document.getElementById("nav-username").style.display = "inline";
-							document.getElementById("nav-username").innerText = data.username;
-							showArrows();
-						} else {
-							document.getElementById("book-content").style.display = "none";
-							document.getElementById("login-btn").style.display = "inline";
-							document.getElementById("logout-btn").style.display = "none";
-							document.getElementById("nav-username").style.display = "none";
-						}
-					});
+							document.getElementById("nav-username").innerText = usersData.username;
+
+				// fetch(
+				// 	"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/user"
+				// )
+				// 	.then((response) => response.json())
+				// 	.then((data) => {
+				// 		if (data !== "Not logged in") {
+				// 			document.getElementById("book-content").style.display = "block";
+				// 			document.getElementById("login-btn").style.display = "none";
+				// 			document.getElementById("logout-btn").style.display = "inline";
+				// 			document.getElementById("nav-username").style.display = "inline";
+				// 			document.getElementById("nav-username").innerText = data.username;
+				// 			showArrows();
+				// 		} else {
+				// 			document.getElementById("book-content").style.display = "none";
+				// 			document.getElementById("login-btn").style.display = "inline";
+				// 			document.getElementById("logout-btn").style.display = "none";
+				// 			document.getElementById("nav-username").style.display = "none";
+				// 		}
+				// 	});
 
 				function fetchSpidersInfo() {
-					const apiUrl =
-						"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/api/spiders-info";
-					return fetch(apiUrl)
-						.then((response) => {
-							if (!response.ok) {
-								throw new Error("Network response was not ok");
-							}
-							return response.json();
-						})
-						.then((data) => {
-							return data;
-						})
-						.catch((error) => {
-							console.error("Error fetching spiders information:", error);
-							return null;
-						});
+					const spidersInfoData = [
+						{
+							"spiderId": 4,
+							"spiderName": "Steatoda grossa",
+							"facts": "Steatoda grossa, commonly known as the false black widow, is a species of spider in the family Theridiidae. These spiders are often mistaken for the more dangerous black widow spider due to their similar appearance.",
+							"spiderImage": "steatoda_grossa.jpg"
+						},
+						{
+							"spiderId": 10,
+							"spiderName": "Holocnemus pluchei",
+							"facts": null,
+							"spiderImage": "holocnemus_pluchei.jpg"
+						},
+						{
+							"spiderId": 6,
+							"spiderName": "Argiope aurantia",
+							"facts": "Argiope aurantia, commonly known as the yellow garden spider, is a species of orb-weaving spider found throughout North America. These spiders are often recognized by their bright yellow and black coloration and distinctive zigzag pattern, known as a stabilimentum, in the center of their webs.",
+							"spiderImage": "argiope_aurantia.jpg"
+						},
+						{
+							"spiderId": 2,
+							"spiderName": "Habronattus coecatus",
+							"facts": "Habronattus coecatus is a species of jumping spider commonly found in North America. These spiders have excellent vision and use their keen eyesight to locate and capture prey.",
+							"spiderImage": "habronattus_coecatus.jpg"
+						},
+						{
+							"spiderId": 7,
+							"spiderName": "Lycosa tarantula",
+							"facts": null,
+							"spiderImage": "lycosa_tarantula.jpg"
+						},
+						{
+							"spiderId": 9,
+							"spiderName": "Pholcus phalangioides",
+							"facts": null,
+							"spiderImage": "pholcus_phalangioides.jpg"
+						},
+						{
+							"spiderId": 3,
+							"spiderName": "Latrodectus mactans",
+							"facts": "Latrodectus mactans, commonly known as the southern black widow, is a species of venomous spider found in the southeastern United States. Female Latrodectus mactans spiders are known for their distinctive black coloration and red hourglass-shaped markings on the underside of their abdomen.",
+							"spiderImage": "latrodectus_mactans.jpg"
+						},
+						{
+							"spiderId": 1,
+							"spiderName": "Phidippus audax",
+							"facts": "Phidippus audax, also known as the daring jumping spider, is one of the most common and conspicuous jumping spiders in North America. These spiders are known for their agile jumping ability and are often seen hunting for prey on walls, fences, and vegetation.",
+							"spiderImage": "phidippus_audax.jpg"
+						},
+						{
+							"spiderId": 5,
+							"spiderName": "Araneus diadematus",
+							"facts": "Araneus diadematus, commonly known as the European garden spider, is a species of orb-weaving spider. These spiders are known for their intricate orb webs, which they use to capture flying insects like flies and mosquitoes.",
+							"spiderImage": "araneus_diadematus.jpg"
+						},
+						{
+							"spiderId": 8,
+							"spiderName": "Pardosa amentata",
+							"facts": null,
+							"spiderImage": "pardosa_amentata.jpg"
+						}
+					]
+
+					// const apiUrl =
+					// 	"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/api/spiders-info";
+					// return fetch(apiUrl)
+					// 	.then((response) => {
+					// 		if (!response.ok) {
+					// 			throw new Error("Network response was not ok");
+					// 		}
+					// 		return response.json();
+					// 	})
+					// 	.then((data) => {
+					// 		return data;
+					// 	})
+					// 	.catch((error) => {
+					// 		console.error("Error fetching spiders information:", error);
+					// 		return null;
+					// 	});
 				}
-				function fetchUserFavorites(userId) {
-					const apiUrl = `http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/api/user-favorites/${4}`;
-					return fetch(apiUrl)
-						.then((response) => {
-							if (!response.ok) {
-								throw new Error("Network response was not ok");
-							}
-							return response.json();
-						})
-						.then((data) => {
-							return data;
-						})
-						.catch((error) => {
-							console.error("Error fetching user favorites:", error);
-							return null;
-						});
-				}
+
+				// function fetchUserFavorites(userId) {
+				// 	const apiUrl = `http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/api/user-favorites/${4}`;
+				// 	return fetch(apiUrl)
+				// 		.then((response) => {
+				// 			if (!response.ok) {
+				// 				throw new Error("Network response was not ok");
+				// 			}
+				// 			return response.json();
+				// 		})
+				// 		.then((data) => {
+				// 			return data;
+				// 		})
+				// 		.catch((error) => {
+				// 			console.error("Error fetching user favorites:", error);
+				// 			return null;
+				// 		});
+				// }
 
 				function toggleFavorites() {
 					const showFavorites =
