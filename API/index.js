@@ -73,7 +73,6 @@ passport.use(
 		async (accessToken, refreshToken, profile, done) => {
 			try {
 				const user = await findOrCreateUser(profile);
-				console.log("users: " + user);
 				done(null, profile);
 			} catch (error) {
 				done(error);
@@ -94,7 +93,6 @@ async function findOrCreateUser(profile) {
 			'SELECT * FROM "User" WHERE "githubId" = $1',
 			[profile.id]
 		);
-		console.log("result: " + result);
 		if (result.rows.length > 0) {
 			// User exists
 			return result.rows[0];
