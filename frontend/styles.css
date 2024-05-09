@@ -391,6 +391,7 @@ button {
     display: flex;
     align-items: center;
     margin-right: 1.25rem;
+    margin-bottom: 0.5rem;
 }
 
 .sort-options label {
