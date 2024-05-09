@@ -1,87 +1,159 @@
-const express = require('express');
-const expressSession = require('express-session');
-const passport = require('passport');
-const GitHubStrategy = require('passport-github').Strategy;
-const userRouter = require('./user');
-const path = require('path');
-const isProduction = process.env.NODE_ENV === 'production';
-require('dotenv').config();
-
+const express = require("express");
+const expressSession = require("express-session");
+const passport = require("passport");
+const GitHubStrategy = require("passport-github").Strategy;
+const userRouter = require("./user");
+const path = require("path");
+const isProduction = process.env.NODE_ENV === "production";
+const { Pool } = require("pg");
+require("dotenv").config();
 const app = express();
+const AWS = require("aws-sdk");
 
-// Session Configuration
-app.use(expressSession({
+AWS.config.update({ region: "eu-west-1" });
 
-    secret: process.env.GITHUB_SECRET || 'default-secret-key',
+const secretsManager = new AWS.SecretsManager();
 
-    resave: false,
+app.use(
+	expressSession({
+		secret: process.env.GITHUB_SECRET || "default-secret-key",
+		resave: false,
+		saveUninitialized: false,
+	})
+);
 
-    saveUninitialized: false
-
-}));
-
-
-// Passport Initialization
 app.use(passport.initialize());
-
 app.use(passport.session());
 
-// Passport GitHub OAuth Strategy
-passport.use(new GitHubStrategy({
+let pool;
 
-    clientID: isProduction ? process.env.PROD_GITHUB_ID : process.env.LOCAL_GITHUB_ID,
+async function initializePool() {
+    try {
+        const secretData = await secretsManager
+            .getSecretValue({
+                SecretId:
+                    "arn:aws:secretsmanager:eu-west-1:179530787873:secret:spiderpedia_secrets-CiA3Se",
+            })
+            .promise();
+        const secret = JSON.parse(secretData.SecretString);
+ 
+        pool = new Pool({
+            user: secret.username,
+            password: secret.password,
+            host: "spiderpedia-postgres-db.c4n7thcq1lqm.eu-west-1.rds.amazonaws.com",
+            database: "SpiderpediaDB",
+            port: 5432,
+            ssl: {
+                rejectUnauthorized: false,
+            },
+        });
+	} catch (err) {
+		console.error("Error initializing database pool:", err);
+		process.exit(1);
+	}
+}
 
-    clientSecret: isProduction ? process.env.PROD_GITHUB_SECRET : process.env.LOCAL_GITHUB_SECRET,
+initializePool();
 
-    callbackURL: isProduction
-        ? `http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:${process.env.PORT || 5000}/callback`
-        : `http://localhost:${process.env.PORT || 5000}/callback`
+passport.use(
+	new GitHubStrategy(
+		{
+			clientID: isProduction
+				? process.env.PROD_GITHUB_ID
+				: process.env.LOCAL_GITHUB_ID,
+			clientSecret: isProduction
+				? process.env.PROD_GITHUB_SECRET
+				: process.env.LOCAL_GITHUB_SECRET,
+			callbackURL: isProduction
+				? `http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:${
+						process.env.PORT || 5000
+				  }/callback`
+				: "http://localhost:5000/callback",
+		},
+		async (accessToken, refreshToken, profile, done) => {
+			try {
+				const user = await findOrCreateUser(profile);
+				console.log("users: " + user);
+				done(null, profile);
+			} catch (error) {
+				done(error);
+			}
+		}
+	)
+);
 
-}, (accessToken, refreshToken, profile, done) => {
+async function findOrCreateUser(profile) {
+	const client = await pool.connect();
+	const emailAddress = "test@gmail.com";
+	// const emailAddress = profile.emails && profile.emails[0].value;
 
-    done(null, profile);
-
-}));
+	try {
+		// Check if the user already exists
+		// const result = await client.query('SELECT * FROM "User" WHERE "githubId" = $1', [profile.id]);
+		const result = await client.query(
+			'SELECT * FROM "User" WHERE "githubId" = $1',
+			[profile.id]
+		);
+		console.log("result: " + result);
+		if (result.rows.length > 0) {
+			// User exists
+			return result.rows[0];
+		} else {
+			// Insert new user
+			const newUser = await client.query(
+				'INSERT INTO "User" ("userId","emailAddress", "username", "githubId") VALUES (DEFAULT,$1, $2, $3) RETURNING *',
+				[emailAddress, profile.username, profile.id]
+			);
+			return newUser.rows[0];
+		}
+	} catch (error) {
+		console.log(error);
+	} finally {
+		client.release();
+	}
+}
 
 passport.serializeUser((user, done) => {
-    done(null, user);
+	done(null, user);
 });
 
 passport.deserializeUser((user, done) => {
-    done(null, user);
+	done(null, user);
 });
 
 // Serving static files
-app.use(express.static(path.join(__dirname, '../frontend')));
+app.use(express.static(path.join(__dirname, "../frontend")));
 
 // Routes
-app.get('/', (req, res) => {
-
-    res.sendFile('index.html', { root: path.join(__dirname, '../frontend') });
-
+app.get("/", (req, res) => {
+	res.sendFile("index.html", { root: path.join(__dirname, "../frontend") });
 });
 
-app.get('/login', passport.authenticate('github'));
+app.get("/login", passport.authenticate("github"));
 
-app.get('/callback', passport.authenticate('github', { failureRedirect: '/' }), (req, res) => {
-    res.redirect('/');
+app.get(
+	"/callback",
+	passport.authenticate("github", { failureRedirect: "/" }),
+	(req, res) => {
+		res.redirect("/");
+	}
+);
+
+app.get("/logout", (req, res, next) => {
+	req.logout((err) => {
+		if (err) {
+			return next(err);
+		}
+		res.redirect("/");
+	});
 });
 
-app.get('/logout', (req, res, next) => {
-    req.logout(err => {
-        if (err) { return next(err); }
-        res.redirect('/');
-    });
-});
-
-app.get('/user', (req, res) => {
-    if (req.isAuthenticated()) {
-
-        res.json({ username: req.user.username });
-
-    } else {
-        res.json('Not logged in');
-    }
+app.get("/user", (req, res) => {
+	if (req.isAuthenticated()) {
+		res.json({ username: req.user.username });
+	} else {
+		res.json("Not logged in");
+	}
 });
 
 // API Routes
