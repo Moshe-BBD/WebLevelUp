@@ -140,6 +140,10 @@ input {
 	backface-visibility: hidden;
 	box-sizing: border-box;
 	padding: 1rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-content: center;
 }
 
 .back-page {
@@ -324,8 +328,7 @@ header h1#nav-title {
 }
 
 .spider-image {
-	max-width: 80%;
-	height: auto;
-	display: block;
-	margin: 10px auto;
+	max-width: 50vh;
+	max-height: 50vh;
+	padding: 3rem 0;
 }
