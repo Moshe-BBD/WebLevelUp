@@ -56,7 +56,7 @@ passport.use(
 
 async function findOrCreateUser(profile) {
 	const client = await pool.connect();
-	const emailAddress = "test@gmail.com"; 
+	const emailAddress = "test@gmail.com";
 	// const emailAddress = profile.emails && profile.emails[0].value;
 
 	try {
@@ -72,7 +72,7 @@ async function findOrCreateUser(profile) {
 		} else {
 			// Insert new user
 			const newUser = await client.query(
-				'INSERT INTO "User" ("userId","emailAddress", "username", "githubId") VALUES (DEFAULT,$1, $2, $3) RETURNING *',
+				'INSERT INTO "User" ("emailAddress", "username", "githubId") VALUES (DEFAULT,$1, $2, $3) RETURNING *',
 				[emailAddress, profile.username, profile.id]
 			);
 			return newUser.rows[0];
