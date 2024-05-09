@@ -46,7 +46,7 @@ body {
 #btnSearch {
     padding: 0.5rem 1rem;
     cursor: pointer;
-    background-color: lightslategray;
+    background-color: #a6a6a6;
     color: white;
     border: none;
     border-radius: 0.3125rem;
@@ -54,11 +54,11 @@ body {
 }
  
 #btnSearch:hover {
-    background-color: lightslategray;
+    background-color: #a6a6a6;
 }
  
 #btnSearch:active {
-    background-color: lightslategray;
+    background-color: #a6a6a6;
 }
 
 .cover,
