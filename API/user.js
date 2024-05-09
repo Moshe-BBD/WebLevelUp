@@ -1,7 +1,8 @@
 const express = require("express");
+const app = express();
 const { Pool } = require("pg");
 const AWS = require("aws-sdk");
-
+app.use(express.json());
 AWS.config.update({ region: "eu-west-1" });
 
 const secretsManager = new AWS.SecretsManager();
@@ -121,6 +122,52 @@ router.get("/spiders-info", async (req, res) => {
         `);
 
 		res.json(spidersInfo.rows);
+	} catch (err) {
+		console.error(err);
+		res.status(500).json({ message: "Server Error" });
+	}
+});
+router.post("/favorite-spider", async (req, res) => {
+	try {
+		const { userId, spiderId } = req.body;
+
+		if (!userId || !spiderId) {
+			return res
+				.status(400)
+				.json({ message: "userId and spiderId are required" });
+		}
+
+		const userCheck = await pool.query(
+			'SELECT * FROM "User" WHERE "userId" = $1',
+			[userId]
+		);
+		if (userCheck.rowCount === 0) {
+			return res.status(404).json({ message: "User not found" });
+		}
+
+		const spiderCheck = await pool.query(
+			'SELECT * FROM "Spider" WHERE "spiderId" = $1',
+			[spiderId]
+		);
+		if (spiderCheck.rowCount === 0) {
+			return res.status(404).json({ message: "Spider not found" });
+		}
+
+		const existingFavorite = await pool.query(
+			'SELECT * FROM "FavouriteSpider" WHERE "userId" = $1 AND "spiderId" = $2',
+			[userId, spiderId]
+		);
+		if (existingFavorite.rowCount > 0) {
+			return res
+				.status(400)
+				.json({ message: "Spider already favorited by the user" });
+		}
+
+		const insertQuery =
+			'INSERT INTO "FavouriteSpider" ("userId", "spiderId", "like") VALUES ($1, $2, $3)';
+		await pool.query(insertQuery, [userId, spiderId, 1]);
+
+		res.status(201).json({ message: "Favorite spider added successfully" });
 	} catch (err) {
 		console.error(err);
 		res.status(500).json({ message: "Server Error" });
