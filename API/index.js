@@ -7,7 +7,6 @@ const userRouter = require("./user");
 const path = require("path");
 const isProduction = process.env.NODE_ENV === "production";
 require("dotenv").config();
-var cors = require("cors");
 const pool = require("./DB");
 const app = express();
 app.use(express.json());
