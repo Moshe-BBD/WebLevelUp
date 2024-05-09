@@ -83,7 +83,7 @@ passport.use(
 
 async function findOrCreateUser(profile) {
 	const client = await pool.connect();
-	const emailAddress = "test@gmail.com";
+	const emailAddress = "test@gmail.com"; 
 	// const emailAddress = profile.emails && profile.emails[0].value;
 
 	try {
