@@ -18,17 +18,12 @@ app.use(expressSession({
 app.use(passport.initialize());
 app.use(passport.session());
 
-let pool = new Pool({
-    // user: secret.username,
-    user: process.env.username,
-    host: "spiderpedia-postgres-db.c4n7thcq1lqm.eu-west-1.rds.amazonaws.com",
-    database: "SpiderpediaDB",
-    // password: secret.password,
-    password: process.env.password,
+const pool = new Pool({
+    host: 'spiderpedia-postgres-db.c4n7thcq1lqm.eu-west-1.rds.amazonaws.com',
     port: 5432,
-    ssl: {
-        rejectUnauthorized: false
-    }
+    user: 'someUser',
+    password: 'somePassword#',
+    database: 'SpiderpediaDB'
 });
 
 passport.use(new GitHubStrategy({
@@ -40,37 +35,55 @@ passport.use(new GitHubStrategy({
 }, async (accessToken, refreshToken, profile, done) => {
     // Check if user exists and insert if not
     try {
-        const user = await findOrCreateUser(profile);
-        done(null, user);
+        const users = await fetchUsers();
+        // const user = await findOrCreateUser(profile);
+        console.log("users: " + users);
+        done(null, profile);
     } catch (error) {
         done(error);
     }
 }));
 
-async function findOrCreateUser(profile) {
-    const client = await pool.connect();
+async function fetchUsers() {
     try {
-        // Check if the user already exists
-        const result = await client.query('SELECT * FROM "User" WHERE "githubId" = $1', [profile.id]);
-        if (result.rows.length > 0) {
-            // User exists
-            return result.rows[0]
-        } else {
-            // Insert new user
-            const newUser = await client.query(
-                'INSERT INTO "User" ("emailAddress", "username", "githubId") VALUES ($1, $2, $3) RETURNING *',
-                [profile.emails[0].value, profile.username, profile.id]
-            );
-            return newUser.rows[0];
-        }
-    } 
-    catch(error) {
-        console.log(error);
-    }
-    finally {
-        client.release();
+        console.log("hello world");
+        const res = await pool.query('SELECT * FROM "User"');
+        console.log("hello world");
+        console.log(res.rows); // Output the users
+    } catch (err) {
+        console.error(err);
     }
 }
+
+// async function findOrCreateUser(profile) {
+//     const client = await pool.connect();
+//     const emailAddress = "";
+//     // const emailAddress = profile.emails && profile.emails[0].value;
+
+//     try {
+//         // Check if the user already exists
+//         // const result = await client.query('SELECT * FROM "User" WHERE "githubId" = $1', [profile.id]);
+//         const result = await client.query('SELECT * FROM "User" WHERE "githubId" = $1', [profile.id])
+//         console.log("result: " + result)
+//         // if (result.rows.length > 0) {
+//         //     // User exists
+//         //     return result.rows[0]
+//         // } else {
+//         //     // Insert new user
+//         //     const newUser = await client.query(
+//         //         'INSERT INTO "User" ("userId", "emailAddress", "username", "githubId") VALUES ($1, $2, $3, $4) RETURNING *',
+//         //         [userId, emailAddress, profile.username, profile.id]
+//         //     );
+//         //     return newUser.rows[0];
+//         // }
+//     }
+//     catch(error) {
+//         console.log(error);
+//     }
+//     finally {
+//         client.release();
+//     }
+// }
 
 passport.serializeUser((user, done) => {
     done(null, user);
