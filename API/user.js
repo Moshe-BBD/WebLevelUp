@@ -151,6 +151,24 @@ router.post("/favorite-spider", async (req, res) => {
 	}
 });
 
+router.get("/user-favorites/:userId", async (req, res) => {
+	try {
+		const { userId } = req.params;
+		const userFavorites = await pool.query(
+			'SELECT fs."userId", fs."spiderId", s."spiderName", s."spiderImage", sf."factContent" \
+            FROM "FavouriteSpider" fs \
+            INNER JOIN "Spider" s ON fs."spiderId" = s."spiderId" \
+            LEFT JOIN "SpiderFact" sf ON s."spiderId" = sf."spiderId" \
+            WHERE fs."userId" = $1',
+			[userId]
+		);
+		res.json(userFavorites.rows);
+	} catch (err) {
+		console.error(err);
+		res.status(500).json({ message: "Server Error" });
+	}
+});
+
 router.delete("/favorite-spider", async (req, res) => {
 	try {
 		const { userId, spiderId } = req.query;
