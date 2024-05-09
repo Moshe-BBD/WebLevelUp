@@ -382,6 +382,7 @@ button {
 	color: white;
 	border: none;
 	border-radius: 4px; /* Optional: rounded corners */
+    width: 100%;
 }
 
 .sort-options {
@@ -389,6 +390,7 @@ button {
 	align-items: center;
 	margin-right: 1.25rem;
 	margin-bottom: 0.5rem;
+    width: 100%;
 }
 
 .sort-options label {
