@@ -1,34 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-		<title>Spider Flip Book</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="stylesheet" href="styles.css" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<script src="app.js"></script>
-	</head>
-	<body>
-		<header id="top-nav">
-			<img src="images/spiderLogo.png" alt="Logo" id="logo" />
-			<h1 id="nav-title">SPIDERPEDIA</h1>
-			<nav class="nav-right">
-				<p id="nav-username"></p>
-				<a id="login-btn" href="/login">
-					<img
-						src="images/githubLogo.png"
-						alt="GitHub Logo"
-						class="github-icon"
-					/>
-					Login
-				</a>
-				<a id="logout-btn" href="/logout" style="display: none">Logout</a>
-			</nav>
-		</header>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Spider Flip Book</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js"></script>
+</head>
+<body>
+    <header id="top-nav">
+        <img src="images/spiderLogo.png" alt="Logo" id="logo">
+        <h1 id="nav-title">SPIDERPEDIA</h1>
+        <nav class="nav-right">
+            <p id="nav-username"></p>
+            <a id="login-btn" href="/login">
+                <img src="images/githubLogo.png" alt="GitHub Logo" class="github-icon"> Login
+            </a>
+            <a id="logout-btn" href="/logout" style="display:none;">Logout</a>
+        </nav>
+    </header>
 
-		<section id="book-content" style="display: none">
+		<section id="book-content" style="display: flex">
 			<input type="checkbox" id="show-favorites" onchange="toggleFavorites()" />
 			<label for="show-favorites">Show Favorites Only</label>
 
