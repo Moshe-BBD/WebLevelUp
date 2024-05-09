@@ -1,5 +1,5 @@
 CREATE TABLE "SpiderFamily" (
-  "spiderFamilyID" int PRIMARY KEY,
+  "spiderFamilyID" SERIAL PRIMARY KEY,
   "name" varchar(255) NOT NULL,
   "description" text
 );
