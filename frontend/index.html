@@ -21,81 +21,180 @@
         </nav>
     </header>
 
-		<section id="book-content" style="display:flex;">
+		<section id="book-content" style="display: flex">
+			<input type="checkbox" id="show-favorites" onchange="toggleFavorites()" />
+			<label for="show-favorites">Show Favorites Only</label>
+
 			<input type="checkbox" id="checkbox-cover" />
 			<input type="checkbox" id="checkbox-page1" />
-
+			<!-- Dynamic generation of checkboxes for additional pages -->
 			<main class="book">
 				<section class="cover">
 					<label for="checkbox-cover">
-						<img src="images/spiderPediaBookCover.png" alt="Cover Image">
+						<img src="images/spiderPediaBookCover.png" alt="Cover Image" />
 					</label>
 				</section>
-				<article class="page" id="page1">
-					<section class="front-page">
-						<h2>Page 1</h2>
-						<p>I am page 1</p>
-						<label class="next" for="checkbox-page1"></label>
-					</section>
-					<section class="back-page">
-						<label class="prev" for="checkbox-page1"> </label>
-					</section>
-				</article>
+
+				<!-- Dynamic generation of spider pages -->
 				<section class="back-cover"></section>
-			</section>
 			</main>
 
 			<span class="arrow left-arrow" onclick="prevPage()"></span>
-            <span class="arrow right-arrow" onclick="nextPage()"></span> 
+			<span class="arrow right-arrow" onclick="nextPage()"></span>
 
-        <script>
-          let currentPage = 0;
-          function showArrows() {
-            arrows.forEach(arrow => {
-            arrow.style.display = "inline-block";
-            });
-        }
+			<script>
+				let currentPage = 0;
+				const arrows = document.querySelectorAll(".arrow");
 
-        function hideArrows() {
-            arrows.forEach(arrow => {
-            arrow.style.display = "none";
-            });
-        }
+				function showArrows() {
+					arrows.forEach((arrow) => {
+						arrow.style.display = "inline-block";
+					});
+				}
 
-        function nextPage() {
-            if (currentPage < pages.length - 1) {
-            showPage(currentPage + 1);
-        }
-    }
+				function hideArrows() {
+					arrows.forEach((arrow) => {
+						arrow.style.display = "none";
+					});
+				}
 
-        function prevPage() {
-            if (currentPage > 0) {
-                showPage(currentPage - 1);
-            }
-        }
+				function showPage(pageIndex) {
+					const pages = document.querySelectorAll(".page");
+					pages.forEach((page, index) => {
+						if (index === pageIndex) {
+							page.style.display = "block";
+						} else {
+							page.style.display = "none";
+						}
+					});
+					currentPage = pageIndex;
+				}
 
-        </script>
-    </div>
+				function nextPage() {
+					if (currentPage < document.querySelectorAll(".page").length - 1) {
+						showPage(currentPage + 1);
+					}
+				}
 
-    <script>
-        fetch('/user')
-            .then(response => response.json())
-            .then(data => {
-                if (data !== 'Not logged in') {
-                    document.getElementById('book-content').style.display = 'flex';
-                    document.getElementById('login-btn').style.display = 'none';
-                    document.getElementById('logout-btn').style.display = 'inline';
-                    document.getElementById('nav-username').style.display = 'inline';
-                    document.getElementById('nav-username').innerText = data.username; // Update with the username fetched
-                    showArrows(); // Show arrows once the book is opened
-                } else {
-                    document.getElementById('book-content').style.display = 'none';
-                    document.getElementById('login-btn').style.display = 'inline';
-                    document.getElementById('logout-btn').style.display = 'none';
-                    document.getElementById('nav-username').style.display = 'none';
-                }
-            });
-    </script>
-    </section>
-</body>
+				function prevPage() {
+					if (currentPage > 0) {
+						showPage(currentPage - 1);
+					}
+				}
+				const IMAGE_BASE_URL =
+					"https://spiderpedia-bucket.s3.eu-west-1.amazonaws.com/";
+
+				fetch(
+					"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/user"
+				)
+					.then((response) => response.json())
+					.then((data) => {
+						if (data !== "Not logged in") {
+							document.getElementById("book-content").style.display = "block";
+							document.getElementById("login-btn").style.display = "none";
+							document.getElementById("logout-btn").style.display = "inline";
+							document.getElementById("nav-username").style.display = "inline";
+							document.getElementById("nav-username").innerText = data.username;
+							showArrows();
+						} else {
+							document.getElementById("book-content").style.display = "none";
+							document.getElementById("login-btn").style.display = "inline";
+							document.getElementById("logout-btn").style.display = "none";
+							document.getElementById("nav-username").style.display = "none";
+						}
+					});
+
+				function fetchSpidersInfo() {
+					const apiUrl =
+						"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/api/spiders-info";
+					return fetch(apiUrl)
+						.then((response) => {
+							if (!response.ok) {
+								throw new Error("Network response was not ok");
+							}
+							return response.json();
+						})
+						.then((data) => {
+							return data;
+						})
+						.catch((error) => {
+							console.error("Error fetching spiders information:", error);
+							return null;
+						});
+				}
+				function fetchUserFavorites(userId) {
+					const apiUrl = `http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/api/user-favorites/${4}`;
+					return fetch(apiUrl)
+						.then((response) => {
+							if (!response.ok) {
+								throw new Error("Network response was not ok");
+							}
+							return response.json();
+						})
+						.then((data) => {
+							return data;
+						})
+						.catch((error) => {
+							console.error("Error fetching user favorites:", error);
+							return null;
+						});
+				}
+
+				function toggleFavorites() {
+					const showFavorites =
+						document.getElementById("show-favorites").checked;
+					if (showFavorites) {
+						fetchUserFavorites(userId).then((data) => {
+							if (data) {
+								renderSpiders(data);
+							} else {
+								console.error("Failed to fetch user favorites");
+							}
+						});
+					} else {
+						fetchSpidersInfo().then((data) => {
+							if (data) {
+								renderSpiders(data);
+							} else {
+								console.error("Failed to fetch spiders information");
+							}
+						});
+					}
+				}
+
+				function renderSpiders(data) {
+					document.querySelector(".book").innerHTML = ""; // Clear existing spiders
+					data.forEach((spider, index) => {
+						const page = document.createElement("article");
+						page.classList.add("page");
+						page.innerHTML = `
+                        <input type="checkbox" id="checkbox-page${index + 1}" />
+                        <section class="front-page">
+                            <h2>${spider.spiderName}</h2>
+                            <img src="${IMAGE_BASE_URL}${
+							spider.spiderImage
+						}" alt="${spider.spiderName}" class="spider-image"> 
+                            <p>${spider.factContent || "No fact available"}</p>
+                            <label class="next" for="checkbox-page${
+															index + 1
+														}"></label>
+                        </section>
+                        <section class="back-page">
+                            <label class="prev" for="checkbox-page${
+															index + 1
+														}"></label>
+                        </section>
+                    `;
+						document.querySelector(".book").appendChild(page);
+					});
+					currentPage = 0;
+					showPage(currentPage);
+					showArrows();
+				}
+
+				// Initial fetch
+				toggleFavorites();
+			</script>
+		</section>
+	</body>
 </html>

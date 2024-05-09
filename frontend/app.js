@@ -23,23 +23,22 @@
 // 	showPage(0);
 // });
 
-
 document.addEventListener("DOMContentLoaded", function () {
-    fetch('/user')
-        .then(response => response.json())
-        .then(data => {
-            const loginBtn = document.getElementById('login-btn');
-            const logoutBtn = document.getElementById('logout-btn');
-            const navUsername = document.getElementById('nav-username');
-            if (data !== 'Not logged in') {
-                loginBtn.style.display = 'none';
-                logoutBtn.style.display = 'inline';
-                navUsername.textContent = data.username;
-                navUsername.style.display = 'inline';
-            } else {
-                loginBtn.style.display = 'inline';
-                logoutBtn.style.display = 'none';
-                navUsername.style.display = 'none';
-            }
-        });
+	fetch("http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/user")
+		.then((response) => response.json())
+		.then((data) => {
+			const loginBtn = document.getElementById("login-btn");
+			const logoutBtn = document.getElementById("logout-btn");
+			const navUsername = document.getElementById("nav-username");
+			if (data !== "Not logged in") {
+				loginBtn.style.display = "none";
+				logoutBtn.style.display = "inline";
+				navUsername.textContent = data.username;
+				navUsername.style.display = "inline";
+			} else {
+				loginBtn.style.display = "inline";
+				logoutBtn.style.display = "none";
+				navUsername.style.display = "none";
+			}
+		});
 });

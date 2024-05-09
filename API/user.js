@@ -1,40 +1,17 @@
 const express = require("express");
+const cors = require("cors"); // Import cors
 const app = express();
-const { Pool } = require("pg");
 const AWS = require("aws-sdk");
 app.use(express.json());
 AWS.config.update({ region: "eu-west-1" });
+const corsOptions = {
+	origin: "http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000",
+	optionsSuccessStatus: 200,
+};
 
-const secretsManager = new AWS.SecretsManager();
-let pool;
+app.use(cors(corsOptions));
 
-async function initializePool() {
-	try {
-		const secretData = await secretsManager
-			.getSecretValue({
-				SecretId:
-					"arn:aws:secretsmanager:eu-west-1:179530787873:secret:spiderpedia_secrets-CiA3Se",
-			})
-			.promise();
-		const secret = JSON.parse(secretData.SecretString);
-
-		pool = new Pool({
-			user: secret.username,
-			password: secret.password,
-			host: "spiderpedia-postgres-db.c4n7thcq1lqm.eu-west-1.rds.amazonaws.com",
-			database: "SpiderpediaDB",
-			port: 5432,
-			ssl: {
-				rejectUnauthorized: false,
-			},
-		});
-	} catch (err) {
-		console.error("Error initializing database pool:", err);
-		process.exit(1);
-	}
-}
-
-initializePool();
+const pool = require("./DB");
 
 const router = express.Router();
 
@@ -168,6 +145,24 @@ router.post("/favorite-spider", async (req, res) => {
 		await pool.query(insertQuery, [userId, spiderId, 1]);
 
 		res.status(201).json({ message: "Favorite spider added successfully" });
+	} catch (err) {
+		console.error(err);
+		res.status(500).json({ message: "Server Error" });
+	}
+});
+
+router.get("/user-favorites/:userId", async (req, res) => {
+	try {
+		const { userId } = req.params;
+		const userFavorites = await pool.query(
+			'SELECT fs."userId", fs."spiderId", s."spiderName", s."spiderImage", sf."factContent" \
+            FROM "FavouriteSpider" fs \
+            INNER JOIN "Spider" s ON fs."spiderId" = s."spiderId" \
+            LEFT JOIN "SpiderFact" sf ON s."spiderId" = sf."spiderId" \
+            WHERE fs."userId" = $1',
+			[userId]
+		);
+		res.json(userFavorites.rows);
 	} catch (err) {
 		console.error(err);
 		res.status(500).json({ message: "Server Error" });
