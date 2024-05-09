@@ -6,7 +6,7 @@ const userRouter = require("./user");
 const path = require("path");
 const isProduction = process.env.NODE_ENV === "production";
 require("dotenv").config();
-
+const pool = require("./DB");
 const app = express();
 app.use(express.json());
 
@@ -55,14 +55,14 @@ passport.use(
 );
 
 async function findOrCreateUser(profile) {
-	const client = await pool.connect();
+	// const client = await pool.connect();
 	const emailAddress = "test@gmail.com";
 	// const emailAddress = profile.emails && profile.emails[0].value;
 
 	try {
 		// Check if the user already exists
 		// const result = await client.query('SELECT * FROM "User" WHERE "githubId" = $1', [profile.id]);
-		const result = await client.query(
+		const result = await pool.query(
 			'SELECT * FROM "User" WHERE "githubId" = $1',
 			[profile.id]
 		);
@@ -71,7 +71,7 @@ async function findOrCreateUser(profile) {
 			return result.rows[0];
 		} else {
 			// Insert new user
-			const newUser = await client.query(
+			const newUser = await pool.query(
 				'INSERT INTO "User" ("emailAddress", "username", "githubId") VALUES (DEFAULT,$1, $2, $3) RETURNING *',
 				[emailAddress, profile.username, profile.id]
 			);
@@ -79,8 +79,6 @@ async function findOrCreateUser(profile) {
 		}
 	} catch (error) {
 		console.log(error);
-	} finally {
-		client.release();
 	}
 }
 
