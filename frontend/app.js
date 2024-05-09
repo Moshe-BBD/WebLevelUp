@@ -24,7 +24,7 @@
 // });
 
 document.addEventListener("DOMContentLoaded", function () {
-	fetch("http://localhost:5000/user")
+	fetch("http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/user")
 		.then((response) => response.json())
 		.then((data) => {
 			const loginBtn = document.getElementById("login-btn");

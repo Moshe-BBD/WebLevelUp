@@ -1,9 +1,8 @@
 const { Pool } = require("pg");
 const express = require("express");
-const app = express();
 
 const AWS = require("aws-sdk");
-app.use(express.json());
+express.json();
 AWS.config.update({ region: "eu-west-1" });
 
 const secretsManager = new AWS.SecretsManager();

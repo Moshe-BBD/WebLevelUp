@@ -1,14 +1,22 @@
 const express = require("express");
 const expressSession = require("express-session");
 const passport = require("passport");
+const cors = require("cors");
 const GitHubStrategy = require("passport-github").Strategy;
 const userRouter = require("./user");
 const path = require("path");
 const isProduction = process.env.NODE_ENV === "production";
 require("dotenv").config();
+var cors = require("cors");
 const pool = require("./DB");
 const app = express();
 app.use(express.json());
+const corsOptions = {
+	origin: "http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000",
+	optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
 
 // Session Configuration
 app.use(

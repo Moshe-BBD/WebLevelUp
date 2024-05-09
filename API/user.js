@@ -1,11 +1,16 @@
 const express = require("express");
+const cors = require("cors"); // Import cors
 const app = express();
-
 const AWS = require("aws-sdk");
 app.use(express.json());
 AWS.config.update({ region: "eu-west-1" });
+const corsOptions = {
+	origin: "http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000",
+	optionsSuccessStatus: 200,
+};
 
-const secretsManager = new AWS.SecretsManager();
+app.use(cors(corsOptions));
+
 const pool = require("./DB");
 
 const router = express.Router();
