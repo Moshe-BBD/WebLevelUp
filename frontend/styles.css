@@ -403,6 +403,7 @@ button {
 	align-items: center;
 	margin-right: 1.25rem;
 	margin-bottom: 0.5rem;
+    width: 100%;
 }
 
 .sort-options label {
@@ -412,13 +413,13 @@ button {
 .sort-options select {
 	padding: 0.3125rem 0.625rem;
 	border-radius: 0.3125rem;
-	border: 0.0625rem solid #ccc;
-	background-color: #f9f9f9;
+	border: 0.0625rem solid black;
+	background-color:white;
 	font-size: 0.875rem;
 }
 
 #labelsort {
 	font-size: 0.875rem;
-	color: #f9f9f9; /* Adjust as needed */
+	color: black; /* Adjust as needed */
 	margin-right: 0.625rem; /* Adjust as needed */
 }
