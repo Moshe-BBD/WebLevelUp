@@ -156,23 +156,6 @@ body {
 	border-radius: 0.9375rem 0 0 0.9375rem; /* 15px converted to rem */
 }
 
-.spider-page {
-	position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    box-sizing: border-box;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-    image-rendering: crisp-edges;
-    font-family: 'Cormorant Garamond';
-    align-items: center;
-    border-radius: 0.5rem;
-    overflow-wrap: break-word;
-}
 
 .back-page {
 	transform: rotateY(180deg);
@@ -347,7 +330,7 @@ header h1#nav-title {
 
 .arrow {
 	width: 3rem;
-	height: 3rem;
+	height: 3rem; /* Converted from 40px */
 	top: calc(50% -1.5rem);
 	transform: translateY(-50%);
 	cursor: pointer;
@@ -429,7 +412,18 @@ button {
 	margin-right: 0.625rem; /* Adjust as needed */
 }
 
-#checkbox-cover:not(:checked) ~ .book .left-arrow,
-#checkbox-cover:not(:checked) ~ .book .right-arrow {
-	display: none;
+.spider-page {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	backface-visibility: hidden;
+	box-sizing: border-box;
+	padding: 1rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-content: center;
+	image-rendering: crisp-edges;
+	font-family: "Cormorant Garamond";
+	align-items: center;
 }
