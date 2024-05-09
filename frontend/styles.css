@@ -378,3 +378,9 @@ button {
     background-color: #f9f9f9;
     font-size: 0.875rem;
 }
+
+#labelsort {
+    font-size: 0.875rem;
+    color: #f9f9f9; /* Adjust as needed */
+    margin-right: 0.625rem; /* Adjust as needed */
+}
