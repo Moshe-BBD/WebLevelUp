@@ -50,10 +50,35 @@
 
 		<script>
 			document.addEventListener("DOMContentLoaded", function () {
+				const loginBtn = document.getElementById("login-btn");
+				const logoutBtn = document.getElementById("logout-btn");
+				const navUsername = document.getElementById("nav-username");
+				const bookContent = document.getElementById("book-content");
 				const IMAGE_BASE_URL =
 					"https://spiderpedia-bucket.s3.eu-west-1.amazonaws.com/";
 				let currentPage = 0;
 				const arrows = document.querySelectorAll(".arrow");
+
+				// Check login status and manage UI elements
+				fetch(
+					"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/user"
+				)
+					.then((response) => response.json())
+					.then((data) => {
+						if (data !== "Not logged in") {
+							loginBtn.style.display = "none";
+							logoutBtn.style.display = "inline";
+							navUsername.textContent = data.username;
+							navUsername.style.display = "inline";
+							bookContent.style.display = "block"; // Show the book content
+							fetchSpidersInfo().then(displaySpiders); // Fetch and display spiders after confirming login
+						} else {
+							loginBtn.style.display = "inline";
+							logoutBtn.style.display = "none";
+							navUsername.style.display = "none";
+							bookContent.style.display = "none";
+						}
+					});
 
 				document.getElementById("sort").addEventListener("change", function () {
 					fetchSpidersInfo().then((data) => {
@@ -80,39 +105,35 @@
 							b.spiderName.localeCompare(a.spiderName)
 						);
 					}
-					return data;
+					return data; // Return unsorted data if 'default' is selected
 				}
 
 				function displaySpiders(data) {
 					const book = document.querySelector(".book");
 					const existingPages = document.querySelectorAll(".page");
-					existingPages.forEach((page) => page.remove());
+					existingPages.forEach((page) => page.remove()); // Clear existing pages
 
 					data.forEach((spider, index) => {
 						const page = document.createElement("article");
 						page.classList.add("page");
 						page.innerHTML = `
-                        <input type="checkbox" id="checkbox-page${index + 1}" />
-                        <section class="front-page">
-                            <h2>${spider.spiderName}</h2>
-                            <img src="${IMAGE_BASE_URL}${
-							spider.spiderImage
-						}" alt="${spider.spiderName}" class="spider-image"> 
-                            <p>${spider.facts || "No fact available"}</p>
-                            <label class="next" for="checkbox-page${
-															index + 1
-														}"></label>
-                        </section>
-                        <section class="back-page">
-                            <label class="prev" for="checkbox-page${
-															index + 1
-														}"></label>
-                        </section>
-                    `;
+                <input type="checkbox" id="checkbox-page${index + 1}" />
+                <section class="front-page">
+                    <h2>${spider.spiderName}</h2>
+                    <img src="${IMAGE_BASE_URL}${spider.spiderImage}" alt="${
+							spider.spiderName
+						}" class="spider-image"> 
+                    <p>${spider.facts || "No fact available"}</p>
+                    <label class="next" for="checkbox-page${index + 1}"></label>
+                </section>
+                <section class="back-page">
+                    <label class="prev" for="checkbox-page${index + 1}"></label>
+                </section>
+            `;
 						book.insertBefore(page, document.querySelector(".back-cover"));
 					});
 
-					showPage(0);
+					showPage(0); // Display the first page
 					showArrows();
 				}
 
@@ -143,9 +164,6 @@
 						showPage(currentPage - 1);
 					}
 				}
-
-				// Initially fetch and display spiders
-				fetchSpidersInfo().then((data) => displaySpiders(data));
 			});
 		</script>
 	</body>
