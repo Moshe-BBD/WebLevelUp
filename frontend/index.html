@@ -29,12 +29,8 @@
 		</header>
 
 		<section id="book-content" style="display: none">
-			<input type="checkbox" id="show-favorites" onchange="toggleFavorites()" />
-			<label for="show-favorites">Show Favorites Only</label>
-
 			<input type="checkbox" id="checkbox-cover" />
 			<input type="checkbox" id="checkbox-page1" />
-			<!-- Dynamic generation of checkboxes for additional pages -->
 			<main class="book">
 				<section class="cover">
 					<label for="checkbox-cover">
@@ -42,7 +38,6 @@
 					</label>
 				</section>
 
-				<!-- Dynamic generation of spider pages -->
 				<section class="back-cover"></section>
 			</main>
 
@@ -129,78 +124,45 @@
 							return null;
 						});
 				}
-				function fetchUserFavorites(userId) {
-					const apiUrl = `http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/api/user-favorites/${4}`;
-					return fetch(apiUrl)
-						.then((response) => {
-							if (!response.ok) {
-								throw new Error("Network response was not ok");
-							}
-							return response.json();
-						})
-						.then((data) => {
-							return data;
-						})
-						.catch((error) => {
-							console.error("Error fetching user favorites:", error);
-							return null;
-						});
-				}
 
-				function toggleFavorites() {
-					const showFavorites =
-						document.getElementById("show-favorites").checked;
-					if (showFavorites) {
-						fetchUserFavorites(userId).then((data) => {
-							if (data) {
-								renderSpiders(data);
-							} else {
-								console.error("Failed to fetch user favorites");
-							}
+				fetchSpidersInfo().then((data) => {
+					if (data) {
+						data.forEach((spider, index) => {
+							const page = document.createElement("article");
+							page.classList.add("page");
+							page.innerHTML = `
+                    <input type="checkbox" id="checkbox-page${index + 1}" />
+                    <section class="front-page">
+                        <h2>${spider.spiderName}</h2>
+						            <img src="${IMAGE_BASE_URL}${spider.spiderImage}" alt="${
+								spider.spiderName
+							}" class="spider-image"> 
+
+                        <p>${spider.facts || "No fact available"}</p>
+                        <label class="next" for="checkbox-page${
+													index + 1
+												}"></label>
+                    </section>
+                    <section class="back-page">
+                        <label class="prev" for="checkbox-page${
+													index + 1
+												}"></label>
+                    </section>
+                `;
+							document
+								.querySelector(".book")
+								.insertBefore(page, document.querySelector(".back-cover"));
 						});
+
+						currentPage = 0;
+
+						showPage(currentPage);
+
+						showArrows();
 					} else {
-						fetchSpidersInfo().then((data) => {
-							if (data) {
-								renderSpiders(data);
-							} else {
-								console.error("Failed to fetch spiders information");
-							}
-						});
+						console.error("Failed to fetch spiders information");
 					}
-				}
-
-				function renderSpiders(data) {
-					document.querySelector(".book").innerHTML = ""; // Clear existing spiders
-					data.forEach((spider, index) => {
-						const page = document.createElement("article");
-						page.classList.add("page");
-						page.innerHTML = `
-                        <input type="checkbox" id="checkbox-page${index + 1}" />
-                        <section class="front-page">
-                            <h2>${spider.spiderName}</h2>
-                            <img src="${IMAGE_BASE_URL}${
-							spider.spiderImage
-						}" alt="${spider.spiderName}" class="spider-image"> 
-                            <p>${spider.factContent || "No fact available"}</p>
-                            <label class="next" for="checkbox-page${
-															index + 1
-														}"></label>
-                        </section>
-                        <section class="back-page">
-                            <label class="prev" for="checkbox-page${
-															index + 1
-														}"></label>
-                        </section>
-                    `;
-						document.querySelector(".book").appendChild(page);
-					});
-					currentPage = 0;
-					showPage(currentPage);
-					showArrows();
-				}
-
-				// Initial fetch
-				toggleFavorites();
+				});
 			</script>
 		</section>
 	</body>
