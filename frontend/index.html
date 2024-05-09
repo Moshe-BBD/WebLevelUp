@@ -5,9 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<title>Spider Flip Book</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="styles.css" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<script src="app.js"></script>
 	</head>
 	<body>
@@ -26,52 +24,112 @@
 				</a>
 				<a id="logout-btn" href="/logout" style="display: none">Logout</a>
 			</nav>
+			<div class="sort-options">
+				<label for="sort">Sort by:</label>
+				<select id="sort">
+					<option value="default">Default Order</option>
+					<option value="asc">Name Ascending</option>
+					<option value="desc">Name Descending</option>
+				</select>
+			</div>
 		</header>
 
 		<section id="book-content" style="display: none">
 			<input type="checkbox" id="checkbox-cover" />
-			<input type="checkbox" id="checkbox-page1" />
-			<!-- Dynamic generation of checkboxes for additional pages -->
 			<main class="book">
 				<section class="cover">
 					<label for="checkbox-cover">
 						<img src="images/spiderPediaBookCover.png" alt="Cover Image" />
 					</label>
 				</section>
-
-				<!-- Dynamic generation of spider pages -->
 				<section class="back-cover"></section>
 			</main>
-
 			<span class="arrow left-arrow" onclick="prevPage()"></span>
 			<span class="arrow right-arrow" onclick="nextPage()"></span>
+		</section>
 
-			<script>
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				const IMAGE_BASE_URL =
+					"https://spiderpedia-bucket.s3.eu-west-1.amazonaws.com/";
 				let currentPage = 0;
 				const arrows = document.querySelectorAll(".arrow");
 
-				function showArrows() {
-					arrows.forEach((arrow) => {
-						arrow.style.display = "inline-block";
+				document.getElementById("sort").addEventListener("change", function () {
+					fetchSpidersInfo().then((data) => {
+						if (data) {
+							const sortedData = sortData(data, this.value);
+							displaySpiders(sortedData);
+						}
 					});
+				});
+
+				function fetchSpidersInfo() {
+					const apiUrl =
+						"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/api/spiders-info";
+					return fetch(apiUrl).then((response) => response.json());
 				}
 
-				function hideArrows() {
-					arrows.forEach((arrow) => {
-						arrow.style.display = "none";
+				function sortData(data, sortOrder) {
+					if (sortOrder === "asc") {
+						return data.sort((a, b) =>
+							a.spiderName.localeCompare(b.spiderName)
+						);
+					} else if (sortOrder === "desc") {
+						return data.sort((a, b) =>
+							b.spiderName.localeCompare(a.spiderName)
+						);
+					}
+					return data;
+				}
+
+				function displaySpiders(data) {
+					const book = document.querySelector(".book");
+					const existingPages = document.querySelectorAll(".page");
+					existingPages.forEach((page) => page.remove());
+
+					data.forEach((spider, index) => {
+						const page = document.createElement("article");
+						page.classList.add("page");
+						page.innerHTML = `
+                        <input type="checkbox" id="checkbox-page${index + 1}" />
+                        <section class="front-page">
+                            <h2>${spider.spiderName}</h2>
+                            <img src="${IMAGE_BASE_URL}${
+							spider.spiderImage
+						}" alt="${spider.spiderName}" class="spider-image"> 
+                            <p>${spider.facts || "No fact available"}</p>
+                            <label class="next" for="checkbox-page${
+															index + 1
+														}"></label>
+                        </section>
+                        <section class="back-page">
+                            <label class="prev" for="checkbox-page${
+															index + 1
+														}"></label>
+                        </section>
+                    `;
+						book.insertBefore(page, document.querySelector(".back-cover"));
 					});
+
+					showPage(0);
+					showArrows();
 				}
 
 				function showPage(pageIndex) {
 					const pages = document.querySelectorAll(".page");
 					pages.forEach((page, index) => {
-						if (index === pageIndex) {
-							page.style.display = "block";
-						} else {
-							page.style.display = "none";
-						}
+						page.style.display = index === pageIndex ? "block" : "none";
 					});
 					currentPage = pageIndex;
+				}
+
+				function showArrows() {
+					arrows.forEach((arrow) => (arrow.style.display = "inline-block"));
+				}
+
+				function hideArrows() {
+					arrows.forEach((arrow) => (arrow.style.display = "none"));
 				}
 
 				function nextPage() {
@@ -85,87 +143,10 @@
 						showPage(currentPage - 1);
 					}
 				}
-				const IMAGE_BASE_URL =
-					"https://spiderpedia-bucket.s3.eu-west-1.amazonaws.com/";
 
-				fetch(
-					"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/user"
-				)
-					.then((response) => response.json())
-					.then((data) => {
-						if (data !== "Not logged in") {
-							document.getElementById("book-content").style.display = "block";
-							document.getElementById("login-btn").style.display = "none";
-							document.getElementById("logout-btn").style.display = "inline";
-							document.getElementById("nav-username").style.display = "inline";
-							document.getElementById("nav-username").innerText = data.username;
-							showArrows();
-						} else {
-							document.getElementById("book-content").style.display = "none";
-							document.getElementById("login-btn").style.display = "inline";
-							document.getElementById("logout-btn").style.display = "none";
-							document.getElementById("nav-username").style.display = "none";
-						}
-					});
-
-				function fetchSpidersInfo() {
-					const apiUrl =
-						"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/api/spiders-info";
-					return fetch(apiUrl)
-						.then((response) => {
-							if (!response.ok) {
-								throw new Error("Network response was not ok");
-							}
-							return response.json();
-						})
-						.then((data) => {
-							return data;
-						})
-						.catch((error) => {
-							console.error("Error fetching spiders information:", error);
-							return null;
-						});
-				}
-
-				fetchSpidersInfo().then((data) => {
-					if (data) {
-						data.forEach((spider, index) => {
-							const page = document.createElement("article");
-							page.classList.add("page");
-							page.innerHTML = `
-                    <input type="checkbox" id="checkbox-page${index + 1}" />
-                    <section class="front-page">
-                        <h2>${spider.spiderName}</h2>
-						            <img src="${IMAGE_BASE_URL}${spider.spiderImage}" alt="${
-								spider.spiderName
-							}" class="spider-image"> 
-
-                        <p>${spider.facts || "No fact available"}</p>
-                        <label class="next" for="checkbox-page${
-													index + 1
-												}"></label>
-                    </section>
-                    <section class="back-page">
-                        <label class="prev" for="checkbox-page${
-													index + 1
-												}"></label>
-                    </section>
-                `;
-							document
-								.querySelector(".book")
-								.insertBefore(page, document.querySelector(".back-cover"));
-						});
-
-						currentPage = 0;
-
-						showPage(currentPage);
-
-						showArrows();
-					} else {
-						console.error("Failed to fetch spiders information");
-					}
-				});
-			</script>
-		</section>
+				// Initially fetch and display spiders
+				fetchSpidersInfo().then((data) => displaySpiders(data));
+			});
+		</script>
 	</body>
 </html>
