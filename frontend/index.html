@@ -56,21 +56,26 @@
 		</section>
 
 		<script>
+			let currentPage = 0;
+			let totalPages = 0;
 			function searchSpider() {
 				const searchText = document
 					.getElementById("search-input")
 					.value.toLowerCase();
 				const pages = document.querySelectorAll(".page");
+				let found = false;
 				for (let i = 0; i < pages.length; i++) {
 					const spiderName = pages[i]
 						.querySelector("h2")
 						.textContent.toLowerCase();
 					if (spiderName.includes(searchText)) {
-						currentPage = i; // Update current page
+						currentPage = i; // Update current page globally
 						showPage(currentPage); // Display the searched page
+						found = true;
 						break;
 					}
 				}
+				if (!found) alert("No spider found with that name.");
 			}
 			document.addEventListener("DOMContentLoaded", function () {
 				const loginBtn = document.getElementById("login-btn");
@@ -79,8 +84,6 @@
 				const bookContent = document.getElementById("book-content");
 				const IMAGE_BASE_URL =
 					"https://spiderpedia-bucket.s3.eu-west-1.amazonaws.com/";
-				let currentPage = 0;
-				let totalPages = 0;
 
 				function checkLoginAndUpdateContent() {
 					fetch(
@@ -104,7 +107,7 @@
 						});
 				}
 
-				checkLoginAndUpdateContent(); // Perform login check and update content accordingly
+				checkLoginAndUpdateContent();
 
 				document.getElementById("sort").addEventListener("change", function () {
 					fetchSpidersInfo().then((data) => {
