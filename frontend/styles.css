@@ -151,35 +151,6 @@ input {
     z-index: 99;
 }
 
-
-.next-btn,
-.prev-btn {
-    position: absolute;
-    /* bottom: 1em; Adjust position as needed */
-}
-
-.next,
-.prev {
-    position: absolute;
-    bottom: 1rem;
-    cursor: pointer;
-}
-
-.next-btn {
-    right: 27em !important;
-}
-    right: 27em !important;
-}
-
-.next {
-    right: 1rem;
-}
-
-.prev-btn {
-    left: 9em;
-}
-
-
 #checkbox-cover:checked ~ .book {
     transform: translateX(12.5rem); /* 200px converted to rem */
 }
@@ -204,20 +175,6 @@ input {
     z-index: 3;
 }
 
-.next-btn,
-.prev-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.next-btn {
-    right: 1.25rem;
-}
-
-.prev-btn {
-    left: 1.25rem;
-}
 
 a {
     text-decoration: none;
@@ -349,11 +306,11 @@ header h1#nav-title {
 .arrow {
     width: 3rem; /* Converted from 40px */
     height: 3rem; /* Converted from 40px */
-    top: 50%;
+    top: calc(50% -1.5rem);
     transform: translateY(-50%);
     cursor: pointer;
 	z-index: 1000;
-    display: none; /* Hide arrows by default */
+    position: fixed;
 }
 
 .left-arrow {
