@@ -107,7 +107,7 @@
         fetch('/user')
             .then(response => response.json())
             .then(data => {
-                if (true) {
+                if (data !== 'Not logged in') {
                     document.getElementById('book-content').style.display = 'block';
                     document.getElementById('login-btn').style.display = 'none';
                     document.getElementById('logout-btn').style.display = 'inline';
