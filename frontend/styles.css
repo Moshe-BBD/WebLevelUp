@@ -114,9 +114,12 @@ input {
     min-width: 2515.6250em;
     max-width: 25em;
     height: 330px;
-    position: relative;
     perspective: 62.5em;
     transition: 1s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
 }
 .page {
     width: 95%;
