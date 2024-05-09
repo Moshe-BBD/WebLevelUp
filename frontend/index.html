@@ -57,28 +57,31 @@
 				const IMAGE_BASE_URL =
 					"https://spiderpedia-bucket.s3.eu-west-1.amazonaws.com/";
 				let currentPage = 0;
-				const arrows = document.querySelectorAll(".arrow");
+				let totalPages = 0;
 
-				// Check login status and manage UI elements
-				fetch(
-					"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/user"
-				)
-					.then((response) => response.json())
-					.then((data) => {
-						if (data !== "Not logged in") {
-							loginBtn.style.display = "none";
-							logoutBtn.style.display = "inline";
-							navUsername.textContent = data.username;
-							navUsername.style.display = "inline";
-							bookContent.style.display = "block"; // Show the book content
-							fetchSpidersInfo().then(displaySpiders); // Fetch and display spiders after confirming login
-						} else {
-							loginBtn.style.display = "inline";
-							logoutBtn.style.display = "none";
-							navUsername.style.display = "none";
-							bookContent.style.display = "none";
-						}
-					});
+				function checkLoginAndUpdateContent() {
+					fetch(
+						"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/user"
+					)
+						.then((response) => response.json())
+						.then((data) => {
+							if (data !== "Not logged in") {
+								loginBtn.style.display = "none";
+								logoutBtn.style.display = "inline";
+								navUsername.textContent = data.username;
+								navUsername.style.display = "inline";
+								bookContent.style.display = "block";
+								fetchSpidersInfo().then(displaySpiders);
+							} else {
+								loginBtn.style.display = "inline";
+								logoutBtn.style.display = "none";
+								navUsername.style.display = "none";
+								bookContent.style.display = "none";
+							}
+						});
+				}
+
+				checkLoginAndUpdateContent(); // Perform login check and update content accordingly
 
 				document.getElementById("sort").addEventListener("change", function () {
 					fetchSpidersInfo().then((data) => {
@@ -105,13 +108,13 @@
 							b.spiderName.localeCompare(a.spiderName)
 						);
 					}
-					return data; // Return unsorted data if 'default' is selected
+					return data;
 				}
 
 				function displaySpiders(data) {
 					const book = document.querySelector(".book");
 					const existingPages = document.querySelectorAll(".page");
-					existingPages.forEach((page) => page.remove()); // Clear existing pages
+					existingPages.forEach((page) => page.remove()); // Remove existing pages
 
 					data.forEach((spider, index) => {
 						const page = document.createElement("article");
@@ -124,17 +127,13 @@
 							spider.spiderName
 						}" class="spider-image"> 
                     <p>${spider.facts || "No fact available"}</p>
-                    <label class="next" for="checkbox-page${index + 1}"></label>
-                </section>
-                <section class="back-page">
-                    <label class="prev" for="checkbox-page${index + 1}"></label>
                 </section>
             `;
 						book.insertBefore(page, document.querySelector(".back-cover"));
 					});
 
-					showPage(0); // Display the first page
-					showArrows();
+					totalPages = data.length;
+					showPage(currentPage); // Reset to first page
 				}
 
 				function showPage(pageIndex) {
@@ -142,28 +141,30 @@
 					pages.forEach((page, index) => {
 						page.style.display = index === pageIndex ? "block" : "none";
 					});
-					currentPage = pageIndex;
+					updateArrows();
 				}
 
-				function showArrows() {
-					arrows.forEach((arrow) => (arrow.style.display = "inline-block"));
+				function updateArrows() {
+					const leftArrow = document.querySelector(".left-arrow");
+					const rightArrow = document.querySelector(".right-arrow");
+					leftArrow.style.display = currentPage > 0 ? "inline-block" : "none";
+					rightArrow.style.display =
+						currentPage < totalPages - 1 ? "inline-block" : "none";
 				}
 
-				function hideArrows() {
-					arrows.forEach((arrow) => (arrow.style.display = "none"));
-				}
-
-				function nextPage() {
-					if (currentPage < document.querySelectorAll(".page").length - 1) {
-						showPage(currentPage + 1);
-					}
-				}
-
-				function prevPage() {
+				document.querySelector(".left-arrow").addEventListener("click", () => {
 					if (currentPage > 0) {
-						showPage(currentPage - 1);
+						currentPage--;
+						showPage(currentPage);
 					}
-				}
+				});
+
+				document.querySelector(".right-arrow").addEventListener("click", () => {
+					if (currentPage < totalPages - 1) {
+						currentPage++;
+						showPage(currentPage);
+					}
+				});
 			});
 		</script>
 	</body>
