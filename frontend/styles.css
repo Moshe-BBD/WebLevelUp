@@ -28,6 +28,7 @@ body {
 	transition-duration: 1s;
 	transform-style: preserve-3d;
 	perspective: 93.75em;
+    margin-top: 2rem;
 }
 
 .search-bar {
