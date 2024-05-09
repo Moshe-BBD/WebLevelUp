@@ -22,13 +22,12 @@ body {
 }
 
 .book {
-	width: 50vw;
+	width: 32vw;
 	height: 70vh;
 	position: relative;
 	transition-duration: 1s;
 	transform-style: preserve-3d;
 	perspective: 93.75em;
-	margin: auto;
 }
 
 .search-bar {
