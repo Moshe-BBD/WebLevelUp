@@ -22,7 +22,6 @@ body {
 }
 
 .book {
-	position: relative;
 	width: 32vw;
 	height: 70vh;
 	position: relative;
@@ -157,7 +156,7 @@ body {
 	border-radius: 0.9375rem 0 0 0.9375rem; /* 15px converted to rem */
 }
 
-.spider-page {
+.front-page {
 	position: absolute;
 	width: 100%;
 	height: 100%;
@@ -168,9 +167,6 @@ body {
 	flex-direction: column;
 	justify-content: center;
 	align-content: center;
-	image-rendering: crisp-edges;
-	font-family: "Cormorant Garamond";
-	align-items: center;
 }
 
 .back-page {
@@ -346,23 +342,23 @@ header h1#nav-title {
 
 .arrow {
 	width: 3rem;
-	height: 3rem;
+	height: 3rem; /* Converted from 40px */
 	top: calc(50% -1.5rem);
 	transform: translateY(-50%);
 	cursor: pointer;
 	z-index: 1000;
-	cursor: pointer;
+	position: fixed;
 }
 
 .left-arrow {
-	left: 1rem;
+	left: 47%;
 	background-image: url("https://img.icons8.com/material-outlined/24/000000/chevron-left.png");
 	background-size: cover;
 	position: fixed;
 }
 
 .right-arrow {
-	right: 1rem;
+	right: 22.5%;
 	background-image: url("https://img.icons8.com/material-outlined/24/000000/chevron-right.png");
 	background-size: cover;
 	position: fixed;
@@ -426,9 +422,4 @@ button {
 	font-size: 0.875rem;
 	color: black; /* Adjust as needed */
 	margin-right: 0.625rem; /* Adjust as needed */
-}
-
-#checkbox-cover:not(:checked) ~ .book .left-arrow,
-#checkbox-cover:not(:checked) ~ .book .right-arrow {
-	display: none;
 }
