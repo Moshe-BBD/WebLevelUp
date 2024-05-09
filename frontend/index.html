@@ -5,7 +5,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<title>Spider Flip Book</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="styles.css" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<script src="app.js"></script>
 	</head>
 	<body>
@@ -26,9 +28,10 @@
 			</nav>
 		</header>
 
-		<section id="book-content" style="display: flex">
+		<section id="book-content" style="display: none">
 			<input type="checkbox" id="checkbox-cover" />
 			<input type="checkbox" id="checkbox-page1" />
+			<!-- Dynamic generation of checkboxes for additional pages -->
 			<main class="book">
 				<section class="cover">
 					<label for="checkbox-cover">
@@ -36,6 +39,7 @@
 					</label>
 				</section>
 
+				<!-- Dynamic generation of spider pages -->
 				<section class="back-cover"></section>
 			</main>
 
