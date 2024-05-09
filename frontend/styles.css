@@ -29,9 +29,11 @@ body {
 	transform-style: preserve-3d;
 	perspective: 93.75em;
 }
-
-input {
-	display: none;
+.search-bar input[type="text"] {
+	display: inline-block;
+	padding: 8px;
+	width: 200px;
+	margin-right: 8px;
 }
 .cover,
 .back-cover {
@@ -49,10 +51,6 @@ input {
 	position: relative;
 	transition-duration: 1s;
 	perspective: 93.75rem; /* 1500px converted to rem */
-}
-
-input {
-	display: none;
 }
 
 .cover {
