@@ -39,7 +39,7 @@
 				id="search-input"
 				placeholder="Search for a spider..."
 			/>
-                <button id ="btnSearch" onclick="searchSpider()">Search</button>
+			<button id="btnSearch" onclick="searchSpider()">Search</button>
 		</div>
 		<section id="book-content" style="display: none">
 			<input type="checkbox" id="checkbox-cover" />
@@ -76,6 +76,20 @@
 					}
 				}
 				if (!found) alert("No spider found with that name.");
+			}
+			function showPage(pageIndex) {
+				const pages = document.querySelectorAll(".page");
+				pages.forEach((page, index) => {
+					page.style.display = index === pageIndex ? "block" : "none";
+				});
+				updateArrows();
+			}
+			function updateArrows() {
+				const leftArrow = document.querySelector(".left-arrow");
+				const rightArrow = document.querySelector(".right-arrow");
+				leftArrow.style.display = currentPage > 0 ? "inline-block" : "none";
+				rightArrow.style.display =
+					currentPage < totalPages - 1 ? "inline-block" : "none";
 			}
 			document.addEventListener("DOMContentLoaded", function () {
 				const loginBtn = document.getElementById("login-btn");
@@ -160,22 +174,6 @@
 
 					totalPages = data.length;
 					showPage(currentPage); // Reset to first page
-				}
-
-				function showPage(pageIndex) {
-					const pages = document.querySelectorAll(".page");
-					pages.forEach((page, index) => {
-						page.style.display = index === pageIndex ? "block" : "none";
-					});
-					updateArrows();
-				}
-
-				function updateArrows() {
-					const leftArrow = document.querySelector(".left-arrow");
-					const rightArrow = document.querySelector(".right-arrow");
-					leftArrow.style.display = currentPage > 0 ? "inline-block" : "none";
-					rightArrow.style.display =
-						currentPage < totalPages - 1 ? "inline-block" : "none";
 				}
 
 				document.querySelector(".left-arrow").addEventListener("click", () => {
