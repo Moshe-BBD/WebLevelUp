@@ -13,48 +13,49 @@ body {
 	background-position: center;
 	background-attachment: fixed; /* Optional: Fixes the background position */
 }
-
+ 
 /* General Reset */
 * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
 }
-
+ 
 .book {
-	width: 31.25em;
-	height: 37.5em;
-	position: relative;
-	transition-duration: 1s;
-	transform-style: preserve-3d;
-	perspective: 93.75em;
-}
+    width: 31.25em;
+    height: 37.5em;
+    position: relative;
+    transition-duration: 1s;
+    transform-style: preserve-3d;
+    perspective: 93.75em;
 
+}
+ 
 input {
-	display: none;
+    display: none;
 }
 .cover,
 .back-cover {
-	background-color: #321907;
-	width: 100%;
-	height: 100%;
-	border-radius: 0 15px 15px 0;
-	box-shadow: 0 0 5px rgb(41, 41, 41);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	transform-origin: center left;
-	width: 21.875rem; /* 350px converted to rem */
-	height: 28.125rem; /* 450px converted to rem */
-	position: relative;
-	transition-duration: 1s;
-	perspective: 93.75rem; /* 1500px converted to rem */
+    background-color: #A6A6A6;
+    width: 100%;
+    height: 100%;
+    border-radius: 0 15px 15px 0;
+    box-shadow: 0 0 5px rgb(41, 41, 41);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-origin: center left;
+    width: 21.875rem; /* 350px converted to rem */
+    height: 28.125rem; /* 450px converted to rem */
+    position: relative;
+    transition-duration: 1s;
+    perspective: 93.75rem; /* 1500px converted to rem */
 }
-
+ 
 input {
-	display: none;
+    display: none;
 }
-
+ 
 .cover {
 	position: absolute;
 	z-index: 4;
@@ -70,6 +71,15 @@ input {
 	transform-origin: center left;
 }
 
+#book-content{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    
+}
+
 .cover img {
 	width: 100%;
 	height: 100%;
@@ -82,7 +92,7 @@ input {
 	backface-visibility: hidden;
 	background-size: cover;
 }
-
+ 
 .back-cover {
 	background-color: #a6a6a6;
 	width: 100%;
@@ -97,42 +107,42 @@ input {
 	z-index: -1;
 	backface-visibility: hidden;
 }
-.book-content {
-	width: 65%;
-	min-width: 2515.625em;
-	max-width: 25em;
-	height: 330px;
-	position: relative;
-	perspective: 62.5em;
-	transition: 1s;
+.book-content{
+    width: 65%;
+    min-width: 2515.6250em;
+    max-width: 25em;
+    height: 330px;
+    position: relative;
+    perspective: 62.5em;
+    transition: 1s;
 }
 .page {
-	width: 95%;
-	height: 95%;
-	border-radius: 0 0.9375rem 0.9375rem 0; /* 15px converted to rem */
-	box-shadow: 0 0 0.3125rem rgb(41, 41, 41); /* 5px converted to rem */
-	display: flex;
-	backface-visibility: hidden;
-	background-color: white;
-	margin-top: 10px;
-	transform-origin: left;
-	transform-style: preserve-3d;
-	transform: rotateY(0deg);
-	transition-duration: 1.5s;
-	position: absolute;
-	background-color: white;
-	transform-origin: left;
-	transform-style: preserve-3d;
-	transform: rotateY(0deg);
-	transition-duration: 1.5s;
+    width: 95%;
+    height: 95%;
+    border-radius: 0 0.9375rem 0.9375rem 0; /* 15px converted to rem */
+    box-shadow: 0 0 0.3125rem rgb(41, 41, 41); /* 5px converted to rem */
+    display: flex;
+    backface-visibility: hidden;
+    background-color: white;
+    margin-top: 10px;
+    transform-origin: left;
+    transform-style: preserve-3d;
+    transform: rotateY(0deg);
+    transition-duration: 1.5s;
+    position: absolute;
+    background-color: white;
+    transform-origin: left;
+    transform-style: preserve-3d;
+    transform: rotateY(0deg);
+    transition-duration: 1.5s;
 }
-
+ 
 .page img {
 	width: 100%;
 	height: 100%;
 	border-radius: 0.9375rem 0 0 0.9375rem; /* 15px converted to rem */
 }
-
+ 
 .front-page {
 	position: absolute;
 	width: 100%;
@@ -145,7 +155,7 @@ input {
 	justify-content: center;
 	align-content: center;
 }
-
+ 
 .back-page {
 	transform: rotateY(180deg);
 	position: absolute;
@@ -154,21 +164,23 @@ input {
 	backface-visibility: hidden;
 	z-index: 99;
 }
-
+ 
 #checkbox-cover:checked ~ .book {
-	transform: translateX(12.5rem); /* 200px converted to rem */
+    transform: translateX(10.5rem); /* 200px converted to rem */
 }
-
+ 
 #checkbox-cover:checked ~ .book .cover {
-	transition: transform 1.5s, z-index 0.5s 0.5s;
-	transform: rotateY(-180deg);
-	z-index: 1;
+  
+    transition: transform 1.5s, z-index 0.5s 0.5s;
+    transform: rotateY(-180deg);
+    z-index: 1;
 }
-
+ 
 #checkbox-cover:checked ~ .book .page {
-	box-shadow: 0 0 0.1875rem rgb(99, 98, 98); /* 3px converted to rem */
+ 
+    box-shadow: 0 0 0.1875rem rgb(99, 98, 98); /* 3px converted to rem */
 }
-
+ 
 #checkbox-page1:checked ~ .book #page1 {
 	transform: rotateY(-180deg);
 	z-index: 2;
@@ -187,7 +199,7 @@ a {
 	border-radius: 0.625rem;
 	margin: 0.625rem;
 }
-
+ 
 #top-nav {
 	position: fixed; /* Fixed position at the top */
 	top: 0; /* Align to the top edge */
@@ -214,32 +226,32 @@ a {
 	z-index: 1000;
 	box-sizing: border-box;
 }
-
+ 
 .nav-left,
 .nav-right {
 	display: flex;
 	align-items: center;
 	gap: 0.3125rem;
 }
-
+ 
 #logo {
 	height: 1.875rem;
 	margin-right: 0.4375rem;
 }
-
+ 
 #nav-title {
 	font-size: 1.5rem;
 	color: #ffffff;
 	font-weight: bold;
 	margin: 0 auto;
 }
-
+ 
 #nav-username {
 	font-size: 1.125rem;
 	color: #ffffff;
 	display: inline;
 }
-
+ 
 #login-btn,
 #logout-btn {
 	color: #ffffff;
@@ -251,13 +263,13 @@ a {
 	transition: background-color 0.3s, color 0.3s;
 	font-size: 1rem;
 }
-
+ 
 #login-btn:hover,
 #logout-btn:hover {
 	background-color: #0b0b0b; /* Darker shade on hover */
 	background-color: #333333;
 }
-
+ 
 #login-btn:active,
 #logout-btn:active {
 	background-color: #1b1e21;
