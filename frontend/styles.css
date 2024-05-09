@@ -141,6 +141,7 @@ input {
 .prev-btn {
     position: absolute;
     /* bottom: 1em; Adjust position as needed */
+}
 
 .next,
 .prev {
@@ -150,13 +151,15 @@ input {
 }
 
 .next-btn {
-    right: 27em !important; 
+    right: 27em !important;
+}
 
 .next {
     right: 1rem;
 }
+
 .prev-btn {
-    left: 9em; 
+    left: 9em;
 }
 
 
@@ -324,6 +327,30 @@ header h1#nav-title {
     width: 100%;
     top: 0;
     left: 0;
+}
+
+.arrow {
+    width: 3rem; /* Converted from 40px */
+    height: 3rem; /* Converted from 40px */
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+	z-index: 1000;
+    display: none; /* Hide arrows by default */
+}
+
+.left-arrow {
+    left: 47%;
+    background-image: url('https://img.icons8.com/material-outlined/24/000000/chevron-left.png');
+    background-size: cover;
+    position:fixed;
+}
+
+.right-arrow {
+    right: 22.5%;
+    background-image: url('https://img.icons8.com/material-outlined/24/000000/chevron-right.png');
+    background-size: cover;
+    position:fixed;
 }
 
 
