@@ -43,11 +43,46 @@ passport.use(
 				  }/callback`
 				: `http://localhost:${process.env.PORT || 5000}/callback`,
 		},
-		(accessToken, refreshToken, profile, done) => {
-			done(null, profile);
+		async (accessToken, refreshToken, profile, done) => {
+			try {
+				const user = await findOrCreateUser(profile);
+				done(null, profile);
+			} catch (error) {
+				done(error);
+			}
 		}
 	)
 );
+
+async function findOrCreateUser(profile) {
+	const client = await pool.connect();
+	const emailAddress = "test@gmail.com"; 
+	// const emailAddress = profile.emails && profile.emails[0].value;
+
+	try {
+		// Check if the user already exists
+		// const result = await client.query('SELECT * FROM "User" WHERE "githubId" = $1', [profile.id]);
+		const result = await client.query(
+			'SELECT * FROM "User" WHERE "githubId" = $1',
+			[profile.id]
+		);
+		if (result.rows.length > 0) {
+			// User exists
+			return result.rows[0];
+		} else {
+			// Insert new user
+			const newUser = await client.query(
+				'INSERT INTO "User" ("userId","emailAddress", "username", "githubId") VALUES (DEFAULT,$1, $2, $3) RETURNING *',
+				[emailAddress, profile.username, profile.id]
+			);
+			return newUser.rows[0];
+		}
+	} catch (error) {
+		console.log(error);
+	} finally {
+		client.release();
+	}
+}
 
 passport.serializeUser((user, done) => {
 	done(null, user);
