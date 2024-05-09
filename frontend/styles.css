@@ -22,6 +22,7 @@ body {
 }
 
 .book {
+	position: relative;
 	width: 32vw;
 	height: 70vh;
 	position: relative;
@@ -167,9 +168,9 @@ body {
 	flex-direction: column;
 	justify-content: center;
 	align-content: center;
-    image-rendering: crisp-edges;
-    font-family: 'Cormorant Garamond';
-    align-items: center;
+	image-rendering: crisp-edges;
+	font-family: "Cormorant Garamond";
+	align-items: center;
 }
 
 .back-page {
@@ -350,18 +351,18 @@ header h1#nav-title {
 	transform: translateY(-50%);
 	cursor: pointer;
 	z-index: 1000;
-	position: fixed;
+	cursor: pointer;
 }
 
 .left-arrow {
-	left: 47%;
+	left: 1rem;
 	background-image: url("https://img.icons8.com/material-outlined/24/000000/chevron-left.png");
 	background-size: cover;
 	position: fixed;
 }
 
 .right-arrow {
-	right: 22.5%;
+	right: 1rem;
 	background-image: url("https://img.icons8.com/material-outlined/24/000000/chevron-right.png");
 	background-size: cover;
 	position: fixed;
