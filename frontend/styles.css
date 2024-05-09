@@ -177,9 +177,23 @@ body {
 	backface-visibility: hidden;
 	z-index: 99;
 }
-
+#checkbox-cover {
+	display: none;
+}
+#checkbox-cover {
+	position: absolute;
+	opacity: 0;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+	padding: 0;
+}
 #checkbox-cover:checked ~ .book {
-	transform: translateX(12.5rem); /* 200px converted to rem */
+	transform: translateX(12.5rem);
 }
 
 #checkbox-cover:checked ~ .book .cover {
@@ -189,7 +203,7 @@ body {
 }
 
 #checkbox-cover:checked ~ .book .page {
-	box-shadow: 0 0 0.1875rem rgb(99, 98, 98); /* 3px converted to rem */
+	box-shadow: 0 0 0.1875rem rgb(99, 98, 98);
 }
 
 #checkbox-page1:checked ~ .book #page1 {
