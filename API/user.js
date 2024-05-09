@@ -174,4 +174,52 @@ router.post("/favorite-spider", async (req, res) => {
 	}
 });
 
+router.delete("/favorite-spider", async (req, res) => {
+	try {
+		const { userId, spiderId } = req.query;
+
+		if (!userId || !spiderId) {
+			return res
+				.status(400)
+				.json({ message: "userId and spiderId are required" });
+		}
+
+		const userCheck = await pool.query(
+			'SELECT * FROM "User" WHERE "userId" = $1',
+			[userId]
+		);
+		if (userCheck.rowCount === 0) {
+			return res.status(404).json({ message: "User not found" });
+		}
+
+		const spiderCheck = await pool.query(
+			'SELECT * FROM "Spider" WHERE "spiderId" = $1',
+			[spiderId]
+		);
+		if (spiderCheck.rowCount === 0) {
+			return res.status(404).json({ message: "Spider not found" });
+		}
+
+		const existingFavorite = await pool.query(
+			'SELECT * FROM "FavouriteSpider" WHERE "userId" = $1 AND "spiderId" = $2',
+			[userId, spiderId]
+		);
+		if (existingFavorite.rowCount === 0) {
+			return res
+				.status(404)
+				.json({ message: "Spider not favorited by the user" });
+		}
+
+		await pool.query(
+			'DELETE FROM "FavouriteSpider" WHERE "userId" = $1 AND "spiderId" = $2',
+			[userId, spiderId]
+		);
+
+		res.status(200).json({ message: "Favorite spider deleted successfully" });
+	} catch (err) {
+		console.error(err);
+		res.status(500).json({ message: "Server Error" });
+	}
+});
+
 module.exports = router;
