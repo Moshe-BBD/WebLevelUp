@@ -11,10 +11,9 @@ body {
 	background-image: url("images/spider-web-background-free-vector.jpg");
 	background-size: cover;
 	background-position: center;
-	background-attachment: fixed; /* Optional: Fixes the background position */
+	background-attachment: fixed; /
 }
 
-/* General Reset */
 * {
 	margin: 0;
 	padding: 0;
@@ -110,8 +109,8 @@ body {
 	background-color: #a6a6a6;
 	width: 100%;
 	height: 100%;
-	border-radius: 0 0.9375rem 0.9375rem 0; /* 15px converted to rem */
-	box-shadow: 0 0 0.3125rem rgb(41, 41, 41); /* 5px converted to rem */
+	border-radius: 0 0.9375rem 0.9375rem 0; 
+	box-shadow: 0 0 0.3125rem rgb(41, 41, 41); 
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -132,8 +131,8 @@ body {
 .page {
 	width: 95%;
 	height: 95%;
-	border-radius: 0 0.9375rem 0.9375rem 0; /* 15px converted to rem */
-	box-shadow: 0 0 0.3125rem rgb(41, 41, 41); /* 5px converted to rem */
+	border-radius: 0 0.9375rem 0.9375rem 0; 
+	box-shadow: 0 0 0.3125rem rgb(41, 41, 41); 
 	display: flex;
 	backface-visibility: hidden;
 	background-color: white;
@@ -153,7 +152,7 @@ body {
 .page img {
 	width: 100%;
 	height: 100%;
-	border-radius: 0.9375rem 0 0 0.9375rem; /* 15px converted to rem */
+	border-radius: 0.9375rem 0 0 0.9375rem;
 }
 
 .front-page {
@@ -226,18 +225,18 @@ a {
 }
 
 #top-nav {
-	position: fixed; /* Fixed position at the top */
-	top: 0; /* Align to the top edge */
-	left: 0; /* Align to the left edge */
-	width: 100%; /* Occupy the full width */
-	display: flex; /* Horizontal layout for children */
-	justify-content: space-between; /* Space between left and right content */
-	align-items: center; /* Vertically center items */
-	background-color: #0b0b0b; /* Dark background */
-	padding: 0.5rem 1rem; /* Padding around the navbar */
-	box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.2); /* Subtle shadow */
-	z-index: 1000; /* Keep navbar above other content */
-	box-sizing: border-box; /* Include padding in width calculation */
+	position: fixed; 
+	top: 0; 
+	left: 0; 
+	width: 100%; 
+	display: flex;
+	justify-content: space-between; 
+	align-items: center;
+	background-color: #0b0b0b; 
+	padding: 0.5rem 1rem; 
+	box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.2);
+	z-index: 1000;
+	box-sizing: border-box;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -291,7 +290,7 @@ a {
 
 #login-btn:hover,
 #logout-btn:hover {
-	background-color: #0b0b0b; /* Darker shade on hover */
+	background-color: #0b0b0b; 
 	background-color: #333333;
 }
 
@@ -342,7 +341,7 @@ header h1#nav-title {
 
 .arrow {
 	width: 3rem;
-	height: 3rem; /* Converted from 40px */
+	height: 3rem;
 	cursor: pointer;
 	z-index: 1000;
 }
@@ -392,10 +391,10 @@ header h1#nav-title {
 button {
 	padding: 8px 16px;
 	cursor: pointer;
-	background-color: #64460f; /* Adjust color as needed */
+	background-color: #64460f; 
 	color: white;
 	border: none;
-	border-radius: 4px; /* Optional: rounded corners */
+	border-radius: 4px;
 }
 
 .sort-options {
@@ -420,8 +419,8 @@ button {
 
 #labelsort {
 	font-size: 0.875rem;
-	color: black; /* Adjust as needed */
-	margin-right: 0.625rem; /* Adjust as needed */
+	color: black; 
+	margin-right: 0.625rem; 
 }
 
 .spider-page {
