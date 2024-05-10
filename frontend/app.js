@@ -99,8 +99,10 @@ document.addEventListener("DOMContentLoaded", function () {
 			page.classList.add("page");
 			page.innerHTML = `
     <section class="spider-page">
+		<article class="arrow-container">
                 <span class="arrow left-arrow" onclick="prevPage()"></span>
 				<span class="arrow right-arrow" onclick="nextPage()"></span>
+			</article>
         <h2>${spider.spiderName}</h2>
         <img src="${IMAGE_BASE_URL}${spider.spiderImage}" alt="${
 				spider.spiderName
