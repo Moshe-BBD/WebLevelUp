@@ -1,5 +1,5 @@
 const express = require("express");
-const cors = require("cors"); // Import cors
+const cors = require("cors");
 const app = express();
 const AWS = require("aws-sdk");
 app.use(express.json());
