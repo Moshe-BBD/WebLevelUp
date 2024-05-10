@@ -10,8 +10,8 @@ function searchSpider() {
 	for (let i = 0; i < pages.length; i++) {
 		const spiderName = pages[i].querySelector("h2").textContent.toLowerCase();
 		if (spiderName.includes(searchText)) {
-			currentPage = i; // Update current page globally
-			showPage(currentPage); // Display the searched page
+			currentPage = i;
+			showPage(currentPage);
 			found = true;
 			break;
 		}
@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	function displaySpiders(data) {
 		const book = document.querySelector(".book");
 		const existingPages = document.querySelectorAll(".page");
-		existingPages.forEach((page) => page.remove()); // Remove existing pages
+		existingPages.forEach((page) => page.remove());
 
 		data.forEach((spider, index) => {
 			const page = document.createElement("article");
@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		});
 
 		totalPages = data.length;
-		showPage(currentPage); // Reset to first page
+		showPage(currentPage);
 	}
 
 	document.querySelector(".left-arrow").addEventListener("click", () => {
