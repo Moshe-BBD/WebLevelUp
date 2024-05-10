@@ -367,6 +367,10 @@ header h1#nav-title {
 	max-width: 50vh;
 	max-height: 50vh;
 	padding: 3rem 0;
+	transition: transform 0.5s;
+}
+.spider-image:hover {
+    transform: scale(1.15); 
 }
 .search-bar {
 	position: fixed;
