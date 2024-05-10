@@ -63,7 +63,7 @@ body {
 
 .cover,
 .back-cover {
-	background-color: #321907;
+	background-color:#a6a6a6;
 	width: 100%;
 	height: 100%;
 	border-radius: 0 1vw 1vw 0;
@@ -360,7 +360,7 @@ header h1#nav-title {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	gap: 2vw;
+	gap: 3vw;
 }
 
 .spider-image {
