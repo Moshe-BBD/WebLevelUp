@@ -9,8 +9,6 @@ const isProduction = process.env.NODE_ENV === "production";
 require("dotenv").config();
 const pool = require("./DB");
 const app = express();
-const authenticateSession = require("./authMiddleware");
-
 app.use(express.json());
 const corsOptions = {
 	origin: "http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000",
@@ -55,7 +53,7 @@ passport.use(
 		async (accessToken, refreshToken, profile, done) => {
 			try {
 				const user = await findOrCreateUser(profile);
-				done(null, { ...profile, accessToken });
+				done(null, profile);
 			} catch (error) {
 				done(error);
 			}
@@ -113,8 +111,7 @@ app.get(
 	"/callback",
 	passport.authenticate("github", { failureRedirect: "/" }),
 	(req, res) => {
-		const accessToken = req.user.accessToken;
-		res.redirect(`/?token=${accessToken}`);
+		res.redirect("/");
 	}
 );
 
@@ -136,7 +133,7 @@ app.get("/user", (req, res) => {
 });
 
 // API Routes
-app.use("/api", authenticateSession, userRouter);
+app.use("/api", userRouter);
 
 // Server setup
 const port = process.env.PORT || 5000;

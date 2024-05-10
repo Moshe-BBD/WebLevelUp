@@ -1,10 +1,6 @@
 let currentPage = 0;
 let totalPages = 0;
 
-const urlParams = new URLSearchParams(window.location.search);
-const accessToken = urlParams.get("token");
-sessionStorage.setItem("accessToken", accessToken);
-
 function searchSpider() {
 	const searchText = document
 		.getElementById("search-input")
@@ -38,6 +34,7 @@ function updateArrows() {
 	rightArrow.style.display =
 		currentPage < totalPages - 1 ? "inline-block" : "none";
 }
+
 document.addEventListener("DOMContentLoaded", function () {
 	const loginBtn = document.getElementById("login-btn");
 	const logoutBtn = document.getElementById("logout-btn");
@@ -46,24 +43,17 @@ document.addEventListener("DOMContentLoaded", function () {
 	const IMAGE_BASE_URL =
 		"https://spiderpedia-bucket.s3.eu-west-1.amazonaws.com/";
 
-	function checkLoginAndUpdateContent(token) {
-		fetch(
-			"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/user",
-			{
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			}
-		)
+	function checkLoginAndUpdateContent() {
+		fetch("http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/user")
 			.then((response) => response.json())
 			.then((data) => {
-				if (accessToken) {
+				if (data !== "Not logged in") {
 					loginBtn.style.display = "none";
 					logoutBtn.style.display = "inline";
 					navUsername.textContent = data.username;
 					navUsername.style.display = "inline";
 					bookContent.style.display = "block";
-					fetchSpidersInfo(token).then(displaySpiders);
+					fetchSpidersInfo().then(displaySpiders);
 				} else {
 					loginBtn.style.display = "inline";
 					logoutBtn.style.display = "none";
@@ -73,10 +63,10 @@ document.addEventListener("DOMContentLoaded", function () {
 			});
 	}
 
-	checkLoginAndUpdateContent(sessionStorage.getItem("accessToken"));
+	checkLoginAndUpdateContent();
 
 	document.getElementById("sort").addEventListener("change", function () {
-		fetchSpidersInfo(sessionStorage.getItem("accessToken")).then((data) => {
+		fetchSpidersInfo().then((data) => {
 			if (data) {
 				const sortedData = sortData(data, this.value);
 				displaySpiders(sortedData);
@@ -84,14 +74,10 @@ document.addEventListener("DOMContentLoaded", function () {
 		});
 	});
 
-	function fetchSpidersInfo(token) {
+	function fetchSpidersInfo() {
 		const apiUrl =
 			"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/api/spiders-info";
-		return fetch(apiUrl, {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		}).then((response) => response.json());
+		return fetch(apiUrl).then((response) => response.json());
 	}
 
 	function sortData(data, sortOrder) {
