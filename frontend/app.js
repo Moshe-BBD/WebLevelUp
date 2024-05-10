@@ -97,39 +97,22 @@ document.addEventListener("DOMContentLoaded", function () {
 		data.forEach((spider, index) => {
 			const page = document.createElement("article");
 			page.classList.add("page");
-			const arrowHTML = `
-            <span class="arrow left-arrow" onclick="prevPage()"></span>
-            <span class="arrow right-arrow" onclick="nextPage()"></span>
-        `;
 			page.innerHTML = `
-            ${arrowHTML}
-            <section class="spider-page">
-                <h2>${spider.spiderName}</h2>
-                <img src="${IMAGE_BASE_URL}${spider.spiderImage}" alt="${
+    <section class="spider-page">
+        <h2>${spider.spiderName}</h2>
+        <img src="${IMAGE_BASE_URL}${spider.spiderImage}" alt="${
 				spider.spiderName
 			}" class="spider-image">
-                <p>${spider.facts || "No fact available"}</p>
-            </section>
-            ${arrowHTML}
-        `;
+        <p>${spider.facts || "No fact available"}</p>
+    </section>
+`;
 			book.insertBefore(page, document.querySelector(".back-cover"));
 		});
-	}
-	document.addEventListener("click", function (event) {
-		if (event.target.classList.contains("left-arrow")) {
-			if (currentPage > 0) {
-				currentPage--;
-				showPage(currentPage);
-			}
-		}
 
-		if (event.target.classList.contains("right-arrow")) {
-			if (currentPage < totalPages - 1) {
-				currentPage++;
-				showPage(currentPage);
-			}
-		}
-	});
+		totalPages = data.length;
+		showPage(currentPage); // Reset to first page
+	}
+
 	document.querySelector(".left-arrow").addEventListener("click", () => {
 		if (currentPage > 0) {
 			currentPage--;
