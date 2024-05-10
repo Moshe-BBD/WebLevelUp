@@ -115,17 +115,18 @@ document.addEventListener("DOMContentLoaded", function () {
 		showPage(currentPage);
 	}
 
-	document.querySelector(".left-arrow").addEventListener("click", () => {
-		if (currentPage > 0) {
-			currentPage--;
-			showPage(currentPage);
-		}
-	});
-
-	document.querySelector(".right-arrow").addEventListener("click", () => {
-		if (currentPage < totalPages - 1) {
-			currentPage++;
-			showPage(currentPage);
+	document.addEventListener("click", function (event) {
+		const target = event.target;
+		if (target.classList.contains("left-arrow")) {
+			if (currentPage > 0) {
+				currentPage--;
+				showPage(currentPage);
+			}
+		} else if (target.classList.contains("right-arrow")) {
+			if (currentPage < totalPages - 1) {
+				currentPage++;
+				showPage(currentPage);
+			}
 		}
 	});
 });
