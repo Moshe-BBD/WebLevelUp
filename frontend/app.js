@@ -1,3 +1,5 @@
+let currentPage = 0;
+let totalPages = 0;
 document.addEventListener("DOMContentLoaded", () => {
 	const carousel = document.getElementById("carousel");
 	const stubSpiders = [
@@ -125,4 +127,59 @@ document.addEventListener("DOMContentLoaded", () => {
 	}
 
 	centerCard(carousel.children[0]);
+
+	// Add event listener to the form
+	const searchForm = document.getElementById("searchForm");
+	searchForm.addEventListener("submit", function (event) {
+		event.preventDefault(); // Prevent default form submission behavior
+		searchSpider(); // Call the searchSpider function when the form is submitted
+	});
 });
+
+function searchSpider() {
+	const searchText = document.getElementById("searchInput").value.toLowerCase();
+	const pages = document.querySelectorAll("#carousel article");
+	let found = false;
+	for (let i = 0; i < pages.length; i++) {
+		const spiderName = pages[i].querySelector("h2").textContent.toLowerCase();
+		if (spiderName.includes(searchText)) {
+			currentPage = i;
+			showPage(currentPage);
+			found = true;
+			break;
+		}
+	}
+	if (!found) alert("No spider found with that name.");
+}
+
+function showPage(pageIndex) {
+	const carousel = document.getElementById("carousel");
+	const pages = carousel.querySelectorAll("article");
+	pages.forEach((page, index) => {
+		page.style.display = index === pageIndex ? "block" : "none";
+	});
+}
+
+function resetPage() {
+	// Reset search input value
+	document.getElementById("searchInput").value = "";
+
+	// Show all spider cards
+	const pages = document.querySelectorAll("#carousel article");
+	pages.forEach((page) => {
+		page.style.display = "block";
+	});
+
+	// Reset active card to the first one
+	const activeCard = document.querySelector("#carousel article.active");
+	if (activeCard) {
+		activeCard.classList.remove("active");
+	}
+	const firstCard = document.querySelector("#carousel article");
+	if (firstCard) {
+		firstCard.classList.add("active");
+	}
+
+	// Center the first card
+	centerCard(carousel.children[0]);
+}

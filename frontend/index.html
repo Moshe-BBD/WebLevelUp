@@ -13,17 +13,23 @@
 				<nav class="top-nav">
 					<div class="nav-logo">Spider Flip Book</div>
 					<ul class="nav-links">
+						<li><a href="#reset" onclick="resetPage()">Reset</a></li>
 						<li><a href="#about">Sort by Name</a></li>
 						<li><a href="#species">Filter likes</a></li>
 					</ul>
 				</nav>
 			</header>
-			<form class="search-container">
+			<div class="search-container">
 				<container class="search-wrapper">
-					<input type="text" class="search-input" placeholder="Search..." />
+					<input
+						type="text"
+						id="searchInput"
+						class="search-input"
+						placeholder="Search..."
+					/>
 					<button class="search-btn" onclick="searchSpider()">Search</button>
 				</container>
-			</form>
+			</div>
 
 			<section id="carousel-container">
 				<section id="carousel" aria-label="Spider Cards">
@@ -31,7 +37,7 @@
 				</section>
 			</section>
 		</section>
-
+		<script></script>
 		<script src="app.js"></script>
 	</body>
 </html>

@@ -1,12 +1,15 @@
 * {
 	margin: 0;
 	padding: 0;
+	max-height: 100vh;
 }
 body {
 	display: flex;
 	justify-content: center;
-	min-height: 100vh;
 	background-image: url("images/spider-web-background-free-vector.jpg");
+	background-size: cover;
+	background-position: center top;
+	max-height: 100vh;
 }
 
 #carousel-container {
@@ -14,7 +17,7 @@ body {
 	position: relative;
 	justify-content: center;
 	align-items: center;
-	filter: blur(5px);
+	/* filter: blur(5px); */
 }
 
 #carousel {
