@@ -1,184 +1,293 @@
-body, html {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    /* height: 100%; */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-image: url("images/spider-web-background-free-vector.jpg");
-    height: 100vh; /* Use viewport height instead of 100% */
-    overflow: hidden;
+* {
+	margin: 0;
+	padding: 0;
+}
+body {
+	display: flex;
+	justify-content: center;
+	min-height: 100vh;
+	background-image: url("images/spider-web-background-free-vector.jpg");
 }
 
 #carousel-container {
-    width: 100%; /* Full width to use the space efficiently */
-    position: relative; /* Needed for absolute child positioning */
-    justify-content: center; /* Center the carousel container */
-    align-items: center;
+	width: 100%;
+	position: relative;
+	justify-content: center;
+	align-items: center;
+	filter: blur(5px);
 }
 
 #carousel {
-    display: flex;
-    justify-content: flex-start; /* Align children to the start */
-    transition: transform 0.5s ease; /* Smooth transition for sliding */
-    will-change: transform; /* Optimize for transformations */
+	display: flex;
+	justify-content: flex-start;
+	transition: transform 0.5s ease;
+	will-change: transform;
 }
 
 article {
-    flex: 0 0 20%; /* Width setting to keep peeking effect */
-    margin: 0 1%; /* Space between cards */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between; /* Changes to space-between to distribute space inside the card */
-    padding: 1rem;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    border: 1px solid #ccc;
-    background-color: #fff;
-    border-radius: 15px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    height: 60vh; /* Initial responsive height setting */
-    max-height: 400px; /* Prevents the cards from becoming too tall on very large screens */
+	flex: 0 0 20%;
+	margin: 0 1%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	padding: 1rem;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	border: 1px solid #ccc;
+	background-color: #fff;
+	border-radius: 15px;
+	transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+	position: relative;
+	overflow: hidden;
+	height: 60vh;
+	max-height: 400px;
 }
 
 @media (min-height: 800px) {
-    article {
-        height: 70vh; /* Increases height for screens with more vertical space */
-        max-height: 500px; /* Adjusts maximum height */
-    }
+	article {
+		height: 70vh;
+		max-height: 500px;
+	}
 }
 
 @media (min-height: 1200px) {
-    article {
-        height: 80vh; /* Further increases height for very tall screens */
-        max-height: 80vh; /* Further adjusts maximum height */
-    }
+	article {
+		height: 80vh;
+		max-height: 80vh;
+	}
 }
 
-
 #carousel article {
-    flex: 0 0 calc(100% / 3 - 2%); /* Adjust the number of visible cards based on the viewport */
-    margin: 0 3%; /* Space between cards */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    border: 1px solid #ccc;
-    background-color: #fff;
-    border-radius: 15px;
-    transition: all 0.3s ease; /* Smooth transitions for all properties */
-    position: relative;
-    overflow: hidden;
+	flex: 0 0 calc(100% / 3 - 2%);
+	margin: 0 3%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 1rem;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	border: 1px solid #ccc;
+	background-color: #fff;
+	border-radius: 15px;
+	transition: all 0.3s ease;
+	position: relative;
+	overflow: hidden;
 }
 
 #carousel article.active {
-    flex: 0 0 30%; /* Larger size for the active card */
-    border: 2px solid #0066cc; /* More pronounced border for active card */
-    background-color: #e6f2ff; /* Lighter background to stand out */
-    box-shadow: 0 6px 12px rgba(0,0,50,0.3); /* Stronger shadow for emphasis */
-    transform: scale(1.1); /* Enlarges card on hover */
-    opacity: 1; /* Full opacity on hover */
-    z-index: 3; /* Brings hovered card above others */
-}
-
-/* Adjustments for navigation buttons to ensure they are on top of the cards */
-button {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 2; /* Ensures buttons are clickable and on top of cards */
+	flex: 0 0 30%;
+	border: 2px solid #0066cc;
+	background-color: #e6f2ff;
+	box-shadow: 0 6px 12px rgba(0, 0, 50, 0.3);
+	transform: scale(1.1);
+	opacity: 1;
+	z-index: 3;
 }
 
 #carousel article:hover {
-    transform: scale(1.1); /* Slightly larger scale to highlight */
-    z-index: 10;
+	transform: scale(1.1);
+	z-index: 10;
 }
 
 h2 {
-    font-size: 1rem; /* Title size */
-    color: #333;
-    margin-bottom: 1rem; /* Space below title */
-    text-align: center; /* Center title text */
+	font-size: 1rem;
+	color: #333;
+	margin-bottom: 1rem;
+	text-align: center;
 }
 
 img {
-    width: 80%; /* Consistent width filling the container */
-    height: 20%; /* Auto height to maintain aspect ratio */
-    max-height: 15vh; /* Limit image height to 15% of the viewport height */
-    object-fit: cover; /* Ensures the image covers the area, maintaining aspect ratio */
-    margin-bottom: 1rem; /* Space below image */
-    display: block; /* Ensures the image is treated as a block-level element, helping with alignment */
+	width: 80%;
+	height: 20%;
+	max-height: 15vh;
+	object-fit: cover;
+	margin-bottom: 1rem;
+	display: block;
 }
 
 @media (max-width: 768px) {
-    img {
-        max-height: 20vh; /* Allows a bit more vertical space on smaller screens */
-    }
+	img {
+		max-height: 20vh;
+	}
 }
 
 @media (max-width: 480px) {
-    img {
-        max-height: 25vh; /* Additional vertical space for very small screens */
-    }
+	img {
+		max-height: 25vh;
+	}
 }
 
 p {
-    font-size: clamp(0.5rem, 1vw, 1.5rem); /* Dynamically adjust font size */
-    color: #666;
-    text-align: center;
-    margin-top: 0;
-    background-color: #f8f8f8;
-    padding: 1rem;
-    border-radius: 10px;
-    width: 95%; /* Keeps width relative to its container, allowing some margins */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    box-sizing: border-box; /* Includes padding and border in the element's total width and height */
-    overflow: hidden; /* Prevents text from overflowing the box */
-    max-height: 20vh; /* Maximum height to ensure text box doesn't grow too large */
-    display: flex; /* Ensures the layout is flexible */
-    flex-direction: column; /* Stacks content vertically */
-    justify-content: center; /* Centers content vertically within the box */
+	font-size: clamp(0.5rem, 1vw, 1.5rem);
+	color: #666;
+	text-align: center;
+	margin-top: 0;
+	background-color: #f8f8f8;
+	padding: 1rem;
+	border-radius: 10px;
+	width: 95%;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	box-sizing: border-box;
+	overflow: hidden;
+	max-height: 20vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 }
 
 #carousel article p {
-    margin-top: 0.5rem;
+	margin-top: 0.5rem;
 }
 
-
 .heart-btn {
-    cursor: pointer;
-    border: none;
-    background: transparent;
-    font-size: 1.5rem;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    color: #ccc; /* Default color */
-    transition: color 0.3s;
+	cursor: pointer;
+	border: none;
+	background: transparent;
+	font-size: 1.5rem;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	color: #ccc;
+	transition: color 0.3s;
 }
 
 .heart-btn.liked {
-    color: #ff4136; /* Liked state color */
+	color: #ff4136;
 }
 
 .page-number {
-    font-size: 0.8em;
-    color: #666;
-    width: 100%;
-    text-align: center;
-    background-color: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    border-top: 1px solid #ccc;
-    height: 3vh;
-
-    /* Flexbox properties for vertical centering */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+	font-size: 0.8em;
+	color: #666;
+	width: 100%;
+	text-align: center;
+	background-color: rgba(255, 255, 255, 0.8);
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	border-top: 1px solid #ccc;
+	height: 3vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	min-width: 100vw;
+}
+.search-container {
+	max-width: 40%;
+	border-radius: 20px;
+	position: relative;
+	margin-top: 1%;
+	margin-bottom: 3rem;
 }
 
+.search-wrapper {
+	display: flex;
+	justify-content: center;
+}
+
+.search-input {
+	padding: 10px 20px;
+	font-size: 1em;
+	border: 2px solid #555;
+	border-radius: 20px 0 0 20px;
+	outline: none;
+	transition: all 0.3s ease;
+	background-color: #333;
+	color: #eee;
+}
+.header-width {
+	width: 100%;
+}
+.search-wrapper {
+	display: flex;
+	border: 1px solid transparent;
+}
+.search-input:focus {
+	border-color: transparent;
+}
+
+.search-btn {
+	background-color: #555;
+	border: none;
+	color: #eee;
+	padding: 10px 20px;
+	font-size: 1em;
+	border-radius: 0 20px 20px 0;
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+
+.search-btn:hover {
+	background-color: #777;
+}
+.tab-container {
+	max-width: 100%;
+	margin: 10px auto;
+	overflow: hidden;
+	border-radius: 10px;
+	position: relative;
+	z-index: 200;
+}
+.tab-options {
+	display: flex;
+	background-color: #555;
+	color: #eee;
+}
+.tab-option {
+	flex: 1;
+	text-align: center;
+	padding: 10px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+.tab-option:hover {
+	background-color: #777;
+}
+.tab-option.active {
+	background-color: #333;
+}
+
+.header-content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 20px;
+	width: 100%;
+}
+
+.top-nav {
+	background-color: #333;
+	color: #eee;
+	padding: 15px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.nav-logo {
+	font-size: 1.2em;
+	font-weight: bold;
+}
+
+.nav-links {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+}
+
+.nav-links li {
+	margin-left: 20px;
+}
+
+.nav-links a {
+	color: #eee;
+	text-decoration: none;
+	transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+	color: #333;
+}
