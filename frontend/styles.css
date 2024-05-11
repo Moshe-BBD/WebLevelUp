@@ -200,6 +200,28 @@ p {
 	background-color: #333;
 	color: #eee;
 }
+.login-button {
+	background-color: #777;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	padding: 10px 20px;
+	font-size: 16px;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+	background-color: #555;
+}
+
+.login-button:focus {
+	outline: none;
+}
+
 .header-width {
 	width: 100%;
 }
