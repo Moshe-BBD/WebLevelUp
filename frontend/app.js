@@ -1,5 +1,6 @@
 let currentPage = 0;
 let totalPages = 0;
+let ascendingOrder = true;
 document.addEventListener("DOMContentLoaded", () => {
 	const carousel = document.getElementById("carousel");
 	const stubSpiders = [
@@ -75,58 +76,70 @@ document.addEventListener("DOMContentLoaded", () => {
 		},
 	];
 
-	stubSpiders.forEach((spider, index) => {
-		const IMAGE_BASE_URL =
-			"https://spiderpedia-bucket.s3.eu-west-1.amazonaws.com/";
-		const card = document.createElement("article");
-		const img = document.createElement("img");
-		const title = document.createElement("h2");
-		const desc = document.createElement("p");
-		const likeBtn = document.createElement("button");
-		const pageNumber = document.createElement("span");
+	function renderSpiderCards(spiderArray) {
+		carousel.innerHTML = "";
 
-		img.src = IMAGE_BASE_URL + spider.spiderImage;
-		img.alt = `Image of ${spider.spiderName}`;
-		title.textContent = spider.spiderName;
-		desc.textContent = spider.facts;
-		likeBtn.classList.add("heart-btn");
-		likeBtn.innerHTML = "❤";
-		pageNumber.textContent = `Page ${index + 1} of ${stubSpiders.length}`;
-		pageNumber.classList.add("page-number");
+		spiderArray.forEach((spider, index) => {
+			const IMAGE_BASE_URL =
+				"https://spiderpedia-bucket.s3.eu-west-1.amazonaws.com/";
+			const card = document.createElement("article");
+			const img = document.createElement("img");
+			const title = document.createElement("h2");
+			const desc = document.createElement("p");
+			const likeBtn = document.createElement("button");
+			const pageNumber = document.createElement("span");
 
-		likeBtn.addEventListener("click", (event) => {
-			likeBtn.classList.toggle("liked");
-			event.stopPropagation();
+			img.src = IMAGE_BASE_URL + spider.spiderImage;
+			img.alt = `Image of ${spider.spiderName}`;
+			title.textContent = spider.spiderName;
+			desc.textContent = spider.facts;
+			likeBtn.classList.add("heart-btn");
+			likeBtn.innerHTML = "❤";
+			pageNumber.textContent = `Page ${index + 1} of ${spiderArray.length}`;
+			pageNumber.classList.add("page-number");
+
+			likeBtn.addEventListener("click", (event) => {
+				likeBtn.classList.toggle("liked");
+				event.stopPropagation();
+			});
+
+			card.appendChild(title);
+			card.appendChild(img);
+			card.appendChild(desc);
+			card.appendChild(likeBtn);
+			card.appendChild(pageNumber);
+			carousel.appendChild(card);
+
+			card.addEventListener("click", () => {
+				document
+					.querySelectorAll("#carousel article")
+					.forEach((c) => c.classList.remove("active"));
+				card.classList.add("active");
+				centerCard(card);
+			});
+
+			if (index === 0) {
+				card.classList.add("active");
+			}
 		});
 
-		card.appendChild(title);
-		card.appendChild(img);
-		card.appendChild(desc);
-		card.appendChild(likeBtn);
-		card.appendChild(pageNumber);
-		carousel.appendChild(card);
-
-		card.addEventListener("click", () => {
-			document
-				.querySelectorAll("#carousel article")
-				.forEach((c) => c.classList.remove("active"));
-			card.classList.add("active");
-			centerCard(card);
-		});
-
-		if (index === 0) {
-			card.classList.add("active");
-		}
-	});
-
-	function centerCard(selectedCard) {
-		const activeCardOffset =
-			selectedCard.offsetLeft + selectedCard.offsetWidth / 2;
-		const shift = carousel.offsetWidth / 2 - activeCardOffset;
-		carousel.style.transform = `translateX(${shift}px)`;
+		centerCard(carousel.children[0]);
 	}
 
-	centerCard(carousel.children[0]);
+	renderSpiderCards(stubSpiders);
+
+	const sortByNameLink = document.querySelector('a[href="#about"]');
+	sortByNameLink.addEventListener("click", sortSpidersByName);
+
+	function sortSpidersByName() {
+		if (ascendingOrder) {
+			stubSpiders.sort((a, b) => a.spiderName.localeCompare(b.spiderName));
+		} else {
+			stubSpiders.sort((a, b) => b.spiderName.localeCompare(a.spiderName));
+		}
+		ascendingOrder = !ascendingOrder;
+		renderSpiderCards(stubSpiders);
+	}
 
 	const searchForm = document.getElementById("searchForm");
 	searchForm.addEventListener("submit", function (event) {
@@ -134,6 +147,14 @@ document.addEventListener("DOMContentLoaded", () => {
 		searchSpider();
 	});
 });
+
+function centerCard(selectedCard) {
+	const carousel = document.getElementById("carousel");
+	const activeCardOffset =
+		selectedCard.offsetLeft + selectedCard.offsetWidth / 2;
+	const shift = carousel.offsetWidth / 2 - activeCardOffset;
+	carousel.style.transform = `translateX(${shift}px)`;
+}
 
 function searchSpider() {
 	const searchText = document.getElementById("searchInput").value.toLowerCase();
@@ -151,12 +172,12 @@ function searchSpider() {
 	if (!found) alert("No spider found with that name.");
 }
 
-function showPage(pageIndex) {
+function moveCarousel(selectedCard) {
 	const carousel = document.getElementById("carousel");
-	const pages = carousel.querySelectorAll("article");
-	pages.forEach((page, index) => {
-		page.style.display = index === pageIndex ? "block" : "none";
-	});
+	const activeCardOffset =
+		selectedCard.offsetLeft + selectedCard.offsetWidth / 2;
+	const shift = carousel.offsetWidth / 2 - activeCardOffset;
+	carousel.style.transform = `translateX(${shift}px)`;
 }
 
 function resetPage() {
@@ -173,14 +194,6 @@ function resetPage() {
 	const firstCard = document.querySelector("#carousel article");
 	if (firstCard) {
 		firstCard.classList.add("active");
+		moveCarousel(firstCard);
 	}
-
-	centerCard(carousel.children[0]);
-}
-function moveCarousel(selectedCard) {
-	const carousel = document.getElementById("carousel");
-	const activeCardOffset =
-		selectedCard.offsetLeft + selectedCard.offsetWidth / 2;
-	const shift = carousel.offsetWidth / 2 - activeCardOffset;
-	carousel.style.transform = `translateX(${shift}px)`;
 }
