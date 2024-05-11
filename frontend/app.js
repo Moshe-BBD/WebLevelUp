@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		const title = document.createElement("h2");
 		const desc = document.createElement("p");
 		const likeBtn = document.createElement("button");
-		const pageNumber = document.createElement("span"); // Create a span for the page number
+		const pageNumber = document.createElement("span");
 
 		img.src = IMAGE_BASE_URL + spider.spiderImage;
 		img.alt = `Image of ${spider.spiderName}`;
@@ -91,19 +91,19 @@ document.addEventListener("DOMContentLoaded", () => {
 		desc.textContent = spider.facts;
 		likeBtn.classList.add("heart-btn");
 		likeBtn.innerHTML = "❤";
-		pageNumber.textContent = `Page ${index + 1} of ${stubSpiders.length}`; // Setting the page number
+		pageNumber.textContent = `Page ${index + 1} of ${stubSpiders.length}`;
 		pageNumber.classList.add("page-number");
 
 		likeBtn.addEventListener("click", (event) => {
 			likeBtn.classList.toggle("liked");
-			event.stopPropagation(); // Prevent the card click event from firing
+			event.stopPropagation();
 		});
 
 		card.appendChild(title);
 		card.appendChild(img);
 		card.appendChild(desc);
 		card.appendChild(likeBtn);
-		card.appendChild(pageNumber); // Append the page number to the card
+		card.appendChild(pageNumber);
 		carousel.appendChild(card);
 
 		card.addEventListener("click", () => {
@@ -128,11 +128,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	centerCard(carousel.children[0]);
 
-	// Add event listener to the form
 	const searchForm = document.getElementById("searchForm");
 	searchForm.addEventListener("submit", function (event) {
-		event.preventDefault(); // Prevent default form submission behavior
-		searchSpider(); // Call the searchSpider function when the form is submitted
+		event.preventDefault();
+		searchSpider();
 	});
 });
 
@@ -144,7 +143,7 @@ function searchSpider() {
 		const spiderName = pages[i].querySelector("h2").textContent.toLowerCase();
 		if (spiderName.includes(searchText)) {
 			currentPage = i;
-			showPage(currentPage);
+			moveCarousel(pages[i]);
 			found = true;
 			break;
 		}
@@ -161,16 +160,12 @@ function showPage(pageIndex) {
 }
 
 function resetPage() {
-	// Reset search input value
 	document.getElementById("searchInput").value = "";
-
-	// Show all spider cards
 	const pages = document.querySelectorAll("#carousel article");
 	pages.forEach((page) => {
 		page.style.display = "block";
 	});
 
-	// Reset active card to the first one
 	const activeCard = document.querySelector("#carousel article.active");
 	if (activeCard) {
 		activeCard.classList.remove("active");
@@ -180,6 +175,12 @@ function resetPage() {
 		firstCard.classList.add("active");
 	}
 
-	// Center the first card
 	centerCard(carousel.children[0]);
+}
+function moveCarousel(selectedCard) {
+	const carousel = document.getElementById("carousel");
+	const activeCardOffset =
+		selectedCard.offsetLeft + selectedCard.offsetWidth / 2;
+	const shift = carousel.offsetWidth / 2 - activeCardOffset;
+	carousel.style.transform = `translateX(${shift}px)`;
 }
