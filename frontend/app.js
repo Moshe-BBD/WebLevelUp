@@ -1,7 +1,6 @@
 let currentPage = 0;
 let totalPages = 0;
 
-// Stub data for spiders information
 const stubSpiders = [
 	{
 		spiderId: 4,
@@ -90,6 +89,7 @@ function searchSpider() {
 			break;
 		}
 	}
+	alert(found);
 	if (!found) alert("No spider found with that name.");
 }
 

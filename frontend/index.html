@@ -7,51 +7,45 @@
 		<title>Spider Flip Book</title>
 		<link rel="stylesheet" href="styles.css" />
 	</head>
-	<body>
-		<header id="top-nav">
-			<img src="images/spiderLogo.png" alt="Logo" id="logo" />
-			<h1 id="nav-title">SPIDERPEDIA</h1>
-			<nav class="nav-right">
-				<p id="nav-username"></p>
-				<a id="login-btn" href="/login">
-					<img
-						src="images/githubLogo.png"
-						alt="GitHub Logo"
-						class="github-icon"
-					/>
-					Login
-				</a>
-				<a id="logout-btn" href="/logout" style="display: none">Logout</a>
-			</nav>
-		</header>
-		<section class="search-bar">
-			<section class="sort-options">
-				<label id="labelsort" for="sort">Sort by:</label>
-				<select id="sort">
-					<option value="default">Default Order</option>
-					<option value="asc">Name Ascending</option>
-					<option value="desc">Name Descending</option>
-				</select>
-			</section>
-			<input
-				type="text"
-				id="search-input"
-				placeholder="Search for a spider..."
-			/>
-			<button id="btnSearch" onclick="searchSpider()">Search</button>
-		</section>
-		<section id="book-content" style="display: none">
-			<input type="checkbox" id="checkbox-cover" />
-			<main class="book">
-				<section class="cover">
-					<label for="checkbox-cover">
-						<img src="images/spiderPediaBookCover.png" alt="Cover Image" />
-					</label>
-				</section>
 
-				<section class="back-cover"></section>
-			</main>
-		</section>
+	<body>
+		<container class="content">
+			<header class="header-width">
+				<nav class="top-nav">
+					<div class="nav-logo">Spider Flip Book</div>
+					<ul class="nav-links">
+						<li><a href="#about">About Spiders</a></li>
+						<li><a href="#species">Spider Species</a></li>
+						<li><a href="#webs">Webs & Bites</a></li>
+						<li><a href="#contact">Contact</a></li>
+					</ul>
+				</nav>
+			</header>
+			<form class="search-container">
+				<container class="search-wrapper">
+					<input type="text" class="search-input" placeholder="Search..." />
+					<button class="search-btn" onclick="searchSpider()">Search</button>
+				</container>
+			</form>
+			<div class="tab-container">
+				<div class="tab-options">
+					<div class="tab-option active" data-sort="default">Default</div>
+					<div class="tab-option" data-sort="descending">Descending</div>
+					<div class="tab-option" data-sort="ascending">Ascending</div>
+				</div>
+			</div>
+		</container>
+		<script>
+			const tabOptions = document.querySelectorAll(".tab-option");
+
+			tabOptions.forEach((option) => {
+				option.addEventListener("click", () => {
+					tabOptions.forEach((opt) => opt.classList.remove("active"));
+					option.classList.add("active");
+					const sortOrder = option.dataset.sort;
+				});
+			});
+		</script>
 		<script src="app.js"></script>
 	</body>
 </html>
