@@ -96,8 +96,8 @@ document.addEventListener('DOMContentLoaded', () => {
             event.stopPropagation(); // Prevent the card click event from firing
         });
 
-        card.appendChild(title);
         card.appendChild(img);
+        card.appendChild(title);
         card.appendChild(desc);
         card.appendChild(likeBtn);
         card.appendChild(pageNumber); // Append the page number to the card
