@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
 					loginMessage.style.display = "block";
 				}
 			});
-		const filterLikesLink = document.querySelector('a[href="#filter-likes"]');
+		const filterLikesLink = document.querySelector('a[href="#species"]');
 		filterLikesLink.addEventListener("click", filterLikedSpiders);
 
 		async function filterLikedSpiders() {
