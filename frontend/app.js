@@ -23,12 +23,18 @@ document.addEventListener("DOMContentLoaded", () => {
 		window.location.href = "/logout";
 	});
 
-	function fetchSpidersInfo() {
+	async function fetchSpidersInfo() {
 		const apiUrl =
 			"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/api/spiders-info";
-		spiders = fetch(apiUrl).then((response) => response.json());
-		console.log("spiders: " + spiders);
-		return spiders;
+		try {
+			const response = await fetch(apiUrl);
+			const data = await response.json();
+			console.log("Fetched spiders:", data);
+			return data;
+		} catch (error) {
+			console.error("Error fetching spiders:", error);
+			return [];
+		}
 	}
 
 	function checkLoginAndRenderCards() {
@@ -175,26 +181,27 @@ document.addEventListener("DOMContentLoaded", () => {
 	async function filterLikedSpiders() {
 		try {
 			console.log("Filter Liked Spiders function called");
+
+			// Await the resolution of fetchSpidersInfo()
+			spiders = await fetchSpidersInfo();
+
 			const response = await fetch(
 				`http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5001/api/user-favorites/${userID}`
 			);
+
 			if (!response.ok) {
 				throw new Error("Failed to fetch user's favorite spiders.");
 			}
 
 			const favoriteSpiders = await response.json();
 			console.log("Favorite spiders:", favoriteSpiders);
+
 			const likedSpiderIds = favoriteSpiders.map((spider) => spider.spiderId);
-			console.log("Liked Spider IDs:", likedSpiderIds);
 			const likedSpiders = spiders.filter((spider) =>
 				likedSpiderIds.includes(spider.spiderId)
 			);
 
-			console.log("Liked Spiders after filtering:", likedSpiders);
-
-			console.log("Original spiders array:", spiders);
-
-			renderSpiderCards(likedSpiders, true);
+			renderSpiderCards(likedSpiders, true); // Now call renderSpiderCards
 		} catch (error) {
 			console.error("Error filtering liked spiders:", error);
 		}
