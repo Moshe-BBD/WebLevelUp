@@ -203,13 +203,16 @@ function resetPage() {
 
 async function toggleSpiderLike(spiderId, likeBtn) {
 	try {
-		const response = await fetch("http://localhost:5000/api/favorite-spider", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ userId: 5, spiderId }),
-		});
+		const response = await fetch(
+			"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/favorite-spider",
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ userId: 5, spiderId }),
+			}
+		);
 		if (response.ok) {
 			likeBtn.classList.toggle("liked");
 		} else {
