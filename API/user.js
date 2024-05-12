@@ -258,4 +258,24 @@ async function addFavoriteSpider(userId, spiderId) {
 	}
 }
 
+router.get("/user-id/:username", async (req, res) => {
+	try {
+		const { username } = req.params;
+
+		const user = await pool.query(
+			'SELECT "userId" FROM "User" WHERE username = $1',
+			[username]
+		);
+
+		if (user.rowCount === 0) {
+			return res.status(404).json({ message: "User not found" });
+		}
+
+		res.json({ userId: user.rows[0].userId });
+	} catch (err) {
+		console.error(err);
+		res.status(500).json({ message: "Server Error" });
+	}
+});
+
 module.exports = router;

@@ -3,7 +3,7 @@ let totalPages = 0;
 let ascendingOrder = true;
 let userLoggedIn = false;
 let spiders = [];
-
+let globalUserId;
 document.addEventListener("DOMContentLoaded", () => {
 	const loginButton = document.getElementById("login-button");
 	const logoutButton = document.getElementById("logout-button");
@@ -51,6 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
 					carouselContainer.classList.remove("blur-effect");
 					carousel.style.filter = "none";
 					loginMessage.style.display = "none";
+					fetchUserId(data.username);
 				} else {
 					loginButton.style.display = "inline";
 					logoutButton.style.display = "none";
@@ -208,7 +209,7 @@ function resetPage() {
 }
 
 async function toggleSpiderLike(spiderId, likeBtn) {
-	const userId = 5;
+	const userId = globalUserId;
 	try {
 		const url =
 			"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5001/api/favorite-spider";
@@ -235,4 +236,28 @@ async function toggleSpiderLike(spiderId, likeBtn) {
 	} catch (error) {
 		console.error("Error toggling spider like:", error);
 	}
+}
+function fetchUserId(username) {
+	fetch(
+		`http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/api/user-id/${username}`
+	)
+		.then((response) => response.json())
+		.then((data) => {
+			if (data.userId) {
+				globalUserId = data.userId;
+
+				fetchSpidersInfo()
+					.then((spiders) => {
+						renderSpiderCards(spiders);
+					})
+					.catch((error) => {
+						console.error("Error during fetching or rendering spiders:", error);
+					});
+			} else {
+				console.log("User not found");
+			}
+		})
+		.catch((error) => {
+			console.error("Error fetching user ID:", error);
+		});
 }
