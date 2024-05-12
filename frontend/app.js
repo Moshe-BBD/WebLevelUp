@@ -192,3 +192,26 @@ function resetPage() {
 		moveCarousel(firstCard);
 	}
 }
+
+async function toggleSpiderLike(spiderId, likeBtn) {
+	try {
+		const response = await fetch(
+			"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/api/favorite-spider",
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ userId: 5, spiderId }), // Replace '5' with the actual userId
+			}
+		);
+		if (response.ok) {
+			likeBtn.classList.toggle("liked");
+		} else {
+			const errorMessage = await response.text();
+			console.error("Error toggling spider like:", errorMessage);
+		}
+	} catch (error) {
+		console.error("Error toggling spider like:", error);
+	}
+}
