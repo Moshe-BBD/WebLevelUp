@@ -75,9 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	function renderSpiderCards(spiderArray, filterLiked = false) {
 		console.log("Rendering spider cards. Filter Liked:", filterLiked);
 		carousel.innerHTML = "";
-		if (filterLiked) {
-			spiderArray = spiderArray.filter((spider) => spider.liked);
-		}
+
 		spiderArray.forEach((spider, index) => {
 			const card = document.createElement("article");
 			const img = document.createElement("img");
@@ -182,7 +180,6 @@ document.addEventListener("DOMContentLoaded", () => {
 		try {
 			console.log("Filter Liked Spiders function called");
 
-			// Await the resolution of fetchSpidersInfo()
 			spiders = await fetchSpidersInfo();
 
 			const response = await fetch(
@@ -201,7 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				likedSpiderIds.includes(spider.spiderId)
 			);
 
-			renderSpiderCards(likedSpiders, true); // Now call renderSpiderCards
+			renderSpiderCards(likedSpiders, true);
 		} catch (error) {
 			console.error("Error filtering liked spiders:", error);
 		}
