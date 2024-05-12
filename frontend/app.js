@@ -208,10 +208,10 @@ function resetPage() {
 }
 
 async function toggleSpiderLike(spiderId, likeBtn) {
+	const userId = 5;
 	try {
 		const url =
 			"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5001/api/favorite-spider";
-		const userId = 5;
 		const bodyData = JSON.stringify({ userId, spiderId });
 
 		const headers = {
