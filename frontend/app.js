@@ -265,7 +265,7 @@ async function getUserId(username) {
 async function filterLikedSpiders() {
 	try {
 		const response = await fetch(
-			`http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5001/user-favorites/${userID}`
+			`http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5001/api/user-favorites/${userID}`
 		);
 		const favoriteSpiders = await response.json();
 		renderSpiderCards(favoriteSpiders, true);
