@@ -9,42 +9,46 @@ document.addEventListener("DOMContentLoaded", () => {
 	const logoutButton = document.getElementById("logout-button");
 	const navUsername = document.getElementById("nav-username");
 	const carousel = document.getElementById("carousel");
-	const carouselContainer = document.getElementById('carousel-container');
-	const loginMessage = document.getElementById('loginMessage');
-	const IMAGE_BASE_URL = "https://spiderpedia-bucket.s3.eu-west-1.amazonaws.com/";
+	const carouselContainer = document.getElementById("carousel-container");
+	const loginMessage = document.getElementById("loginMessage");
+	const IMAGE_BASE_URL =
+		"https://spiderpedia-bucket.s3.eu-west-1.amazonaws.com/";
 
-	loginButton.addEventListener('click', function() {
-        window.location.href = '/login';
-    });
+	loginButton.addEventListener("click", function () {
+		window.location.href = "/login";
+	});
 
-	logoutButton.addEventListener('click', function() {
-        window.location.href = '/logout';
-    });
+	logoutButton.addEventListener("click", function () {
+		window.location.href = "/logout";
+	});
 
 	function fetchSpidersInfo() {
-        const apiUrl = "http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/api/spiders-info";
+		const apiUrl =
+			"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/api/spiders-info";
 		spiders = fetch(apiUrl).then((response) => response.json());
 		console.log("spiders: " + spiders);
-        return spiders;
-    }
+		return spiders;
+	}
 
 	function checkLoginAndRenderCards() {
-		fetchSpidersInfo().then(spiders => {
-			renderSpiderCards(spiders);
-		}).catch(error => {
-			console.error("Error during fetching or rendering spiders:", error);
-		});
+		fetchSpidersInfo()
+			.then((spiders) => {
+				renderSpiderCards(spiders);
+			})
+			.catch((error) => {
+				console.error("Error during fetching or rendering spiders:", error);
+			});
 
 		fetch("http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/user")
 			.then((response) => response.json())
-			.then(data => {
+			.then((data) => {
 				if (data !== "Not logged in") {
 					userLoggedIn = true;
 					loginButton.style.display = "none";
 					logoutButton.style.display = "inline";
 					navUsername.textContent = data.username;
 					navUsername.style.display = "inline";
-					carouselContainer.classList.remove('blur-effect');
+					carouselContainer.classList.remove("blur-effect");
 					carousel.style.filter = "none";
 					loginMessage.style.display = "none";
 				} else {
@@ -76,19 +80,19 @@ document.addEventListener("DOMContentLoaded", () => {
 			likeBtn.innerHTML = "❤";
 			likeBtn.disabled = !userLoggedIn;
 			if (!userLoggedIn) {
-				likeBtn.classList.add('disabled'); // Add 'disabled' class for styling
+				likeBtn.classList.add("disabled"); // Add 'disabled' class for styling
 			} else {
-				likeBtn.classList.remove('disabled'); // Remove 'disabled' class if user is logged in
+				likeBtn.classList.remove("disabled"); // Remove 'disabled' class if user is logged in
 			}
 			pageNumber.textContent = `Page ${index + 1} of ${spiderArray.length}`;
 			pageNumber.classList.add("page-number");
 
 			likeBtn.addEventListener("click", (event) => {
-                if (userLoggedIn) {
-                    likeBtn.classList.toggle("liked");
-                }
-                event.stopPropagation();
-            });
+				if (userLoggedIn) {
+					likeBtn.classList.toggle("liked");
+				}
+				event.stopPropagation();
+			});
 
 			card.appendChild(title);
 			card.appendChild(img);
@@ -111,8 +115,8 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 
 		if (carousel.children.length > 0) {
-            centerCard(carousel.children[0]);
-        }
+			centerCard(carousel.children[0]);
+		}
 	}
 
 	function centerCard(selectedCard) {
