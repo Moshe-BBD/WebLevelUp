@@ -29,7 +29,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 	function checkLoginAndRenderCards() {
-		fetchSpidersInfo();
+		fetchSpidersInfo().then(spiders => {
+			renderSpiderCards(spiders);
+		}).catch(error => {
+			console.error("Error during fetching or rendering spiders:", error);
+		});
+
 		fetch("http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/user")
 			.then((response) => response.json())
 			.then(data => {
@@ -49,7 +54,6 @@ document.addEventListener("DOMContentLoaded", () => {
 					carousel.style.filter = "blur(5px)";
 					loginMessage.style.display = "block";
 				}
-				renderSpiderCards(spiders);
 			});
 	}
 
