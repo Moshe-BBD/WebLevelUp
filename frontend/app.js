@@ -54,6 +54,8 @@ document.addEventListener("DOMContentLoaded", () => {
 					loginMessage.style.display = "none";
 					console.log(navUsername.textContent);
 					userID = await getUserId(navUsername.textContent);
+					const filterLikesLink = document.querySelector('a[href="#species"]');
+					filterLikesLink.addEventListener("click", filterLikedSpiders);
 				} else {
 					loginButton.style.display = "inline";
 					logoutButton.style.display = "none";
@@ -62,20 +64,6 @@ document.addEventListener("DOMContentLoaded", () => {
 					loginMessage.style.display = "block";
 				}
 			});
-		const filterLikesLink = document.querySelector('a[href="#species"]');
-		filterLikesLink.addEventListener("click", filterLikedSpiders);
-
-		async function filterLikedSpiders() {
-			try {
-				const response = await fetch(
-					`http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5001/user-favorites/${userID}`
-				);
-				const favoriteSpiders = await response.json();
-				renderSpiderCards(favoriteSpiders, true);
-			} catch (error) {
-				console.error("Error fetching user's favorite spiders:", error);
-			}
-		}
 	}
 
 	function renderSpiderCards(spiderArray, filterLiked = false) {
@@ -272,5 +260,16 @@ async function getUserId(username) {
 	} catch (error) {
 		console.error("Error fetching user ID:", error);
 		throw error;
+	}
+}
+async function filterLikedSpiders() {
+	try {
+		const response = await fetch(
+			`http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5001/user-favorites/${userID}`
+		);
+		const favoriteSpiders = await response.json();
+		renderSpiderCards(favoriteSpiders, true);
+	} catch (error) {
+		console.error("Error fetching user's favorite spiders:", error);
 	}
 }
