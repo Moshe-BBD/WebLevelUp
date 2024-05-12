@@ -4,6 +4,7 @@ let ascendingOrder = true;
 let userLoggedIn = false;
 let spiders = [];
 let navUsername;
+let userID;
 document.addEventListener("DOMContentLoaded", () => {
 	const loginButton = document.getElementById("login-button");
 	const logoutButton = document.getElementById("logout-button");
@@ -52,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
 					carousel.style.filter = "none";
 					loginMessage.style.display = "none";
 					console.log(navUsername.textContent);
-					getUserId(navUsername.textContent);
+					userID = getUserId(navUsername.textContent);
 				} else {
 					loginButton.style.display = "inline";
 					logoutButton.style.display = "none";
@@ -211,11 +212,10 @@ function resetPage() {
 }
 
 async function toggleSpiderLike(spiderId, likeBtn) {
-	const userId = 5;
 	try {
 		const url =
 			"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5001/api/favorite-spider";
-		const bodyData = JSON.stringify({ userId, spiderId });
+		const bodyData = JSON.stringify({ userID, spiderId });
 
 		const headers = {
 			"Content-Type": "application/json",
