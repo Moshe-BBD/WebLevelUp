@@ -212,7 +212,7 @@ async function toggleSpiderLike(spiderId, likeBtn) {
 	const userId = globalUserId;
 	try {
 		const url =
-			"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5002/api/favorite-spider";
+			"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5001/api/favorite-spider";
 		const bodyData = JSON.stringify({ userId, spiderId });
 
 		const headers = {
@@ -239,7 +239,7 @@ async function toggleSpiderLike(spiderId, likeBtn) {
 }
 function fetchUserId(username) {
 	fetch(
-		`http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5002/api/user-id/${username}`
+		`http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5001/api/user-id/${username}`
 	)
 		.then((response) => response.json())
 		.then((data) => {
