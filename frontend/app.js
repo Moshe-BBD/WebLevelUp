@@ -3,11 +3,11 @@ let totalPages = 0;
 let ascendingOrder = true;
 let userLoggedIn = false;
 let spiders = [];
-
+let navUsername;
 document.addEventListener("DOMContentLoaded", () => {
 	const loginButton = document.getElementById("login-button");
 	const logoutButton = document.getElementById("logout-button");
-	const navUsername = document.getElementById("nav-username");
+	navUsername = document.getElementById("nav-username");
 	const carousel = document.getElementById("carousel");
 	const carouselContainer = document.getElementById("carousel-container");
 	const loginMessage = document.getElementById("loginMessage");
@@ -234,5 +234,21 @@ async function toggleSpiderLike(spiderId, likeBtn) {
 		}
 	} catch (error) {
 		console.error("Error toggling spider like:", error);
+	}
+}
+
+async function getUserId(username) {
+	try {
+		const response = await fetch(`/user-id/${navUsername}`);
+		const data = await response.json();
+
+		if (response.ok) {
+			return data.userId;
+		} else {
+			throw new Error(data.message || "Failed to fetch user ID");
+		}
+	} catch (error) {
+		console.error("Error fetching user ID:", error);
+		throw error;
 	}
 }
