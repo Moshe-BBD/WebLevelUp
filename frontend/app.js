@@ -133,13 +133,15 @@ document.addEventListener("DOMContentLoaded", () => {
 	sortByNameLink.addEventListener("click", sortSpidersByName);
 
 	function sortSpidersByName() {
-		if (ascendingOrder) {
-			spiders.sort((a, b) => a.spiderName.localeCompare(b.spiderName));
-		} else {
-			spiders.sort((a, b) => b.spiderName.localeCompare(a.spiderName));
-		}
-		ascendingOrder = !ascendingOrder;
-		renderSpiderCards(spiders);
+		fetchSpidersInfo().then((spiders) => {
+			if (ascendingOrder) {
+				spiders.sort((a, b) => a.spiderName.localeCompare(b.spiderName));
+			} else {
+				spiders.sort((a, b) => b.spiderName.localeCompare(a.spiderName));
+			}
+			ascendingOrder = !ascendingOrder;
+			renderSpiderCards(spiders);
+		});
 	}
 
 	const searchButton = document.querySelector(".search-btn");
