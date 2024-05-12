@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 		fetch("http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/user")
 			.then((response) => response.json())
-			.then((data) => {
+			.then(async (data) => {
 				if (data !== "Not logged in") {
 					userLoggedIn = true;
 					loginButton.style.display = "none";
@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
 					carousel.style.filter = "none";
 					loginMessage.style.display = "none";
 					console.log(navUsername.textContent);
-					userID = getUserId(navUsername.textContent);
+					userID = await getUserId(navUsername.textContent);
 				} else {
 					loginButton.style.display = "inline";
 					logoutButton.style.display = "none";
