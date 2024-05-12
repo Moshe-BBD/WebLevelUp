@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	function fetchSpidersInfo() {
         const apiUrl = "http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/api/spiders-info";
 		spiders = fetch(apiUrl).then((response) => response.json());
+		console.log("spiders: " + spiders);
         return spiders;
     }
 
