@@ -26,8 +26,8 @@ body {
 }
 
 .login-message {
-	position: absolute; /* Already positioned */
-	z-index: 10; /* Higher than carousel's z-index */
+	position: absolute;
+	z-index: 10;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
@@ -38,16 +38,15 @@ body {
 
 @media (max-width: 768px) {
 	.login-message {
-		padding: 0.8em; /* Slightly less padding on smaller screens */
-		width: 90%; /* Wider on smaller screens to utilize more space */
+		padding: 0.8em;
+		width: 90%;
 	}
 
 	.login-message p {
-		font-size: clamp(
-			0.9rem,
-			5vw,
-			1.2rem
-		); /* Smaller minimum font size on small screens */
+		font-size: clamp(0.9rem, 5vw, 1.2rem);
+	}
+	.nav-logo {
+		display: none;
 	}
 }
 
@@ -67,51 +66,46 @@ body {
 }
 
 .login-message p {
-	font-size: clamp(
-		1rem,
-		2.5vw,
-		1.5rem
-	); /* Adjusts dynamically between 1rem and 1.5rem based on viewport width */
-	line-height: 1.4; /* Optimal line height for readability */
-	margin: 0; /* Removes default margins */
-	overflow-wrap: break-word; /* Ensures long words do not overflow the container */
-	overflow: hidden; /* Hides overflowed content */
+	font-size: clamp(1rem, 2.5vw, 1.5rem);
+	line-height: 1.4;
+	margin: 0;
+	overflow-wrap: break-word;
+	overflow: hidden;
 	white-space: normal;
 }
 
 .nav-username-style {
-	color: #fff; /* White text color */
-	background-color: #007bff; /* Bright blue background, adjust as needed */
-	padding: 0.5em 1em; /* Padding around the text for better spacing */
-	border-radius: 0.5em; /* Rounded corners but not fully circular */
-	font-weight: bold; /* Bold text to make it stand out */
-	font-size: 1em; /* Relative font size to parent */
-	display: inline-flex; /* Flex to center text vertically and horizontally */
-	justify-content: center; /* Center horizontally */
-	align-items: center; /* Center vertically */
-	min-height: 2em; /* Minimum height to maintain a good aspect ratio */
-	width: auto; /* Auto width to adjust to content plus padding */
-	min-width: 2em; /* Minimum width to ensure it looks more square */
-	box-shadow: 0 0.1em 0.2em rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-	white-space: nowrap; /* Prevents the name from wrapping */
+	color: #fff;
+	background-color: #007bff;
+	padding: 0.5em 1em;
+	border-radius: 0.5em;
+	font-weight: bold;
+	font-size: 1em;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 2em;
+	width: auto;
+	min-width: 2em;
+	box-shadow: 0 0.1em 0.2em rgba(0, 0, 0, 0.1);
+	white-space: nowrap;
 	margin-left: 1em;
 }
 
-/* Styling for when user is logged out or nav-username should be hidden */
 .nav-username-style.empty {
-	display: none; /* Hide when there is no username */
+	display: none;
 }
 
 @media (max-width: 768px) {
 	.nav-username-style {
-		font-size: 0.9em; /* Slightly smaller font on small devices */
-		height: 1.8em; /* Adjust height for smaller devices */
-		min-width: 1.8em; /* Adjust min-width for smaller devices */
+		font-size: 0.9em;
+		height: 1.8em;
+		min-width: 1.8em;
 	}
 }
 
 .hidden {
-	display: none; /* Hide by default */
+	display: none;
 }
 
 #carousel {
@@ -298,25 +292,25 @@ p {
 }
 
 .button-style {
-	background-color: #777; /* Default background */
-	color: white; /* Text color */
-	border: none; /* No border */
-	border-radius: 4px; /* Rounded corners */
-	padding: 10px 20px; /* Padding around the text */
-	font-size: 16px; /* Text size */
-	cursor: pointer; /* Pointer cursor on hover */
-	text-align: center; /* Center text */
-	text-decoration: none; /* No underlining */
-	display: inline-block; /* Allows margins to be applied and centers align */
-	transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+	background-color: #777;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	padding: 10px 20px;
+	font-size: 16px;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	transition: background-color 0.3s ease;
 }
 
 .button-style:hover {
-	background-color: #555; /* Darker background on hover */
+	background-color: #555;
 }
 
 .button-style:focus {
-	outline: none; /* Removes the outline to clean up focus state */
+	outline: none;
 }
 
 .header-width {
@@ -393,7 +387,7 @@ p {
 .nav-username,
 .nav-logo,
 .nav-links {
-	margin-right: 1em; /* Spacing between navigation items */
+	margin-right: 1em;
 }
 
 .nav-logo {
