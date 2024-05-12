@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			likeBtn.addEventListener("click", async (event) => {
 				if (userLoggedIn) {
 					const spiderId = spider.spiderId;
-					await toggleSpiderLike(spiderId, likeBtn);
+					await toggleSpiderLike(userID, spiderId, likeBtn);
 				} else {
 					console.log("User is not logged in. Unable to toggle spider like.");
 				}
@@ -211,7 +211,7 @@ function resetPage() {
 	}
 }
 
-async function toggleSpiderLike(spiderId, likeBtn) {
+async function toggleSpiderLike(userID, spiderId, likeBtn) {
 	try {
 		const url =
 			"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5001/api/favorite-spider";
@@ -248,6 +248,7 @@ async function getUserId(username) {
 		const data = await response.json();
 
 		if (response.ok) {
+			console.log(data.userId);
 			return data.userId;
 		} else {
 			throw new Error(data.message || "Failed to fetch user ID");
