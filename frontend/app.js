@@ -136,7 +136,13 @@ document.addEventListener("DOMContentLoaded", () => {
 	}
 
 	checkLoginAndRenderCards();
-
+	window.addEventListener("resize", () => {
+		if (window.innerWidth < 768) {
+			navUsername.style.display = "none";
+		} else {
+			navUsername.style.display = navUsername.textContent ? "inline" : "none";
+		}
+	});
 	const sortByNameLink = document.querySelector('a[href="#about"]');
 	sortByNameLink.addEventListener("click", sortSpidersByName);
 
