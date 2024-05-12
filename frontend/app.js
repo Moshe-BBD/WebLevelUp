@@ -241,7 +241,7 @@ async function toggleSpiderLike(spiderId, likeBtn) {
 async function getUserId(username) {
 	try {
 		const response = await fetch(
-			`http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5001/user-id/${username}`
+			`http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5001/api/user-id/${username}`
 		);
 		const data = await response.json();
 
