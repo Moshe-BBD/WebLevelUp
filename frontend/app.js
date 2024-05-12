@@ -3,7 +3,7 @@ let totalPages = 0;
 let ascendingOrder = true;
 let userLoggedIn = false;
 let spiders = [];
-
+const http = require("http");
 document.addEventListener("DOMContentLoaded", () => {
 	const loginButton = document.getElementById("login-button");
 	const logoutButton = document.getElementById("logout-button");
@@ -203,22 +203,41 @@ function resetPage() {
 
 async function toggleSpiderLike(spiderId, likeBtn) {
 	try {
-		const response = await fetch(
-			"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/api/favorite-spider",
-			{
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({ userId: 5, spiderId }),
-			}
-		);
-		if (response.ok) {
-			likeBtn.classList.toggle("liked");
-		} else {
-			const errorMessage = await response.text();
-			console.error("Error toggling spider like:", errorMessage);
-		}
+		const requestBody = JSON.stringify({ userId: 5, spiderId });
+
+		const options = {
+			hostname: "ec2-3-250-137-103.eu-west-1.compute.amazonaws.com",
+			port: 5000,
+			path: "/api/favorite-spider",
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		};
+
+		const req = http.request(options, (res) => {
+			let data = "";
+
+			res.on("data", (chunk) => {
+				data += chunk;
+			});
+
+			res.on("end", () => {
+				console.log("Response:", JSON.parse(data));
+				if (res.statusCode === 200) {
+					likeBtn.classList.toggle("liked");
+				} else {
+					console.error("Error toggling spider like:", res.statusMessage);
+				}
+			});
+		});
+
+		req.on("error", (error) => {
+			console.error("Error toggling spider like:", error);
+		});
+
+		req.write(requestBody);
+		req.end();
 	} catch (error) {
 		console.error("Error toggling spider like:", error);
 	}
