@@ -191,6 +191,9 @@ document.addEventListener("DOMContentLoaded", () => {
 			);
 
 			console.log("Liked Spiders after filtering:", likedSpiders);
+
+			console.log("Original spiders array:", spiders);
+
 			renderSpiderCards(likedSpiders, true);
 		} catch (error) {
 			console.error("Error filtering liked spiders:", error);
