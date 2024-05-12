@@ -12,13 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	const loginMessage = document.getElementById('loginMessage');
 	const IMAGE_BASE_URL = "https://spiderpedia-bucket.s3.eu-west-1.amazonaws.com/";
 
-	function fetchSpidersInfo() {
-		const apiUrl = "http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/api/spiders-info";
-		return fetch(apiUrl).then((response) => response.json());
-	}
-
-	const stubSpiders = fetchSpidersInfo();
-
 	loginButton.addEventListener('click', function() {
         window.location.href = '/login';
     });
@@ -27,32 +20,47 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = '/logout';
     });
 
-	function checkLoginAndRenderCards() {
-		fetch("http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/user")
-			.then((response) => response.json())
-			.then((data) => {
-				if (data !== "Not logged in") {
-					userLoggedIn = true;
-					loginButton.style.display = "none";
-        			logoutButton.style.display = "inline";
-					navUsername.textContent = data.username;
-					navUsername.style.display = "inline";
-					carouselContainer.classList.remove('blur-effect');
-					carousel.style.filter = "none";
-					loginMessage.style.display = "none";
-				} else {
-					loginButton.style.display = "inline";
-					logoutButton.style.display = "none";
-					navUsername.style.display = "none";
-					carousel.style.filter = "blur(5px)";
-					loginMessage.style.display = "block";
+	function fetchSpidersInfo() {
+		const apiUrl = "http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/api/spiders-info";
+		return fetch(apiUrl)
+			.then((response) => {
+				if (!response.ok) {
+					throw new Error('Network response was not ok');
 				}
+				return response.json();
 			})
-			.catch(error => console.error('Error checking login status:', error));
-		renderSpiderCards(stubSpiders);
+			.catch((error) => {
+				console.error('Failed to fetch spider info:', error);
+				return [];
+			});
 	}
 
-	checkLoginAndRenderCards();
+	function checkLoginAndRenderCards() {
+		fetchSpidersInfo().then((spiders) => {
+			fetch("http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/user")
+				.then((response) => response.json())
+				.then((data) => {
+					if (data !== "Not logged in") {
+						userLoggedIn = true;
+						loginButton.style.display = "none";
+						logoutButton.style.display = "inline";
+						navUsername.textContent = data.username;
+						navUsername.style.display = "inline";
+						carouselContainer.classList.remove('blur-effect');
+						carousel.style.filter = "none";
+						loginMessage.style.display = "none";
+					} else {
+						loginButton.style.display = "inline";
+						logoutButton.style.display = "none";
+						navUsername.style.display = "none";
+						carousel.style.filter = "blur(5px)";
+						loginMessage.style.display = "block";
+					}
+					renderSpiderCards(stubSpiders);
+				})
+				.catch(error => console.error('Error checking login status:', error));
+		});
+	}
 
 	function renderSpiderCards(spiderArray) {
 		carousel.innerHTML = "";
@@ -81,9 +89,11 @@ document.addEventListener("DOMContentLoaded", () => {
 			pageNumber.classList.add("page-number");
 
 			likeBtn.addEventListener("click", (event) => {
-				likeBtn.classList.toggle("liked");
-				event.stopPropagation();
-			});
+                if (userLoggedIn) {
+                    likeBtn.classList.toggle("liked");
+                }
+                event.stopPropagation();
+            });
 
 			card.appendChild(title);
 			card.appendChild(img);
@@ -105,8 +115,20 @@ document.addEventListener("DOMContentLoaded", () => {
 			}
 		});
 
-		centerCard(carousel.children[0]);
+		if (carousel.children.length > 0) {
+            centerCard(carousel.children[0]);
+        }
 	}
+
+	function centerCard(selectedCard) {
+		const carousel = document.getElementById("carousel");
+		const activeCardOffset =
+			selectedCard.offsetLeft + selectedCard.offsetWidth / 2;
+		const shift = carousel.offsetWidth / 2 - activeCardOffset;
+		carousel.style.transform = `translateX(${shift}px)`;
+	}
+
+	checkLoginAndRenderCards();
 
 	const sortByNameLink = document.querySelector('a[href="#about"]');
 	sortByNameLink.addEventListener("click", sortSpidersByName);
@@ -127,14 +149,6 @@ document.addEventListener("DOMContentLoaded", () => {
 		searchSpider();
 	});
 });
-
-function centerCard(selectedCard) {
-	const carousel = document.getElementById("carousel");
-	const activeCardOffset =
-		selectedCard.offsetLeft + selectedCard.offsetWidth / 2;
-	const shift = carousel.offsetWidth / 2 - activeCardOffset;
-	carousel.style.transform = `translateX(${shift}px)`;
-}
 
 function searchSpider() {
 	const searchText = document.getElementById("searchInput").value.toLowerCase();
