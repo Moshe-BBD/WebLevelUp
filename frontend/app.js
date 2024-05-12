@@ -51,6 +51,8 @@ document.addEventListener("DOMContentLoaded", () => {
 					carouselContainer.classList.remove("blur-effect");
 					carousel.style.filter = "none";
 					loginMessage.style.display = "none";
+					console.log(navUsername.textContent);
+					getUserId(navUsername.textContent);
 				} else {
 					loginButton.style.display = "inline";
 					logoutButton.style.display = "none";
@@ -136,8 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	}
 
 	checkLoginAndRenderCards();
-	console.log(navUsername.textContent);
-	getUserId(navUsername.textContent);
+
 	window.addEventListener("resize", () => {
 		if (window.innerWidth < 768) {
 			navUsername.style.display = "none";
