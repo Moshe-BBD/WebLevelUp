@@ -62,11 +62,27 @@ document.addEventListener("DOMContentLoaded", () => {
 					loginMessage.style.display = "block";
 				}
 			});
+		const filterLikesLink = document.querySelector('a[href="#filter-likes"]');
+		filterLikesLink.addEventListener("click", filterLikedSpiders);
+
+		async function filterLikedSpiders() {
+			try {
+				const response = await fetch(
+					`http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5001/user-favorites/${userID}`
+				);
+				const favoriteSpiders = await response.json();
+				renderSpiderCards(favoriteSpiders, true);
+			} catch (error) {
+				console.error("Error fetching user's favorite spiders:", error);
+			}
+		}
 	}
 
-	function renderSpiderCards(spiderArray) {
+	function renderSpiderCards(spiderArray, filterLiked = false) {
 		carousel.innerHTML = "";
-
+		if (filterLiked) {
+			spiderArray = spiderArray.filter((spider) => spider.liked);
+		}
 		spiderArray.forEach((spider, index) => {
 			const card = document.createElement("article");
 			const img = document.createElement("img");
@@ -158,7 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				spiders.sort((a, b) => b.spiderName.localeCompare(a.spiderName));
 			}
 			ascendingOrder = !ascendingOrder;
-			renderSpiderCards(spiders);
+			renderSpiderCards(spiders, false);
 		});
 	}
 
