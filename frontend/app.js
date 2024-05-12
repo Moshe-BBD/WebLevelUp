@@ -136,6 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	}
 
 	checkLoginAndRenderCards();
+	console.log(navUsername.textContent);
 	getUserId(navUsername.textContent);
 	window.addEventListener("resize", () => {
 		if (window.innerWidth < 768) {
