@@ -136,6 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	}
 
 	checkLoginAndRenderCards();
+	getUserId(navUsername);
 	window.addEventListener("resize", () => {
 		if (window.innerWidth < 768) {
 			navUsername.style.display = "none";
@@ -239,7 +240,7 @@ async function toggleSpiderLike(spiderId, likeBtn) {
 
 async function getUserId(username) {
 	try {
-		const response = await fetch(`/user-id/${navUsername}`);
+		const response = await fetch(`/user-id/${username}`);
 		const data = await response.json();
 
 		if (response.ok) {
