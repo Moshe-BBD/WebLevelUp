@@ -67,6 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	}
 
 	function renderSpiderCards(spiderArray, filterLiked = false) {
+		console.log("Rendering spider cards. Filter Liked:", filterLiked); // Debugging statement
 		carousel.innerHTML = "";
 		if (filterLiked) {
 			spiderArray = spiderArray.filter((spider) => spider.liked);
@@ -173,24 +174,29 @@ document.addEventListener("DOMContentLoaded", () => {
 	});
 	async function filterLikedSpiders() {
 		try {
+			console.log("Filter Liked Spiders function called");
 			const response = await fetch(
 				`http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5001/api/user-favorites/${userID}`
 			);
+			if (!response.ok) {
+				throw new Error("Failed to fetch user's favorite spiders.");
+			}
+
 			const favoriteSpiders = await response.json();
-
+			console.log("Favorite spiders:", favoriteSpiders);
 			const likedSpiderIds = favoriteSpiders.map((spider) => spider.spiderId);
-
+			console.log("Liked Spider IDs:", likedSpiderIds);
 			const likedSpiders = spiders.filter((spider) =>
 				likedSpiderIds.includes(spider.spiderId)
 			);
 
+			console.log("Liked Spiders after filtering:", likedSpiders);
 			renderSpiderCards(likedSpiders, true);
 		} catch (error) {
-			console.error("Error fetching user's favorite spiders:", error);
+			console.error("Error filtering liked spiders:", error);
 		}
 	}
 });
-
 function searchSpider() {
 	const searchText = document.getElementById("searchInput").value.toLowerCase();
 	const pages = document.querySelectorAll("#carousel article");
