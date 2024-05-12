@@ -48,6 +48,9 @@ body {
 	.nav-logo {
 		display: none;
 	}
+	.nav-username-style {
+		display: none;
+	}
 }
 
 .login-link {
