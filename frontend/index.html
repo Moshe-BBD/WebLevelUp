@@ -4,15 +4,19 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-		<title>Carousel Example</title>
+		<title>Spider Cards</title>
 		<link rel="stylesheet" href="styles.css" />
 	</head>
 	<body>
 		<section class="content">
 			<header class="header-width">
 				<nav class="top-nav">
-					<button class="login-button">login</button>
-					<div class="nav-logo">Spider Flip Book</div>
+					<button class="button-style" id="login-button">Login</button>
+					<section>
+						<button class="button-style" id="logout-button">Logout</button>
+						<p id="nav-username" class="nav-username-style"></p>
+					</section>
+					<div class="nav-logo">SPIDERPEDIA</div>
 					<ul class="nav-links">
 						<li><a href="#reset" onclick="resetPage()">Reset</a></li>
 						<li><a href="#about">Sort by Name</a></li>
@@ -33,6 +37,10 @@
 			</div>
 
 			<section id="carousel-container">
+				<div id="loginMessage" class="login-message hidden">
+					<p>Please log in to view the spider cards.</p>
+					<a href="/login" class="login-link">Log In</a>
+				</div>
 				<section id="carousel" aria-label="Spider Cards">
 					<!-- Cards will be injected here by JavaScript -->
 				</section>

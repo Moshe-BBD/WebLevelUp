@@ -17,7 +17,93 @@ body {
 	position: relative;
 	justify-content: center;
 	align-items: center;
-	/* filter: blur(5px); */
+	overflow: hidden;
+	z-index: 1;
+}
+
+.blur-effect {
+    filter: blur(5px);
+}
+
+.login-message {
+    position: absolute; /* Already positioned */
+    z-index: 10; /* Higher than carousel's z-index */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 768px) {
+    .login-message {
+        padding: 0.8em; /* Slightly less padding on smaller screens */
+        width: 90%; /* Wider on smaller screens to utilize more space */
+    }
+
+    .login-message p {
+        font-size: clamp(0.9rem, 5vw, 1.2rem); /* Smaller minimum font size on small screens */
+    }
+}
+
+.login-link {
+    display: inline-block;
+    margin-top: 1em;
+    padding: 0.5em 1em;
+    background-color: #007BFF;
+    color: white;
+    border-radius: 0.3em;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-link:hover {
+    background-color: #0056b3;
+}
+
+.login-message p {
+    font-size: clamp(1rem, 2.5vw, 1.5rem); /* Adjusts dynamically between 1rem and 1.5rem based on viewport width */
+    line-height: 1.4; /* Optimal line height for readability */
+    margin: 0; /* Removes default margins */
+	overflow-wrap: break-word; /* Ensures long words do not overflow the container */
+    overflow: hidden; /* Hides overflowed content */
+    white-space: normal;
+}
+
+.nav-username-style {
+    color: #fff; /* White text color */
+    background-color: #007BFF; /* Bright blue background, adjust as needed */
+    padding: 0.5em 1em; /* Padding around the text for better spacing */
+    border-radius: 0.5em; /* Rounded corners but not fully circular */
+    font-weight: bold; /* Bold text to make it stand out */
+    font-size: 1em; /* Relative font size to parent */
+    display: inline-flex; /* Flex to center text vertically and horizontally */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    min-height: 2em; /* Minimum height to maintain a good aspect ratio */
+    width: auto; /* Auto width to adjust to content plus padding */
+    min-width: 2em; /* Minimum width to ensure it looks more square */
+    box-shadow: 0 0.1em 0.2em rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    white-space: nowrap; /* Prevents the name from wrapping */
+    margin-left: 1em;
+}
+
+/* Styling for when user is logged out or nav-username should be hidden */
+.nav-username-style.empty {
+    display: none; /* Hide when there is no username */
+}
+
+@media (max-width: 768px) {
+    .nav-username-style {
+        font-size: 0.9em; /* Slightly smaller font on small devices */
+        height: 1.8em; /* Adjust height for smaller devices */
+        min-width: 1.8em; /* Adjust min-width for smaller devices */
+    }
+}
+
+.hidden {
+    display: none; /* Hide by default */
 }
 
 #carousel {
@@ -25,6 +111,7 @@ body {
 	justify-content: flex-start;
 	transition: transform 0.5s ease;
 	will-change: transform;
+	filter: blur(0);
 }
 
 article {
@@ -177,6 +264,7 @@ p {
 	align-items: center;
 	min-width: 100vw;
 }
+
 .search-container {
 	max-width: 40%;
 	border-radius: 20px;
@@ -200,26 +288,27 @@ p {
 	background-color: #333;
 	color: #eee;
 }
-.login-button {
-	background-color: #777;
-	color: white;
-	border: none;
-	border-radius: 4px;
-	padding: 10px 20px;
-	font-size: 16px;
-	cursor: pointer;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	transition: background-color 0.3s ease;
+
+.button-style {
+    background-color: #777; /* Default background */
+    color: white;          /* Text color */
+    border: none;          /* No border */
+    border-radius: 4px;    /* Rounded corners */
+    padding: 10px 20px;    /* Padding around the text */
+    font-size: 16px;       /* Text size */
+    cursor: pointer;       /* Pointer cursor on hover */
+    text-align: center;    /* Center text */
+    text-decoration: none; /* No underlining */
+    display: inline-block; /* Allows margins to be applied and centers align */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
 }
 
-.login-button:hover {
-	background-color: #555;
+.button-style:hover {
+    background-color: #555; /* Darker background on hover */
 }
 
-.login-button:focus {
-	outline: none;
+.button-style:focus {
+    outline: none; /* Removes the outline to clean up focus state */
 }
 
 .header-width {
@@ -289,6 +378,11 @@ p {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	justify-content: space-between;
+}
+
+.button-style, .nav-username, .nav-logo, .nav-links {
+    margin-right: 1em; /* Spacing between navigation items */
 }
 
 .nav-logo {
@@ -305,6 +399,7 @@ p {
 
 .nav-links li {
 	margin-left: 20px;
+	margin-right: 1em;
 }
 
 .nav-links a {
