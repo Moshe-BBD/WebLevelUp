@@ -54,8 +54,6 @@ document.addEventListener("DOMContentLoaded", () => {
 					loginMessage.style.display = "none";
 					console.log(navUsername.textContent);
 					userID = await getUserId(navUsername.textContent);
-					const filterLikesLink = document.querySelector('a[href="#species"]');
-					filterLikesLink.addEventListener("click", filterLikedSpiders);
 				} else {
 					loginButton.style.display = "inline";
 					logoutButton.style.display = "none";
@@ -64,10 +62,12 @@ document.addEventListener("DOMContentLoaded", () => {
 					loginMessage.style.display = "block";
 				}
 			});
+		const filterLikesLink = document.querySelector('a[href="#species"]');
+		filterLikesLink.addEventListener("click", filterLikedSpiders);
 	}
 
 	function renderSpiderCards(spiderArray, filterLiked = false) {
-		console.log("Rendering spider cards. Filter Liked:", filterLiked); // Debugging statement
+		console.log("Rendering spider cards. Filter Liked:", filterLiked);
 		carousel.innerHTML = "";
 		if (filterLiked) {
 			spiderArray = spiderArray.filter((spider) => spider.liked);
@@ -88,9 +88,9 @@ document.addEventListener("DOMContentLoaded", () => {
 			likeBtn.innerHTML = "❤";
 			likeBtn.disabled = !userLoggedIn;
 			if (!userLoggedIn) {
-				likeBtn.classList.add("disabled"); // Add 'disabled' class for styling
+				likeBtn.classList.add("disabled");
 			} else {
-				likeBtn.classList.remove("disabled"); // Remove 'disabled' class if user is logged in
+				likeBtn.classList.remove("disabled");
 			}
 			pageNumber.textContent = `Page ${index + 1} of ${spiderArray.length}`;
 			pageNumber.classList.add("page-number");
