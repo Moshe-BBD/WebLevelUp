@@ -6,7 +6,7 @@ const AWS = require("aws-sdk");
 app.use(express.json());
 AWS.config.update({ region: "eu-west-1" });
 const corsOptions = {
-	origin: "http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5002",
+	origin: "http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000",
 	optionsSuccessStatus: 200,
 };
 

@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	function fetchSpidersInfo() {
 		const apiUrl =
-			"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5002/api/spiders-info";
+			"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/api/spiders-info";
 		spiders = fetch(apiUrl).then((response) => response.json());
 		console.log("spiders: " + spiders);
 		return spiders;
@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				console.error("Error during fetching or rendering spiders:", error);
 			});
 
-		fetch("http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5002/user")
+		fetch("http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/user")
 			.then((response) => response.json())
 			.then((data) => {
 				if (data !== "Not logged in") {
@@ -51,7 +51,6 @@ document.addEventListener("DOMContentLoaded", () => {
 					carouselContainer.classList.remove("blur-effect");
 					carousel.style.filter = "none";
 					loginMessage.style.display = "none";
-					fetchUserId(data.username);
 				} else {
 					loginButton.style.display = "inline";
 					logoutButton.style.display = "none";
@@ -60,6 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
 					loginMessage.style.display = "block";
 				}
 			});
+		fetchUserId(data.username);
 	}
 
 	function renderSpiderCards(spiderArray) {

@@ -11,7 +11,7 @@ const pool = require("./DB");
 const app = express();
 app.use(express.json());
 const corsOptions = {
-	origin: "http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5002",
+	origin: "http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000",
 	optionsSuccessStatus: 200,
 };
 
