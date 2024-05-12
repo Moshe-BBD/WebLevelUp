@@ -210,7 +210,7 @@ function resetPage() {
 async function toggleSpiderLike(spiderId, likeBtn) {
 	try {
 		const response = await fetch(
-			"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5001/favorite-spider",
+			"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5001/api/favorite-spider",
 			{
 				method: "POST",
 				headers: {
