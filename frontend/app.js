@@ -100,7 +100,15 @@ document.addEventListener("DOMContentLoaded", () => {
 			card.appendChild(likeBtn);
 			card.appendChild(pageNumber);
 			carousel.appendChild(card);
-
+			likeBtn.addEventListener("click", async (event) => {
+				if (userLoggedIn) {
+					const spiderId = spider.spiderId;
+					await toggleSpiderLike(spiderId, likeBtn);
+				} else {
+					console.log("User is not logged in. Unable to toggle spider like.");
+				}
+				event.stopPropagation();
+			});
 			card.addEventListener("click", () => {
 				document
 					.querySelectorAll("#carousel article")
@@ -202,7 +210,7 @@ async function toggleSpiderLike(spiderId, likeBtn) {
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify({ userId: 5, spiderId }), // Replace '5' with the actual userId
+				body: JSON.stringify({ userId: 5, spiderId }),
 			}
 		);
 		if (response.ok) {
