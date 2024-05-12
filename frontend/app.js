@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	function fetchSpidersInfo() {
 		const apiUrl =
-			"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/api/spiders-info";
+			"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5002/api/spiders-info";
 		spiders = fetch(apiUrl).then((response) => response.json());
 		console.log("spiders: " + spiders);
 		return spiders;
@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				console.error("Error during fetching or rendering spiders:", error);
 			});
 
-		fetch("http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5000/user")
+		fetch("http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5002/user")
 			.then((response) => response.json())
 			.then((data) => {
 				if (data !== "Not logged in") {
@@ -212,7 +212,7 @@ async function toggleSpiderLike(spiderId, likeBtn) {
 	const userId = globalUserId;
 	try {
 		const url =
-			"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5001/api/favorite-spider";
+			"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5002/api/favorite-spider";
 		const bodyData = JSON.stringify({ userId, spiderId });
 
 		const headers = {
