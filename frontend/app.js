@@ -203,7 +203,7 @@ function resetPage() {
 
 async function toggleSpiderLike(spiderId, likeBtn) {
 	try {
-		const response = await fetch("localhost:5000/api/favorite-spider", {
+		const response = await fetch("http://localhost:5000/api/favorite-spider", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
