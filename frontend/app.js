@@ -171,6 +171,24 @@ document.addEventListener("DOMContentLoaded", () => {
 		event.preventDefault();
 		searchSpider();
 	});
+	async function filterLikedSpiders() {
+		try {
+			const response = await fetch(
+				`http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5001/api/user-favorites/${userID}`
+			);
+			const favoriteSpiders = await response.json();
+
+			const likedSpiderIds = favoriteSpiders.map((spider) => spider.spiderId);
+
+			const likedSpiders = spiders.filter((spider) =>
+				likedSpiderIds.includes(spider.spiderId)
+			);
+
+			renderSpiderCards(likedSpiders, true);
+		} catch (error) {
+			console.error("Error fetching user's favorite spiders:", error);
+		}
+	}
 });
 
 function searchSpider() {
@@ -260,16 +278,5 @@ async function getUserId(username) {
 	} catch (error) {
 		console.error("Error fetching user ID:", error);
 		throw error;
-	}
-}
-async function filterLikedSpiders() {
-	try {
-		const response = await fetch(
-			`http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5001/api/user-favorites/${userID}`
-		);
-		const favoriteSpiders = await response.json();
-		renderSpiderCards(favoriteSpiders, true);
-	} catch (error) {
-		console.error("Error fetching user's favorite spiders:", error);
 	}
 }
