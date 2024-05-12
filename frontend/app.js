@@ -3,6 +3,7 @@ let totalPages = 0;
 let ascendingOrder = true;
 let userLoggedIn = false;
 let spiders = [];
+const { addFavoriteSpider } = require("./favoriteSpiderUtils");
 
 document.addEventListener("DOMContentLoaded", () => {
 	const loginButton = document.getElementById("login-button");
@@ -201,7 +202,7 @@ function resetPage() {
 	}
 }
 
-async function toggleSpiderLike(spiderId, likeBtn) {
+async function toggleSpiderLike1(spiderId, likeBtn) {
 	try {
 		const response = await fetch("http://localhost:5000/api/favorite-spider", {
 			method: "POST",
@@ -218,5 +219,17 @@ async function toggleSpiderLike(spiderId, likeBtn) {
 		}
 	} catch (error) {
 		console.error("Error toggling spider like:", error);
+	}
+}
+async function toggleSpiderLike(spiderId, likeBtn) {
+	try {
+		const result = await addFavoriteSpider(5, spiderId);
+		if (result.message === "Favorite spider added successfully") {
+			likeBtn.classList.toggle("liked");
+		} else {
+			console.error("Error toggling spider like:", result.message);
+		}
+	} catch (error) {
+		console.error("Error toggling spider like:", error.message);
 	}
 }

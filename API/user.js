@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const AWS = require("aws-sdk");
+
 app.use(express.json());
 AWS.config.update({ region: "eu-west-1" });
 const corsOptions = {
@@ -216,5 +217,45 @@ router.delete("/favorite-spider", async (req, res) => {
 		res.status(500).json({ message: "Server Error" });
 	}
 });
+async function addFavoriteSpider(userId, spiderId) {
+	try {
+		if (!userId || !spiderId) {
+			throw new Error("userId and spiderId are required");
+		}
+
+		const userCheck = await pool.query(
+			'SELECT * FROM "User" WHERE "userId" = $1',
+			[userId]
+		);
+		if (userCheck.rowCount === 0) {
+			throw new Error("User not found");
+		}
+
+		const spiderCheck = await pool.query(
+			'SELECT * FROM "Spider" WHERE "spiderId" = $1',
+			[spiderId]
+		);
+		if (spiderCheck.rowCount === 0) {
+			throw new Error("Spider not found");
+		}
+
+		const existingFavorite = await pool.query(
+			'SELECT * FROM "FavouriteSpider" WHERE "userId" = $1 AND "spiderId" = $2',
+			[userId, spiderId]
+		);
+		if (existingFavorite.rowCount > 0) {
+			throw new Error("Spider already favorited by the user");
+		}
+
+		const insertQuery =
+			'INSERT INTO "FavouriteSpider" ("userId", "spiderId", "like") VALUES ($1, $2, $3)';
+		await pool.query(insertQuery, [userId, spiderId, 1]);
+
+		return { message: "Favorite spider added successfully" };
+	} catch (err) {
+		console.error(err);
+		throw new Error("Server Error");
+	}
+}
 
 module.exports = router;
