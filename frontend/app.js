@@ -211,11 +211,11 @@ function resetPage() {
 	}
 }
 
-async function toggleSpiderLike(userID, spiderId, likeBtn) {
+async function toggleSpiderLike(userId, spiderId, likeBtn) {
 	try {
 		const url =
 			"http://ec2-3-250-137-103.eu-west-1.compute.amazonaws.com:5001/api/favorite-spider";
-		const bodyData = JSON.stringify({ userID, spiderId });
+		const bodyData = JSON.stringify({ userId, spiderId });
 
 		const headers = {
 			"Content-Type": "application/json",
