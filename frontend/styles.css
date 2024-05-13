@@ -57,7 +57,7 @@ body {
 	display: inline-block;
 	margin-top: 1em;
 	padding: 0.5em 1em;
-	background-color: #007bff;
+	background-color: #777;
 	color: white;
 	border-radius: 0.3em;
 	text-decoration: none;
@@ -65,7 +65,7 @@ body {
 }
 
 .login-link:hover {
-	background-color: #0056b3;
+	background-color: #777;
 }
 
 .login-message p {
@@ -79,7 +79,7 @@ body {
 
 .nav-username-style {
 	color: #fff;
-	background-color: #007bff;
+	background-color: #777;
 	padding: 0.5em 1em;
 	border-radius: 0.5em;
 	font-weight: bold;
@@ -129,7 +129,7 @@ article {
 	padding: 1rem;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 	border: 1px solid #ccc;
-	background-color: #fff;
+	background-color: #333;
 	border-radius: 15px;
 	transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 	position: relative;
@@ -161,8 +161,8 @@ article {
 	justify-content: center;
 	padding: 1rem;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-	border: 1px solid #ccc;
-	background-color: #fff;
+	border: 1px solid #777;
+	background-color: #333;
 	border-radius: 15px;
 	transition: all 0.3s ease;
 	position: relative;
@@ -171,12 +171,13 @@ article {
 
 #carousel article.active {
 	flex: 0 0 30%;
-	border: 2px solid #0066cc;
-	background-color: #e6f2ff;
+	border: 2px solid #fff;
+	background-color: #333;
 	box-shadow: 0 6px 12px rgba(0, 0, 50, 0.3);
 	transform: scale(1.1);
 	opacity: 1;
 	z-index: 3;
+	border-width: 3.5px;
 }
 
 #carousel article:hover {
@@ -186,18 +187,19 @@ article {
 
 h2 {
 	font-size: 1rem;
-	color: #333;
+	color: #fff;
 	margin-bottom: 1rem;
 	text-align: center;
 }
 
 img {
 	width: 80%;
-	height: 20%;
-	max-height: 15vh;
+	height: 50%;
+	/* max-height: 15vh; */
 	object-fit: cover;
-	margin-bottom: 1rem;
+	margin-bottom: 0.5rem;
 	display: block;
+	margin-top: 1rem;
 }
 
 @media (max-width: 768px) {
@@ -214,10 +216,10 @@ img {
 
 p {
 	font-size: clamp(0.5rem, 1vw, 1.5rem);
-	color: #666;
+	color: #ccc;
 	text-align: center;
 	margin-top: 0;
-	background-color: #f8f8f8;
+	background-color: #777;
 	padding: 1rem;
 	border-radius: 10px;
 	width: 95%;
@@ -238,11 +240,11 @@ p {
 	cursor: pointer;
 	border: none;
 	background: transparent;
-	font-size: 1.5rem;
+	font-size: 2rem;
 	position: absolute;
-	top: 10px;
-	right: 10px;
-	color: #ccc;
+	top: 25px;
+	right: 8px;
+	color: #fff;
 	transition: color 0.3s;
 }
 
@@ -252,10 +254,10 @@ p {
 
 .page-number {
 	font-size: 0.8em;
-	color: #666;
-	width: 100%;
+	color: #fff;
+	width: 95%;
 	text-align: center;
-	background-color: rgba(255, 255, 255, 0.8);
+	background-color: #777;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 	border-top: 1px solid #ccc;
 	height: 3vh;
@@ -309,7 +311,7 @@ p {
 }
 
 .button-style:hover {
-	background-color: #555;
+	background-color: #777;
 }
 
 .button-style:focus {
@@ -417,5 +419,5 @@ p {
 }
 
 .nav-links a:hover {
-	color: #333;
+	color: #777;
 }
