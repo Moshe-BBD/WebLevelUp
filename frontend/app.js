@@ -191,7 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			}
 
 			const favoriteSpiders = await response.json();
-			console.log("Favorite spiders:", favoriteSpiders);
+			"Favorite spiders:", favoriteSpiders;
 
 			const likedSpiderIds = favoriteSpiders.map((spider) => spider.spiderId);
 			const likedSpiders = spiders.filter((spider) =>
@@ -265,10 +265,14 @@ async function toggleSpiderLike(userId, spiderId, likeBtn) {
 		});
 
 		if (response.ok) {
+			alert("Added a spider to favourites");
 			likeBtn.classList.toggle("liked");
 		} else {
 			const errorMessage = await response.text();
 			console.error("Error toggling spider like:", errorMessage);
+			if (errorMessage.includes("Spider already favorited by the user")) {
+				alert("Spider is already favorited!");
+			}
 		}
 	} catch (error) {
 		console.error("Error toggling spider like:", error);
