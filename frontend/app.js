@@ -106,8 +106,8 @@ document.addEventListener("DOMContentLoaded", () => {
 				event.stopPropagation();
 			});
 
-			card.appendChild(title);
 			card.appendChild(img);
+			card.appendChild(title);
 			card.appendChild(desc);
 			card.appendChild(likeBtn);
 			card.appendChild(pageNumber);
