@@ -49,6 +49,6 @@ jobs:
         id: plan
         run: terraform plan -out=.tfplan
 
-      - name: Apply infrastructure plan
-        id: apply
-        run: terraform apply .tfplan
+      - name: Destroy infrastructure
+        id: destroy
+        run: terraform destroy .tfplan
