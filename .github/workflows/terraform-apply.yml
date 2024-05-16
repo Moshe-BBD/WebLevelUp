@@ -47,8 +47,8 @@ jobs:
 
       - name: Generate infrastructure plan
         id: plan
-        run: terraform plan -out=.tfplan
+        run: terraform plan -destroy -out=destroy.tfplan
 
       - name: Destroy infrastructure
         id: destroy
-        run: terraform destroy .tfplan
+        run: terraform apply "destroy.tfplan"
